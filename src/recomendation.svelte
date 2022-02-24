@@ -1,29 +1,24 @@
 <script lang="ts">
-    import './main.css';
+    import './main.postcss';
 
     $: name = '';
     $: description = '';
-
+    
     function refresh()
     {
         const req = new XMLHttpRequest();
         req.onload = () =>
         {
             const res = JSON.parse(req.response);
-            console.log(res);
             name = res.name;
             description = res.description;
         }
-        req.open('get', '/rec');
-        req.send();
+        req.open('post', '/recomendation');
+        req.setRequestHeader('Content-Type', 'application/json');
+        req.send(JSON.stringify({
+            'current-time': (new Date()).toTimeString().match(/[0-9]{1,2}:[0-9]{2}:[0-9]{2}/)[0]
+        }));
     }
-
-    function reset()
-    {
-        name = '';
-        description = '';
-    }
-
 </script>
 
 <div class="rec mx-auto w-fit">
@@ -36,15 +31,16 @@
         <p id="title" class="text-center">{name}</p>
         <div class="relative text-center">
             <img class="mx-auto w-96" src="/favicon.png" alt="{name}" id="food-img" />
-            <p class="absolute bottom-5" id="description">{description}</p>
+            <p class="absolute bottom-6 text-center left-1/2 -translate-x-1/2" id="description">{description}</p>
+        </div>
+        <div class="bnt my-2">
+            <p>Learn more</p>
         </div>
     {/if}
     <div class="flex">
-        <div class="bnt" on:click="{refresh}">
-            <p class="w-fit py-1 px-2">Hit me up!</p>
-        </div>
-        <div class="bnt">
-            <p class="w-fit py-1 px-2" on:click="{reset}">Reset</p>
+        <div class="bnt flex items-center" on:click="{refresh}">
+            <p>Hit me up!</p>
+            <img class="max-h-6" src="/favicon.png" alt="refresh">
         </div>
     </div>
 </div>

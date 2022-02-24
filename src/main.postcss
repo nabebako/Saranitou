@@ -3,9 +3,13 @@
 @tailwind utilities;
 
 .bnt {
-    @apply border-2 border-slate-700 rounded-xl w-fit mx-auto bg-slate-700 text-white;
+    @apply border-2 border-slate-700 rounded-xl w-fit mx-auto bg-slate-700 text-white select-none;
 }
 
 .bnt:hover {
     @apply cursor-pointer;
+}
+
+.bnt > p {
+    @apply w-fit py-1 px-2;
 }
