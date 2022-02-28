@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bnt {
+    @apply block;
+    @apply border-2;
+    @apply border-slate-700;
+    @apply rounded-xl;
+    @apply w-fit;
+    @apply mx-auto;
+    @apply bg-slate-700;
+    @apply text-white;
+    @apply select-none;
+    @apply py-1;
+    @apply px-2;
+    
+    & > * + * {
+        @apply pl-2;
+    }
+    &:hover{
+        @apply cursor-pointer;
+    }
+}
