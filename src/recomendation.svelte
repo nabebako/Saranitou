@@ -1,8 +1,10 @@
-<script lang="ts">
-    import './main.postcss';
+<script>
+    import './main.pcss';
+    import Options from './options.svelte';
 
     $: name = '';
     $: description = '';
+    $: isOptionOpen = false;
     
     function refresh()
     {
@@ -33,14 +35,24 @@
             <img class="mx-auto w-96" src="/favicon.png" alt="{name}" id="food-img" />
             <p class="absolute bottom-6 text-center left-1/2 -translate-x-1/2" id="description">{description}</p>
         </div>
-        <div class="bnt my-2">
+        <button class="bnt my-2">
             <p>Learn more</p>
-        </div>
+        </button>
     {/if}
-    <div class="flex">
-        <div class="bnt flex items-center" on:click="{refresh}">
+    <div class="flex mb-4">
+        <button class="bnt !flex content-center justify-center" on:click="{refresh}">
             <p>Hit me up!</p>
             <img class="max-h-6" src="/favicon.png" alt="refresh">
-        </div>
+        </button>
     </div>
+    <button class="bnt mx-auto" on:click="{() => {isOptionOpen = !isOptionOpen}}">
+        {#if !isOptionOpen}
+        <p>Options</p>
+        {:else}
+        <p>Exit</p>
+        {/if}
+    </button>
+    {#if isOptionOpen}
+        <Options bind:shouldBeOpen = {isOptionOpen}/>
+    {/if}
 </div>
