@@ -1,7 +1,6 @@
-<script>
+<script lang='ts'>
     import './main.pcss';
     import { onMount } from 'svelte';
-    import { writable } from 'svelte/store';
 
     export let shouldBeOpen = false;
     export let options = {};

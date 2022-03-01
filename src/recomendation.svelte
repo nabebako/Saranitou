@@ -1,4 +1,4 @@
-<script>
+<script lang='ts'>
     import './main.pcss';
     import Options from './options.svelte';
 
@@ -32,7 +32,7 @@
     {:else}
         <p id="title" class="text-center">{name}</p>
         <div class="relative text-center">
-            <img class="mx-auto w-96" src="/favicon.png" alt="{name}" id="food-img" />
+            <img class="mx-auto w-96" src="" alt="{name}" id="food-img" style="min-height: 300px;"/>
             <p class="absolute bottom-6 text-center left-1/2 -translate-x-1/2" id="description">{description}</p>
         </div>
         <button class="bnt my-2">
