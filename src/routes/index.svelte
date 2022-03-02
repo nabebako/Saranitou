@@ -8,16 +8,19 @@
 <svelte:head>
 	<title>Untitled</title>
 	<meta charset="utf-8" />
+	<meta name="keywords" content="HTML, CSS, JavaScript, food">
+	<meta name="author" content="Ken">
+
 	<link rel="icon" href="https://untitled-umber.vercel.app/favicon.jpg" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<meta property="og:title" content="Untitled Project" />
-	<meta property="og:description" content="This is a simple food suggestion website, currently in the prototype phase." />
-	<meta property="og:image" content="https://untitled-umber.vercel.app/favicon.jpg" />
+	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://untitled-umber.vercel.app" />
+	<meta property="og:image" content="https://untitled-umber.vercel.app/favicon.jpg" />
+	<meta property="og:description" content="This is a simple food suggestion website, currently in the prototype phase." />
 
-	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:creator" content="@ken_tummada">
+	<meta name="twitter:card" content="summary">
 	<meta name="twitter:title" content="Untitled Project">
 	<meta name="twitter:description" content="An unnamed food suggestion project.">
 	<meta name="twitter:image" content="https://untitled-umber.vercel.app/favicon.jpg">
