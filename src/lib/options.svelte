@@ -1,18 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	export let options: object;
-
-	onMount(() => {
-		options = JSON.parse(localStorage.getItem('options')) ?? {};
-		Object.keys(options).forEach((key) => {
-			const input: HTMLInputElement = document.querySelector(`input[name=${key}]`);
-			if (input.type === 'text') {
-				input.value = options[key]['value'];
-			}
-			input.checked = options[key]['checked'];
-		});
-	});
+	export let options = {};
+	let isOptionOpen = false;
 
 	function saveOptions() {
 		document
@@ -25,11 +15,43 @@
 				};
 			});
 		localStorage.setItem('options', JSON.stringify(options));
-		document.body.dispatchEvent(new CustomEvent('setting-close'));
+		isOptionOpen = false;
 	}
+	function loadOptions() {
+		Object.keys(options).forEach((key) => {
+			const input: HTMLInputElement = document.querySelector(`input[name=${key}]`);
+			if (input.type === 'text') {
+				input.value = options[key].value;
+			}
+			input.checked = options[key].checked;
+		});
+	}
+
+	onMount(() => {
+		options = JSON.parse(localStorage.getItem('options')) ?? {};
+		loadOptions();
+	});
 </script>
 
 <div>
+	<button
+		class="bnt mx-auto"
+		on:click={() => {
+			isOptionOpen = !isOptionOpen;
+		}}
+	>
+		{#if !isOptionOpen}
+			<p>Options</p>
+		{:else}
+			<p>Close Options</p>
+		{/if}
+	</button>
+</div>
+<div
+	class="fixed left-1/2 -translate-x-1/2 transition-all duration-700 options-container rounded-xl p-4 !m-0 {isOptionOpen
+		? 'translate-y-1/2 bottom-1/2 block'
+		: 'bottom-0 opacity-0 invisible'}"
+>
 	<form on:submit|preventDefault={saveOptions}>
 		<fieldset name="time">
 			<legend>Time</legend>

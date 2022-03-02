@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Options from './options.svelte';
 
 	let name = '';
 	let description = '';
-	let isOptionOpen = false;
-	let options: object;
+	export let options = {};
 
 	function refresh() {
 		const req = new XMLHttpRequest();
@@ -25,9 +23,6 @@
 	}
 	onMount(() => {
 		options = JSON.parse(localStorage.getItem('options')) ?? {};
-		document.body.addEventListener('setting-close', () => {
-			isOptionOpen = false;
-		});
 	});
 </script>
 
@@ -55,19 +50,4 @@
 			<img class="max-h-6" src="/favicon.png" alt="refresh" />
 		</button>
 	</div>
-	<button
-		class="bnt mx-auto"
-		on:click={() => {
-			isOptionOpen = !isOptionOpen;
-		}}
-	>
-		{#if !isOptionOpen}
-			<p>Options</p>
-		{:else}
-			<p>Exit</p>
-		{/if}
-	</button>
-	{#if isOptionOpen}
-		<Options bind:options />
-	{/if}
 </div>

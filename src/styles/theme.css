@@ -24,3 +24,8 @@ body {
 	background-color: var(--button-color);
 	color: var(--button-text-color);
 }
+
+.options-container {
+	background-color: var(--button-color);
+	color: var(--button-text-color);
+}

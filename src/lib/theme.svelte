@@ -25,44 +25,47 @@
 			setTheme(val);
 		});
 		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-			if($currentTheme === 'system') setTheme(event.matches? 'dark' : 'light');
+			if ($currentTheme === 'system') setTheme(event.matches ? 'dark' : 'light');
 		});
 	});
 </script>
 
-<div class="hover:cursor-pointer" on:click={() => (shouldShowOptions = !shouldShowOptions)}>
-	<img class="select-none" src="/favicon.png" alt="Hello" />
-</div>
-{#if shouldShowOptions}
-	<div class="absolute">
-		<ul>
-			<li
-				class="hover:cursor-pointer"
-				on:click={() => {
-					currentTheme.set('light');
-					shouldShowOptions = false;
-				}}
-			>
-				Light
-			</li>
-			<li
-				class="hover:cursor-pointer"
-				on:click={() => {
-					currentTheme.set('dark');
-					shouldShowOptions = false;
-				}}
-			>
-				Dark
-			</li>
-			<li
-				class="hover:cursor-pointer"
-				on:click={() => {
-					currentTheme.set('system');
-					shouldShowOptions = false;
-				}}
-			>
-				System
-			</li>
-		</ul>
+<div class="theme-option">
+	<div class="bnt" on:click={() => (shouldShowOptions = !shouldShowOptions)}>
+		<p>Theme</p>
+		<!-- <img class="select-none" src="" alt="Theme" /> -->
 	</div>
-{/if}
+	{#if shouldShowOptions}
+		<div class="absolute">
+			<ul>
+				<li
+					class="hover:cursor-pointer"
+					on:click={() => {
+						currentTheme.set('light');
+						shouldShowOptions = false;
+					}}
+				>
+					Light
+				</li>
+				<li
+					class="hover:cursor-pointer"
+					on:click={() => {
+						currentTheme.set('dark');
+						shouldShowOptions = false;
+					}}
+				>
+					Dark
+				</li>
+				<li
+					class="hover:cursor-pointer"
+					on:click={() => {
+						currentTheme.set('system');
+						shouldShowOptions = false;
+					}}
+				>
+					System
+				</li>
+			</ul>
+		</div>
+	{/if}
+</div>

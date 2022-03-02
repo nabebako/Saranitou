@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+header {
+	@apply grid;
+	@apply h-fit;
+	grid-template-columns: repeat(5, 1fr);
+	grid-template-rows: 2.5rem;
+	align-items: center;
+	@apply gap-x-4;
+	@apply pt-8;
+	@apply pb-6;
+}
+
+body {
+	height: 100vh;
+}
+
+.theme-option {
+	@apply lg:row-start-1 lg:row-end-2;
+	@apply lg:col-start-5 lg:col-end-6;
+}
+
 .bnt {
 	@apply block;
 	@apply border-2;
