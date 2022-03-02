@@ -1,15 +1,15 @@
 <script lang="ts">
-    import Recomendation from "../recomendation.svelte";
-    import Theme from "../theme.svelte";
+	import Recomendation from '../recomendation.svelte';
+	import Theme from '../theme.svelte';
 
-    import "../main.pcss";
-    import '../theme.pcss';
+	import '../main.css';
+	import '../theme.css';
 </script>
 
 <header>
-    <Theme/>
+	<Theme />
 </header>
 <main>
-    <p class="text-xl text-center pb-4">Untitle project</p>
-    <Recomendation/>
+	<p class="text-xl text-center pb-4">Untitle project</p>
+	<Recomendation />
 </main>

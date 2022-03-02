@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bnt {
+	@apply block;
+	@apply border-2;
+	@apply rounded-xl;
+	@apply w-fit;
+	@apply mx-auto;
+	@apply select-none;
+	@apply py-1;
+	@apply px-2;
+}
+.bnt:hover {
+	@apply cursor-pointer;
+}
+.bnt > * + * {
+	@apply pl-2;
+}

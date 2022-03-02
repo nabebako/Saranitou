@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"properties": [],
+	"atDirectives": [
+		{ "name": "@tailwind", "description": "Tailwindcss", "status": "Postcss" },
+		{ "name": "@apply", "description": "Postcss apply directive", "status": "Postcss" }
+	],
+	"pseudoClasses": [],
+	"pseudoElements": []
+}

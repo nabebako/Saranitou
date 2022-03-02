@@ -1,7 +1,8 @@
 <script lang="ts">
-    import '../main.pcss';
+	import '../main.css';
 </script>
+
 <main>
-    <a href="/">Back</a>
-    <h1 class="text-center">About us</h1>
+	<a href="/">Back</a>
+	<h1 class="text-center">About us</h1>
 </main>
