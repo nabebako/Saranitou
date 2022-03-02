@@ -24,6 +24,9 @@
 			localStorage.setItem('theme', val);
 			setTheme(val);
 		});
+		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+			currentTheme.set(event.matches? 'dark' : 'light');
+		});
 	});
 </script>
 
