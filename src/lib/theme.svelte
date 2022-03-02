@@ -2,26 +2,27 @@
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 
-	import './main.css';
-
 	let shouldShowOptions = false;
 	const currentTheme = writable('');
 
+	function setTheme(theme: string): void {
+		if (theme === 'light') document.documentElement.classList.remove('dark-mode');
+		else if (theme === 'dark') document.documentElement.classList.add('dark-mode');
+		else {
+			window?.matchMedia('(prefers-color-scheme: dark)').matches
+				? document.documentElement.classList.add('dark-mode')
+				: document.documentElement.classList.remove('dark-mode');
+		}
+	}
+
 	onMount(() => {
 		currentTheme.set(
-			localStorage.getItem('theme') ?? window?.matchMedia('(prefers-color-scheme: dark)').matches
-				? 'dark'
-				: 'light'
+			localStorage.getItem('theme') ??
+				(window?.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
 		);
 		currentTheme.subscribe((val) => {
 			localStorage.setItem('theme', val);
-			if (val === 'light') document.documentElement.classList.remove('dark-mode');
-			else if (val === 'dark') document.documentElement.classList.add('dark-mode');
-			else {
-				if (window?.matchMedia('(prefers-color-scheme: dark)').matches)
-					document.documentElement.classList.add('dark-mode');
-				else document.documentElement.classList.remove('dark-mode');
-			}
+			setTheme(val);
 		});
 	});
 </script>

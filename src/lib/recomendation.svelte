@@ -1,9 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-
 	import Options from './options.svelte';
-
-	import './main.css';
 
 	let name = '';
 	let description = '';
@@ -22,11 +19,12 @@
 		req.send(
 			JSON.stringify({
 				'current-time': new Date().toTimeString().match(/[0-9]{1,2}:[0-9]{2}:[0-9]{2}/)[0],
-				...options
+				options: { ...options }
 			})
 		);
 	}
 	onMount(() => {
+		options = JSON.parse(localStorage.getItem('options')) ?? {};
 		document.body.addEventListener('setting-close', () => {
 			isOptionOpen = false;
 		});
