@@ -25,7 +25,7 @@
 			setTheme(val);
 		});
 		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-			currentTheme.set(event.matches? 'dark' : 'light');
+			if($currentTheme === 'system') setTheme(event.matches? 'dark' : 'light');
 		});
 	});
 </script>
