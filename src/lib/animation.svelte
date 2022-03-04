@@ -33,6 +33,9 @@
         const canvas = document.querySelector('canvas');
         const ctx = canvas.getContext('2d');
 
+		canvas.width = 500;
+		canvas.height = 500;
+
 		ctx.fillStyle = document.documentElement.classList.contains('dark')? 'rgb(203 213 225)':'rgb(15 23 42)';
 
         class CanvasMoveable {
@@ -44,11 +47,12 @@
             static animationSpeed: number = 0.065;
 
             constructor(cp: Point[], r: number = 8) {
+				const ratio = window.devicePixelRatio;
                 this.r = r;
-                this.x = cp[0].x * canvasWidth/500;
-                this.y = cp[0].y * canvasHeight/500;
+                this.x = cp[0].x * canvasWidth / 500;
+                this.y = cp[0].y * canvasWidth / 500;
                 this.cp = cp.map((corrdinate) => {
-                    return { x: corrdinate.x *  canvasWidth/500, y: corrdinate.y * canvasHeight/500 }
+                    return { x: corrdinate.x * canvasWidth / 500, y: corrdinate.y * canvasWidth / 500 };
                 });
             };
             static tick() {
@@ -92,7 +96,7 @@
         ], 2);
 
         function animate() {
-			ctx.clearRect(0, 0, canvasHeight, canvasHeight);
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 			CanvasMoveable.tick();
 
@@ -112,7 +116,18 @@
             }
         }
 
+		function fixDpi() {
+			const ratio = window.devicePixelRatio;
+    		canvas.width = canvasWidth * ratio;
+    		canvas.height = canvasHeight * ratio;
+    		canvas.style.width = `${canvasWidth}px`;
+    		canvas.style.height = `${canvasHeight}px`;
+    		canvas.getContext("2d").scale(ratio, ratio);
+		}
+
         canvasContainer.addEventListener('click', animate);
+
+		fixDpi();
 
         firstPoint.draw();
         secondPoint.draw();
@@ -121,13 +136,13 @@
         document.documentElement.addEventListener('theme-change', () => {
             ctx.fillStyle = document.documentElement.classList.contains('dark')? 'rgb(203 213 225)':'rgb(15 23 42)';
 			
-			ctx.clearRect(0, 0, canvasHeight, canvasHeight);
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 			firstPoint.draw();
 			secondPoint.draw();
 			thirdPoint.draw();
         });
-    });
+	});
 </script>
 
 <div class="" bind:this="{canvasContainer}">
