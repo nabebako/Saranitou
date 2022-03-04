@@ -6,13 +6,14 @@
 	const currentTheme = writable('');
 
 	function setTheme(theme: string): void {
-		if (theme === 'light') document.documentElement.classList.remove('dark-mode');
-		else if (theme === 'dark') document.documentElement.classList.add('dark-mode');
+		if (theme === 'light') document.documentElement.classList.remove('dark');
+		else if (theme === 'dark') document.documentElement.classList.add('dark');
 		else {
 			window?.matchMedia('(prefers-color-scheme: dark)').matches
-				? document.documentElement.classList.add('dark-mode')
-				: document.documentElement.classList.remove('dark-mode');
+				? document.documentElement.classList.add('dark')
+				: document.documentElement.classList.remove('dark');
 		}
+		document.documentElement.dispatchEvent(new CustomEvent('theme-change'));
 	}
 
 	onMount(() => {
@@ -36,7 +37,7 @@
 		<!-- <img class="select-none" src="" alt="Theme" /> -->
 	</div>
 	{#if shouldShowOptions}
-		<div class="absolute">
+		<div class="absolute z-10">
 			<ul>
 				<li
 					class="hover:cursor-pointer"
