@@ -2,15 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-header {
+.header-grid {
 	@apply grid;
-	@apply h-fit;
 	grid-template-columns: repeat(5, 1fr);
-	grid-template-rows: 2.5rem;
-	align-items: center;
+	grid-template-rows: 1fr;
+	@apply items-center;
+	@apply justify-items-center lg:justify-items-start;
 	@apply gap-x-4;
-	@apply pt-8;
-	@apply pb-6;
 }
 
 body {
@@ -37,4 +35,9 @@ body {
 }
 .bnt > * + * {
 	@apply pl-2;
+}
+
+.icon {
+	@apply w-6;
+	@apply h-6;
 }

@@ -33,9 +33,9 @@
 	});
 </script>
 
-<div>
+<div class="mx-auto">
 	<button
-		class="bnt mx-auto"
+		class="bnt"
 		on:click={() => {
 			isOptionOpen = !isOptionOpen;
 		}}
@@ -47,8 +47,9 @@
 		{/if}
 	</button>
 </div>
+
 <div
-	class="fixed left-1/2 -translate-x-1/2 transition-all duration-700 options-container rounded-xl p-4 !m-0 {isOptionOpen
+	class="fixed left-1/2 -translate-x-1/2 transition-all duration-700 options-container rounded-xl p-4 !m-0 z-10 {isOptionOpen
 		? 'translate-y-1/2 bottom-1/2 block'
 		: 'bottom-0 opacity-0 invisible'}"
 >
