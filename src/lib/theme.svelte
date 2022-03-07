@@ -37,9 +37,9 @@
 		<!-- <img class="select-none" src="" alt="Theme" /> -->
 	</div>
 	<div class="mt-2 absolute z-10 transition-all duration-500 h-0 overflow-hidden {shouldShowOptions? 'h-40':''}">
-		<ul class="text-center divide-y text-light-button-text dark:text-dark-button-text bg-light-button-color dark:bg-dark-button-color p-2 rounded-lg">
+		<ul class="text-center divide-y text-button-text bg-button-bg p-2 rounded-lg w-24">
 			<li
-				class="hover:cursor-pointer py-1"
+				class="bnt !rounded-none !mx-0 !w-full"
 				on:click={() => {
 					currentTheme.set('light');
 					shouldShowOptions = false;
@@ -48,7 +48,7 @@
 				Light
 			</li>
 			<li
-				class="hover:cursor-pointer py-1"
+				class="bnt !rounded-none !mx-0 !w-full"
 				on:click={() => {
 					currentTheme.set('dark');
 					shouldShowOptions = false;
@@ -57,7 +57,7 @@
 				Dark
 			</li>
 			<li
-				class="hover:cursor-pointer py-1"
+				class="bnt !rounded-none !mx-0 !w-full"
 				on:click={() => {
 					currentTheme.set('system');
 					shouldShowOptions = false;

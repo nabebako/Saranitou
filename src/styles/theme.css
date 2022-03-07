@@ -24,9 +24,11 @@ body {
 }
 
 .bnt {
-	border-color: var(--button-color);
-	background-color: var(--button-color);
-	color: var(--button-text-color);
+	@apply bg-button-bg;
+	@apply text-button-text;
+	@apply hover:bg-dark-button-color;
+	@apply transition-colors;
+	@apply ease-out;
 }
 
 .options-container {
@@ -35,10 +37,9 @@ body {
 }
 
 .tick-box {
-	@apply hover:bg-light-border;
-
+	@apply hover:bg-dark-button-color;
 }
 .tick-box[checked] {
-	@apply bg-light-background dark:bg-dark-background;
-	@apply text-light-body dark:text-dark-body;
+	@apply !bg-light-background;
+	@apply !text-light-body;
 }

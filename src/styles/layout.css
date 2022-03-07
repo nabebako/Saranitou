@@ -11,10 +11,6 @@
 	@apply gap-x-4;
 }
 
-body {
-	height: 100vh;
-}
-
 .theme-option {
 	@apply lg:row-start-1 lg:row-end-2;
 	@apply lg:col-start-5 lg:col-end-6;
@@ -22,13 +18,12 @@ body {
 
 .bnt {
 	@apply block;
-	@apply border-2;
 	@apply rounded-xl;
 	@apply w-fit;
 	@apply mx-auto;
 	@apply select-none;
-	@apply py-1;
-	@apply px-2;
+	@apply py-2;
+	@apply px-3;
 	@apply hover:cursor-pointer;
 	@apply space-x-2;
 }
