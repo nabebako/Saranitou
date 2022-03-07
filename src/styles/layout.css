@@ -29,15 +29,17 @@ body {
 	@apply select-none;
 	@apply py-1;
 	@apply px-2;
-}
-.bnt:hover {
-	@apply cursor-pointer;
-}
-.bnt > * + * {
-	@apply pl-2;
+	@apply hover:cursor-pointer;
+	@apply space-x-2;
 }
 
 .icon {
 	@apply w-6;
 	@apply h-6;
+}
+
+.tick-box {
+	@apply bnt;
+	@apply border-none;
+	@apply transition-all;
 }

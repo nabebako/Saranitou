@@ -1,8 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
 
-    import '../styles/layout.css';
-
     export let canvasWidth: number = 500;
     export let canvasHeight: number = 500;
     let canvasContainer: HTMLDivElement;

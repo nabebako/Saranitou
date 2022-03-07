@@ -36,37 +36,35 @@
 		<p>Theme</p>
 		<!-- <img class="select-none" src="" alt="Theme" /> -->
 	</div>
-	{#if shouldShowOptions}
-		<div class="absolute z-10">
-			<ul>
-				<li
-					class="hover:cursor-pointer"
-					on:click={() => {
-						currentTheme.set('light');
-						shouldShowOptions = false;
-					}}
-				>
-					Light
-				</li>
-				<li
-					class="hover:cursor-pointer"
-					on:click={() => {
-						currentTheme.set('dark');
-						shouldShowOptions = false;
-					}}
-				>
-					Dark
-				</li>
-				<li
-					class="hover:cursor-pointer"
-					on:click={() => {
-						currentTheme.set('system');
-						shouldShowOptions = false;
-					}}
-				>
-					System
-				</li>
-			</ul>
-		</div>
-	{/if}
+	<div class="mt-2 absolute z-10 transition-all duration-500 h-0 overflow-hidden {shouldShowOptions? 'h-40':''}">
+		<ul class="text-center divide-y text-light-button-text dark:text-dark-button-text bg-light-button-color dark:bg-dark-button-color p-2 rounded-lg">
+			<li
+				class="hover:cursor-pointer py-1"
+				on:click={() => {
+					currentTheme.set('light');
+					shouldShowOptions = false;
+				}}
+			>
+				Light
+			</li>
+			<li
+				class="hover:cursor-pointer py-1"
+				on:click={() => {
+					currentTheme.set('dark');
+					shouldShowOptions = false;
+				}}
+			>
+				Dark
+			</li>
+			<li
+				class="hover:cursor-pointer py-1"
+				on:click={() => {
+					currentTheme.set('system');
+					shouldShowOptions = false;
+				}}
+			>
+				System
+			</li>
+		</ul>
+	</div>
 </div>

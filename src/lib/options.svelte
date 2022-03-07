@@ -9,19 +9,27 @@
 			.querySelector('form')
 			.querySelectorAll('input')
 			.forEach((input) => {
-				options[input.name] = {
-					value: input.value,
-					checked: input?.checked ?? true
-				};
+				if(input.type !== 'submit') {
+					options[input.name] = {
+						value: input.value,
+						checked: input?.checked ?? true
+					};
+				}
 			});
 		localStorage.setItem('options', JSON.stringify(options));
 		isOptionOpen = false;
 	}
+
 	function loadOptions() {
 		Object.keys(options).forEach((key) => {
-			const input: HTMLInputElement = document.querySelector(`input[name=${key}]`);
-			if (input.type === 'text') {
+			const input: HTMLInputElement = document.querySelector(`input#${key}`);
+			const label: HTMLLabelElement = document.querySelector(`label[for=${key}]`);
+
+			if(input.type === 'text') {
 				input.value = options[key].value;
+			}
+			if(options[key].checked) {
+				label.setAttribute('checked', '');
 			}
 			input.checked = options[key].checked;
 		});
@@ -30,6 +38,11 @@
 	onMount(() => {
 		options = JSON.parse(localStorage.getItem('options')) ?? {};
 		loadOptions();
+		document.querySelectorAll('label').forEach((label) => {
+			label.addEventListener('click', () => {
+				label.toggleAttribute('checked');
+			});
+		});
 	});
 </script>
 
@@ -43,7 +56,7 @@
 		{#if !isOptionOpen}
 			<p>Options</p>
 		{:else}
-			<p>Close Options</p>
+			<p>Cancel</p>
 		{/if}
 	</button>
 </div>
@@ -54,14 +67,14 @@
 		: 'bottom-0 opacity-0 invisible'}"
 >
 	<form on:submit|preventDefault={saveOptions}>
-		<fieldset name="time">
-			<legend>Time</legend>
-			<input type="checkbox" name="breakfast" id="breakfast" value="breakfast" />
-			<label for="breakfast">Breakfast</label>
-			<input type="checkbox" name="lunch" id="lunch" value="lunch" />
-			<label for="lunch">Lunch</label>
-			<input type="checkbox" name="dinner" id="dinner" value="dinner" />
-			<label for="dinner">Dinner</label>
+		<fieldset class="pb-2" name="time">
+			<legend class="pb-2">Time</legend>
+			<input class="hidden" type="checkbox" name="breakfast" id='breakfast' value="breakfast" />
+			<label for="breakfast" class="tick-box">Breakfast</label>
+			<input class="hidden" type="checkbox" name="lunch" id="lunch" value="lunch" />
+			<label class="tick-box" for="lunch">Lunch</label>
+			<input class="hidden" type="checkbox" name="dinner" id="dinner" value="dinner" />
+			<label class="tick-box" for="dinner">Dinner</label>
 		</fieldset>
 		<input class="bnt" type="submit" name="submit" value="Save & exit" />
 	</form>

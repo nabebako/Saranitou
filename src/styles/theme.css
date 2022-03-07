@@ -33,3 +33,12 @@ body {
 	background-color: var(--button-color);
 	color: var(--button-text-color);
 }
+
+.tick-box {
+	@apply hover:bg-light-border;
+
+}
+.tick-box[checked] {
+	@apply bg-light-background dark:bg-dark-background;
+	@apply text-light-body dark:text-dark-body;
+}
