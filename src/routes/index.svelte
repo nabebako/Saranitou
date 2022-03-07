@@ -56,7 +56,7 @@
 				<div
 					class="absolute lg:static mt-3 lg:mt-0 left-0 z-10 overflow-hidden lg:h-fit w-full lg:w-fit transition-height duration-200 bg-light-background dark:bg-dark-background lg:!bg-transparent
 					{shouldShowSideBar
-						? 'h-44'
+						? 'h-52'
 						: 'h-0'}"
 				>
 					<div class="mx-4 lg:mx-0 pt-2 lg:pt-0 border-y border-light-border dark:border-dark-border lg:border-none h-full flex justify-end lg:justify-start  space-x-4">
