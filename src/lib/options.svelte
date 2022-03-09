@@ -46,7 +46,7 @@
 	});
 </script>
 
-<div class="mx-auto">
+<div class="mx-auto hidden lg:block">
 	<button
 		class="bnt"
 		on:click={() => {
@@ -62,9 +62,9 @@
 </div>
 
 <div
-	class="fixed left-1/2 -translate-x-1/2 transition-all duration-700 options-container rounded-xl p-4 !m-0 z-10 {isOptionOpen
-		? 'translate-y-1/2 bottom-1/2 block'
-		: 'bottom-0 opacity-0 invisible'}"
+	class="options-container lg:fixed left-1/2 lg:-translate-x-1/2 transition-all duration-700 rounded-xl p-4 !m-0 z-10 {isOptionOpen
+		? 'lg:translate-y-1/2 bottom-1/2'
+		: 'bottom-0 lg:opacity-0 lg:invisible'}"
 >
 	<form on:submit|preventDefault={saveOptions}>
 		<fieldset class="pb-2" name="time">
