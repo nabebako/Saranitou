@@ -51,20 +51,20 @@
 			<legend><button on:click|preventDefault={function() {this.focus();}}>Time</button></legend>
 			<ul class="pt-1">
 				<li class="checkbox-input">
-					<input type="checkbox" name="breakfast" id="breakfast" value="breakfast" on:touchstart/>
-					<label for="breakfast" on:touchstart>
+					<input type="checkbox" name="breakfast" id="breakfast" value="breakfast" on:click={function() {this.focus()}}/>
+					<label for="breakfast" on:click={function() {this.focus()}}>
 						Breakfast
 					</label>
 				</li>
 				<li class="checkbox-input">
-					<input type="checkbox" name="lunch" id="lunch" value="lunch" on:touchstart />
-					<label for="lunch">
+					<input type="checkbox" name="lunch" id="lunch" value="lunch" on:click={function() {this.focus()}}/>
+					<label for="lunch" >
 						Lunch
 					</label>
 				</li>
 				<li class="checkbox-input">
 					<input type="checkbox" name="dinner" id="dinner" value="dinner" />
-					<label for="dinner" on:touchstart>
+					<label for="dinner" on:click={function() {this.focus()}} >
 						Dinner
 					</label>
 				</li>
