@@ -72,7 +72,7 @@
 		</fieldset>
 		<fieldset>
 			<input type="checkbox" name="test" id="test" value="test" on:focus={() => {window.alert('focus')}}/>
-			<label for="breakfast">
+			<label for="test">
 				Breakfast
 			</label>
 		</fieldset>
