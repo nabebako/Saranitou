@@ -30,30 +30,3 @@ body {
 	@apply transition-colors;
 	@apply ease-out;
 }
-
-.options-container {
-	background: none;
-	@apply text-light-body dark:text-dark-body;
-}
-
-@media (min-width: 1024px) {
-	.options-container {
-		background-color: var(--button-color);
-		color: var(--button-text-color);
-	}
-}
-
-.tick-box {
-	@apply hover:bg-dark-button-color;
-}
-.tick-box[checked] {
-	@apply bg-button-bg;
-	@apply text-button-text;
-}
-
-@media (min-width: 1024px) {
-	.tick-box[checked] {
-		@apply !bg-light-background;
-		@apply !text-light-body;
-	}
-}

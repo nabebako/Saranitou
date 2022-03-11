@@ -1,55 +1,39 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	export let options = {};
+	let optionForm: HTMLFormElement;
 	let isOptionOpen = false;
 
 	function saveOptions() {
-		document
-			.querySelector('form')
-			.querySelectorAll('input')
-			.forEach((input) => {
-				if(input.type !== 'submit') {
-					options[input.name] = {
-						value: input.value,
-						checked: input?.checked ?? true
-					};
-				}
-			});
+		const options = {};
+		new FormData(optionForm).forEach((val, key) => {
+			options[key] = val;
+		});
 		localStorage.setItem('options', JSON.stringify(options));
 		isOptionOpen = false;
-	}
 
+		window.alert('Option Saved!');
+	}
 	function loadOptions() {
-		Object.keys(options).forEach((key) => {
-			const input: HTMLInputElement = document.querySelector(`input#${key}`);
-			const label: HTMLLabelElement = document.querySelector(`label[for=${key}]`);
-
-			if(input.type === 'text') {
-				input.value = options[key].value;
+		const options = JSON.parse(localStorage.getItem('options')) ?? {};
+		optionForm.querySelectorAll('input').forEach((input) => {
+			if(input.type === 'checkbox') {
+				input.checked = options[input.name]? true : false;
 			}
-			if(options[key].checked) {
-				label.setAttribute('checked', '');
+			else if(input.type === 'text') {
+				input.value = options[input.name];
 			}
-			input.checked = options[key].checked;
 		});
 	}
 
-	onMount(() => {
-		options = JSON.parse(localStorage.getItem('options')) ?? {};
-		loadOptions();
-		document.querySelectorAll('label').forEach((label) => {
-			label.addEventListener('click', () => {
-				label.toggleAttribute('checked');
-			});
-		});
-	});
+	onMount(() => loadOptions());
 </script>
 
 <div class="mx-auto hidden lg:block">
 	<button
 		class="bnt"
 		on:click={() => {
+			loadOptions();
 			isOptionOpen = !isOptionOpen;
 		}}
 	>
@@ -61,21 +45,108 @@
 	</button>
 </div>
 
-<div
-	class="options-container lg:fixed left-1/2 lg:-translate-x-1/2 transition-all duration-700 rounded-xl p-4 !m-0 z-10 {isOptionOpen
-		? 'lg:translate-y-1/2 bottom-1/2'
-		: 'bottom-0 lg:opacity-0 lg:invisible'}"
->
-	<form on:submit|preventDefault={saveOptions}>
-		<fieldset class="pb-2" name="time">
-			<legend class="pb-2">Time</legend>
-			<input class="hidden" type="checkbox" name="breakfast" id='breakfast' value="breakfast" />
-			<label for="breakfast" class="tick-box">Breakfast</label>
-			<input class="hidden" type="checkbox" name="lunch" id="lunch" value="lunch" />
-			<label class="tick-box" for="lunch">Lunch</label>
-			<input class="hidden" type="checkbox" name="dinner" id="dinner" value="dinner" />
-			<label class="tick-box" for="dinner">Dinner</label>
+<div class="options-container text-light-body dark:text-dark-body" is-open={isOptionOpen}>
+	<form id="option-form" class="option-gird" on:submit|preventDefault={saveOptions} bind:this={optionForm}>
+		<fieldset class="drop-down" name="time">
+			<legend><button on:click|preventDefault>Time</button></legend>
+			<ul class="pt-1">
+				<li class="checkbox-input">
+					<input type="checkbox" name="breakfast" id="breakfast" value="breakfast"/>
+					<label for="breakfast" is-checked>
+						Breakfast
+					</label>
+				</li>
+				<li class="checkbox-input">
+					<input type="checkbox" name="lunch" id="lunch" value="lunch" />
+					<label for="lunch">
+						Lunch
+					</label>
+				</li>
+				<li class="checkbox-input">
+					<input type="checkbox" name="dinner" id="dinner" value="dinner" />
+					<label for="dinner">
+						Dinner
+					</label>
+				</li>
+			</ul>
 		</fieldset>
-		<input class="bnt" type="submit" name="submit" value="Save & exit" />
+		<input class="bnt h-fit" type="submit" name="submit" value="Save" />
 	</form>
 </div>
+
+<style lang="postcss">
+	.option-gird {
+		@apply grid grid-flow-col;
+		grid-template: repeat(auto-fill, minmax(fit-content, 1fr)) / repeat(
+				auto-fill,
+				minmax(fit-content, 1fr)
+			);
+		@apply gap-2;
+	}
+	
+	.drop-down > :last-child {
+		@apply max-h-0 overflow-hidden;
+		@apply transition-all duration-500;
+	}
+	.drop-down:focus-within > :last-child {
+		@apply max-h-screen;
+	}
+
+	.checkbox-input {
+		@apply flex items-center space-x-2;
+		@apply w-full;
+	}
+	.checkbox-input input { 
+		@apply appearance-none;
+		@apply grid;
+		@apply w-4 h-4;
+		@apply m-0;
+		@apply bg-light-background;
+		@apply border-2 rounded-full border-light-border;
+		@apply flex-shrink-0;
+	}
+	.checkbox-input input:checked {
+		@apply border-0;
+	}
+	.checkbox-input input::before {
+		content: "";
+		@apply block;
+		@apply w-full h-full;
+		@apply rounded-full;
+		box-shadow: inset 1rem 1rem cornflowerblue;
+		@apply transition-transform duration-75;
+		@apply scale-0;
+	}
+	.checkbox-input input:checked::before {
+		@apply scale-100;
+	}
+	.checkbox-input label {
+		@apply block;
+		@apply w-full;
+		@apply select-none;
+		@apply transition-colors;
+		@apply text-light-body dark:text-dark-body;
+		@apply hover:cursor-pointer hover:bg-dark-button-color;
+	}
+	.checkbox-input input:checked ~ label {
+		background-color: cornflowerblue;
+		@apply text-light-body;
+	}
+	/* .checkbox-input label img,
+	.checkbox-input label svg {
+		@apply h-6;
+	} */
+
+	@media screen(lg) {
+		.options-container {
+			@apply hidden;
+			@apply fixed left-1/2 bottom-0 -translate-x-1/2 z-10;
+			@apply p-4 !m-0 rounded-xl;
+			@apply bg-button-bg text-button-text;
+		}
+		.options-container[is-open='true'] {
+			@apply block;
+			@apply bottom-1/2 -translate-x-1/2 translate-y-1/2;
+		}
+	}
+</style>

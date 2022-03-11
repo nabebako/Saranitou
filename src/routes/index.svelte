@@ -7,7 +7,6 @@
 	import '../styles/layout.css';
 	import '../styles/theme.css';
 
-	let options = {};
 	let shouldShowSideBar = false;
 </script>
 
@@ -34,14 +33,15 @@
 	<meta name="twitter:description" content="An unnamed food suggestion project." />
 	<meta name="twitter:image" content="https://untitled-umber.vercel.app/favicon.jpg" />
 </svelte:head>
+
 <header>
 	<div
-		class="py-3 lg:pt-8 lg:pb-6 mx-4 lg:mx-auto lg:w-4/5 lg:px-0 border-b border-light-border dark:border-dark-border lg:border-none"
+		class="py-3 lg:pt-8 lg:pb-6 mx-4 lg:mx-auto lg:w-4/5 lg:px-0 border-b border-light-border dark:border-dark-border"
 	>
 		<div class="header-grid grid grid-cols-5">
-			<a class="w-fit block" href="./">
+			<a class="w-fit block justify-self-center" href="./">
 				<p class="text-xl text-center hidden lg:inline">Saraintou</p>
-				<img class="lg:hidden icon" src="/favicon.jpg" alt="favicon" />
+				<img class="lg:hidden" width="24" height="24" src="/favicon.jpg" alt="favicon" />
 			</a>
 
 			<div class="col-start-5 col-end-6">
@@ -55,15 +55,15 @@
 				</div>
 				<div
 					class="absolute lg:static top-0 right-0 z-10 overflow-hidden h-screen lg:h-fit lg:w-fit transition-width duration-200 bg-light-background dark:bg-dark-background lg:!bg-transparent
-					{shouldShowSideBar
-						? 'w-screen'
-						: 'w-0'}"
+					{shouldShowSideBar ? 'w-screen' : 'w-0'}"
 				>
-					<div class="mx-4 lg:mx-0 pt-2 lg:pt-0 border-y mt-12 lg:mt-0 border-light-border dark:border-dark-border lg:border-none h-full justify-end lg:justify-start space-x-4 grid lg:flex option-gird">
+					<div
+						class="mx-4 lg:mx-0 pt-2 lg:pt-0 border-y mt-12 lg:mt-0 border-light-border dark:border-dark-border lg:border-none h-full justify-start space-x-4 block lg:flex"
+					>
 						<div class="absolute lg:static top-0 left-0 ml-6 lg:mx-0 pt-3 lg:pt-0">
 							<Theme />
 						</div>
-						<Options bind:options />
+						<Options />
 					</div>
 				</div>
 			</div>
@@ -72,6 +72,18 @@
 </header>
 <main>
 	<div class="px-8 mt-4 lg:mt-8">
-		<Recomendation bind:options />
+		<Recomendation />
 	</div>
 </main>
+
+<style lang="postcss">
+	.header-grid {
+
+		@apply grid;
+		grid-template-columns: repeat(5, 1fr);
+		grid-template-rows: 1fr;
+		@apply items-center;
+		@apply justify-items-center lg:justify-items-start;
+		@apply gap-x-4;
+	}
+</style>
