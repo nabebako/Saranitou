@@ -48,7 +48,7 @@
 <div class="options-container text-light-body dark:text-dark-body" is-open={isOptionOpen}>
 	<form id="option-form" class="option-gird" on:submit|preventDefault={saveOptions} bind:this={optionForm}>
 		<fieldset class="drop-down" name="time">
-			<legend><button on:click|preventDefault on:touchstart>Time</button></legend>
+			<legend><button on:click|preventDefault={function() {this.focus();}}>Time</button></legend>
 			<ul class="pt-1">
 				<li class="checkbox-input">
 					<input type="checkbox" name="breakfast" id="breakfast" value="breakfast" on:touchstart/>
