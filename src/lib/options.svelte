@@ -48,11 +48,11 @@
 <div class="options-container text-light-body dark:text-dark-body" is-open={isOptionOpen}>
 	<form id="option-form" class="option-gird" on:submit|preventDefault={saveOptions} bind:this={optionForm}>
 		<fieldset class="drop-down" name="time">
-			<legend><button on:click|preventDefault={() => {this.focus()}}>Time</button></legend>
+			<legend><button on:click|preventDefault on:focus={() => {window.alert('focus')}}>Time</button></legend>
 			<ul class="pt-1">
 				<li class="checkbox-input">
 					<input type="checkbox" name="breakfast" id="breakfast" value="breakfast"/>
-					<label for="breakfast" is-checked>
+					<label for="breakfast">
 						Breakfast
 					</label>
 				</li>
@@ -69,6 +69,12 @@
 					</label>
 				</li>
 			</ul>
+		</fieldset>
+		<fieldset>
+			<input type="checkbox" name="test" id="test" value="test" on:focus={() => {window.alert('focus')}}/>
+			<label for="breakfast">
+				Breakfast
+			</label>
 		</fieldset>
 		<input class="bnt h-fit" type="submit" name="submit" value="Save" />
 	</form>
