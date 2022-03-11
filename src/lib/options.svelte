@@ -52,7 +52,7 @@
 			<ul class="pt-1">
 				<li class="checkbox-input">
 					<input type="checkbox" name="breakfast" id="breakfast" value="breakfast" on:click={function() {this.focus()}}/>
-					<label for="breakfast" on:click={function() {this.focus()}}>
+					<label for="breakfast">
 						Breakfast
 					</label>
 				</li>
@@ -64,7 +64,7 @@
 				</li>
 				<li class="checkbox-input">
 					<input type="checkbox" name="dinner" id="dinner" value="dinner" />
-					<label for="dinner" on:click={function() {this.focus()}} >
+					<label for="dinner">
 						Dinner
 					</label>
 				</li>
