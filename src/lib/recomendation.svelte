@@ -6,6 +6,7 @@
 	let loddingAnimation: HTMLDivElement;
 	let resultImage: HTMLImageElement;
 	let resultContainer: HTMLDivElement;
+	let introduction: HTMLDivElement;
 
 	function animate() {}
 	function refresh() {
@@ -13,6 +14,7 @@
 		const options = JSON.parse(localStorage.getItem('options')) ?? {};
 		
 		req.onload = () => {
+			introduction.classList.add('hidden');
 			const res = JSON.parse(req.response);
 			name = res.name;
 			description = res.description;
@@ -42,14 +44,14 @@
 	});
 </script>
 
-<div class="mx-auto text-center pb-4 w-fit">
-	<p class="text-xl">Welcome to the application</p>
+<div class="mx-auto text-center pb-4 w-fit" bind:this={introduction}>
+	<h1 class="text-xl text-title font-semi-bold">Welcome</h1>
 	<p class="text-base">Hit the button below to get a food recomendation.</p>
 </div>
 
 <div class="mx-auto w-fit">
 	<div
-		class="w-full max-w-md sm:w-64 sm:h-64 aspect-square flex justify-center items-center"
+		class="hidden w-full max-w-md sm:w-64 sm:h-64 aspect-square flex justify-center items-center"
 		bind:this={loddingAnimation}
 	>
 		<svg class="w-48 h-48" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -45,11 +45,13 @@
 	</button>
 </div>
 
-<div class="options-container text-light-body dark:text-dark-body" is-open={isOptionOpen}>
+<div class="options-container popup lg:border lg:border-border" is-open={isOptionOpen}>
 	<form id="option-form" class="option-gird" on:submit|preventDefault={saveOptions} bind:this={optionForm}>
-		<fieldset class="drop-down" name="time">
-			<legend><button on:click|preventDefault={function() {this.focus();}}>Time</button></legend>
-			<ul class="pt-1">
+		<fieldset class="options-section" name="time">
+			<legend>
+				<button on:click|preventDefault={function() {this.focus();}}>Time</button>
+			</legend>
+			<ul class="mt-1">
 				<li class="checkbox-input">
 					<input type="checkbox" name="breakfast" id="breakfast" value="breakfast" on:click={function() {this.focus()}}/>
 					<label for="breakfast">
@@ -63,7 +65,7 @@
 					</label>
 				</li>
 				<li class="checkbox-input">
-					<input type="checkbox" name="dinner" id="dinner" value="dinner" />
+					<input type="checkbox" name="dinner" id="dinner" value="dinner" on:click={function() {this.focus()}}/>
 					<label for="dinner">
 						Dinner
 					</label>
@@ -83,12 +85,19 @@
 			);
 		@apply gap-2;
 	}
-	
-	.drop-down > :last-child {
+
+	.options-section > :first-child {
+		@apply w-full;
+	}
+	.options-section > :first-child * {
+		@apply w-full;
+		@apply text-left;
+	}
+	.options-section > :last-child {
 		@apply max-h-0 overflow-hidden;
 		@apply transition-all duration-500;
 	}
-	.drop-down:focus-within > :last-child {
+	.options-section:focus-within > :last-child {
 		@apply max-h-full;
 	}
 
@@ -96,13 +105,13 @@
 		@apply flex items-center space-x-2;
 		@apply w-full;
 	}
-	.checkbox-input input { 
+	.checkbox-input input {
 		@apply appearance-none;
 		@apply grid;
 		@apply w-4 h-4;
 		@apply m-0;
-		@apply bg-light-background;
-		@apply border-2 rounded-full border-light-border;
+		@apply bg-transparent;
+		@apply border-2 rounded-full border-border;
 		@apply flex-shrink-0;
 	}
 	.checkbox-input input:checked {
@@ -113,7 +122,7 @@
 		@apply block;
 		@apply w-full h-full;
 		@apply rounded-full;
-		box-shadow: inset 1rem 1rem cornflowerblue;
+		box-shadow: inset 1rem 1rem hsl(350 69% 76%);
 		@apply transition-transform duration-75;
 		@apply scale-0;
 	}
@@ -126,23 +135,22 @@
 		@apply select-none;
 		@apply transition-colors;
 		@apply text-light-body dark:text-dark-body;
-		@apply hover:cursor-pointer hover:bg-dark-button-color;
+	}
+	.checkbox-input label:hover {
+		@apply cursor-pointer;
+		@apply bg-bnt-hover-bg;
+		@apply text-bnt-hover-body;
 	}
 	.checkbox-input input:checked ~ label {
-		background-color: cornflowerblue;
-		@apply text-light-body;
+		@apply bg-bnt-bg;
+		@apply text-bnt-hover-body;
 	}
-	/* .checkbox-input label img,
-	.checkbox-input label svg {
-		@apply h-6;
-	} */
 
 	@media screen(lg) {
 		.options-container {
 			@apply hidden;
 			@apply fixed left-1/2 bottom-0 -translate-x-1/2 z-10;
 			@apply p-4 !m-0 rounded-xl;
-			@apply bg-button-bg text-button-text;
 		}
 		.options-container[is-open='true'] {
 			@apply block;
