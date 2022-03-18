@@ -13,6 +13,14 @@ module.exports = {
 					'body': 'hsl(0, 0%, 100%)',
 				},
 				bnt: {
+					light: {
+						'bg': 'hsl(295, 6%, 35%)',
+						'body': 'hsl(350, 69%, 76%)',
+					},
+					dark: {
+						'bg': 'hsl(350, 69%, 76%)',
+						'body': 'hsl(295, 6%, 35%)',
+					},
 					'bg': 'hsl(350, 69%, 76%)',
 					'body': 'hsl(295, 6%, 35%)',
 					hover: {

@@ -1,6 +1,6 @@
 {
 	"name": "saranitou",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build",
@@ -12,12 +12,12 @@
 		"format": "prettier --config ./.prettierrc --write --plugin-search-dir=. 'src/**/*.{svelte,css,ts,mts}'"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "next",
+		"@sveltejs/adapter-auto": "latest",
 		"@sveltejs/adapter-node": "^1.0.0-next.70",
-		"@sveltejs/kit": "next",
-		"svelte": "next",
-		"svelte-check": "next",
-		"svelte-preprocess": "next",
+		"@sveltejs/kit": "latest",
+		"svelte": "latest",
+		"svelte-check": "latest",
+		"svelte-preprocess": "latest",
 		"autoprefixer": "^10.4.2",
 		"postcss": "^8.4.6",
 		"prettier": "^2.5.1",

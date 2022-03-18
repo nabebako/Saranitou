@@ -12,7 +12,7 @@
 	function refresh() {
 		const req = new XMLHttpRequest();
 		const options = JSON.parse(localStorage.getItem('options')) ?? {};
-		
+
 		req.onload = () => {
 			introduction.classList.add('hidden');
 			const res = JSON.parse(req.response);

@@ -35,9 +35,7 @@
 </svelte:head>
 
 <header>
-	<div
-		class="py-3 lg:pt-8 lg:pb-6 mx-4 lg:mx-auto lg:w-4/5 lg:px-0 border-b border-border"
-	>
+	<div class="py-3 lg:pt-8 lg:pb-6 mx-4 lg:mx-auto lg:w-4/5 lg:px-0 border-b border-border">
 		<div class="head-nav-grid">
 			<a class="w-fit block justify-self-center" href="./">
 				<p class="text-xl text-center hidden lg:inline">Saraintou</p>
@@ -58,10 +56,10 @@
 					{shouldShowSideBar ? 'w-screen' : 'w-0'}"
 				>
 					<div
-						class="mx-4 lg:mx-0 pt-2 lg:pt-0 border-y mt-12 lg:mt-0 border-border lg:border-none h-full justify-start space-x-4 block lg:flex"
+						class="mx-4 lg:mx-0 pt-2 lg:pt-0 border-y mt-12 lg:mt-0 border-border lg:border-none h-full justify-start lg:space-x-4 block lg:flex"
 					>
 						<div class="absolute lg:static top-0 left-0 ml-6 lg:mx-0 pt-3 lg:pt-0">
-							<Theme/>
+							<Theme />
 						</div>
 						<Options />
 					</div>

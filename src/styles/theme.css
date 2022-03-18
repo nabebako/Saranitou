@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
 	@apply bg-light-bg dark:bg-dark-bg;
 	@apply text-light-body dark:text-dark-body;
@@ -5,23 +9,11 @@ body {
 }
 
 .bnt {
-	@apply text-bnt-body bg-bnt-bg;
+	@apply bg-bnt-light-bg dark:bg-bnt-dark-bg;
+	@apply text-bnt-light-body dark:text-bnt-dark-body;
 	@apply transition-colors ease-out;
 }
 
 .bnt:hover {
 	@apply bg-bnt-hover-bg text-bnt-hover-body;
-}
-
-.drop-down > :last-child {
-	@apply bg-bnt-bg text-bnt-body;
-}
-
-.drop-down > :last-child button:hover {
-	@apply bg-bnt-hover-bg;
-	@apply text-bnt-hover-body;
-}
-
-.popup {
-	@apply bg-light-bg dark:bg-dark-bg;
 }
