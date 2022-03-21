@@ -68,13 +68,14 @@
 		</div>
 	</div>
 </header>
-<main>
-	<div class="px-8 mt-4 lg:mt-8">
-		<Recomendation />
-	</div>
+<main class="overflow-hidden">
+	<Recomendation />
 </main>
 
 <style lang="postcss">
+	:global(#svelte) {
+		@apply h-full;
+	}
 	.head-nav-grid {
 		@apply grid;
 		grid-template-columns: repeat(5, 1fr);

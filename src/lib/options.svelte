@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 
 	let optionForm: HTMLFormElement;
+	let displaySave: HTMLDivElement;
 	let isOptionOpen = false;
 
 	function saveOptions() {
@@ -11,7 +12,13 @@
 		});
 		localStorage.setItem('options', JSON.stringify(options));
 		isOptionOpen = false;
-		//  play save animation.
+
+		//  play save animation
+		displaySave.classList.remove('hidden');
+
+		setTimeout(() => {
+			displaySave.classList.add('hidden');
+		}, 1500);
 	}
 	function loadOptions() {
 		const options = JSON.parse(localStorage.getItem('options')) ?? {};
@@ -41,6 +48,10 @@
 			<p>Cancel</p>
 		{/if}
 	</button>
+</div>
+
+<div class="absolute top-0 left-1/2 -translate-y-1/2 z-10 hidden" bind:this={displaySave}>
+	<p>Saved!</p>
 </div>
 
 <div class="options-container bg-light-bg dark:bg-dark-bg lg:border lg:w-1/2 lg:border-border" is-open={isOptionOpen}>

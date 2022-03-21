@@ -2,11 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+	box-sizing: border-box;
+}
+*, *::before, *::after {
+	box-sizing: inherit;
+}
+
 .bnt {
 	@apply block;
 	@apply rounded-xl;
 	@apply w-fit;
-	@apply mx-auto;
 	@apply select-none;
 	@apply py-2;
 	@apply px-3;
