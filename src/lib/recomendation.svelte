@@ -63,13 +63,13 @@
 					this.target.style.transform = `translate(${this.x}px) rotate(${this.x * 0.04}deg)`;
 				}
 				if(this.x > this.target.offsetWidth * 0.75) {
-					like();
+					dislike();
 					this.target.style.transform = 'translate(0px) rotate(0deg)';
 					this.x = 0;
 					this.shouldMove = false;
 				}
 				else if(this.x < this.target.offsetWidth * -0.75) {
-					dislike();
+					like();
 					this.target.style.transform = 'translate(0px) rotate(0deg)';
 					this.x = 0;
 					this.shouldMove = false;
@@ -81,13 +81,14 @@
 					this.target.style.transform = `translate(${this.x}px) rotate(${this.x * 0.04}deg)`;
 				}
 				if(this.x > this.target.offsetWidth * 0.4) {
-					like();
+					dislike();
+					
 					this.target.style.transform = 'translate(0px) rotate(0deg)';
 					this.x = 0;
 					this.shouldMove = false;
 				}
 				else if(this.x < this.target.offsetWidth * -0.4) {
-					dislike();
+					like();
 					this.target.style.transform = 'translate(0px) rotate(0deg)';
 					this.x = 0;
 					this.shouldMove = false;
