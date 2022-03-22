@@ -34,12 +34,12 @@
 	<meta name="twitter:image" content="https://untitled-umber.vercel.app/favicon.jpg" />
 </svelte:head>
 
-<header>
-	<div class="py-3 lg:pt-8 lg:pb-6 mx-4 lg:mx-auto lg:w-4/5 lg:px-0 border-b border-border">
+<header class="bg-neutral-700">
+	<div class="py-4 lg:pt-8 lg:pb-6 mx-4 lg:mx-auto lg:w-4/5 lg:px-0">
 		<div class="head-nav-grid">
 			<a class="w-fit block justify-self-center" href="./">
-				<p class="text-xl text-center hidden lg:inline">Saraintou</p>
-				<img class="lg:hidden" width="24" height="24" src="/favicon.jpg" alt="favicon" />
+				<p class="text-xl text-center hidden lg:inline text-primary-300">Saraintou</p>
+				<img class="lg:hidden" width="24" height="24" src="/favicon.jpg" alt="Saraintou" />
 			</a>
 
 			<div class="col-start-5 col-end-6">
@@ -52,23 +52,25 @@
 					<Hamburger canvasWidth={24} canvasHeight={24} />
 				</div>
 				<div
-					class="absolute lg:static top-0 right-0 z-10 overflow-hidden h-screen lg:h-fit lg:w-fit transition-width duration-200 bg-light-bg dark:bg-dark-bg lg:!bg-transparent
+					class="absolute lg:static top-0 right-0 z-10 overflow-hidden h-screen lg:h-fit lg:w-fit transition-width bg-neutral-700
 					{shouldShowSideBar ? 'w-screen' : 'w-0'}"
 				>
 					<div
-						class="mx-4 lg:mx-0 pt-2 lg:pt-0 border-y mt-12 lg:mt-0 border-border lg:border-none h-full justify-start lg:space-x-4 block lg:flex"
+						class="px-4 lg:px-0 pt-2 lg:pt-0 mt-14 lg:mt-0 h-full justify-start lg:space-x-4 block lg:flex bg-neutral-100 dark:bg-neutral-600 lg:!bg-transparent"
 					>
-						<div class="absolute lg:static top-0 left-0 ml-6 lg:mx-0 pt-3 lg:pt-0">
+						<div class="absolute lg:static top-0 left-0 ml-6 lg:mx-0 pt-4 lg:pt-0">
 							<Theme />
 						</div>
-						<Options />
+						<div>
+							<Options />
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </header>
-<main class="overflow-hidden">
+<main class="overflow-hidden bg-neutral-100 dark:bg-neutral-600">
 	<Recomendation />
 </main>
 

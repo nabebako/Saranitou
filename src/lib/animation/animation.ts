@@ -76,3 +76,76 @@ class Animation {
 }
 
 export default { Animation, AnimationObject };
+
+// class Slideable {
+// 	target: HTMLElement;
+// 	shouldMove: boolean;
+// 	x: number;
+// 	startX: number;
+
+// 	constructor(target: HTMLElement) {
+// 		this.target = target;
+// 		this.shouldMove = false;
+// 		this.x = 0;
+// 		this.startX = 0;
+
+// 		this.target.addEventListener('mousedown', () => {
+// 			this.target.classList.remove('transition-transform');
+// 			this.shouldMove = true;
+// 		});
+// 		this.target.addEventListener('touchstart', (e) => {
+// 			this.target.classList.remove('transition-transform');
+// 			this.startX = e.touches.item(0).pageX;
+// 			this.shouldMove = true;
+// 		});
+// 		window.addEventListener('mousemove', (e) => {
+// 			if(this.shouldMove) {
+// 				this.x += e.movementX;
+// 				this.target.style.transform = `translate(${this.x}px) rotate(${this.x * 0.04}deg)`;
+// 			}
+// 			if(this.x > this.target.offsetWidth * 0.75) {
+// 				dislike();
+// 				this.target.style.transform = 'translate(0px) rotate(0deg)';
+// 				this.x = 0;
+// 				this.shouldMove = false;
+// 			}
+// 			else if(this.x < this.target.offsetWidth * -0.75) {
+// 				like();
+// 				this.target.style.transform = 'translate(0px) rotate(0deg)';
+// 				this.x = 0;
+// 				this.shouldMove = false;
+// 			}
+// 		});
+// 		window.addEventListener('touchmove', (e) => {
+// 			if(this.shouldMove) {
+// 				this.x = e.targetTouches.item(0).clientX - this.startX;
+// 				this.target.style.transform = `translate(${this.x}px) rotate(${this.x * 0.04}deg)`;
+// 			}
+// 			if(this.x > this.target.offsetWidth * 0.4) {
+// 				dislike();
+
+// 				this.target.style.transform = 'translate(0px) rotate(0deg)';
+// 				this.x = 0;
+// 				this.shouldMove = false;
+// 			}
+// 			else if(this.x < this.target.offsetWidth * -0.4) {
+// 				like();
+// 				this.target.style.transform = 'translate(0px) rotate(0deg)';
+// 				this.x = 0;
+// 				this.shouldMove = false;
+// 			}
+// 		});
+// 		window.addEventListener('mouseup', () => {
+// 			this.x = 0;
+// 			this.target.classList.add('transition-transform');
+// 			this.target.style.transform = 'translate(0px) rotate(0deg)';
+// 			  this.shouldMove = false;
+// 		  });
+// 		window.addEventListener('touchend', () => {
+// 			this.x = 0;
+// 			this.target.classList.add('transition-transform');
+// 			this.target.style.transform = 'translate(0px) rotate(0deg)';
+// 			this.shouldMove = false;
+// 		});
+// 	}
+// }

@@ -44,10 +44,6 @@
 		canvas.width = 500;
 		canvas.height = 500;
 
-		ctx.fillStyle = document.documentElement.classList.contains('dark')
-			? 'rgb(203 213 225)'
-			: 'rgb(15 23 42)';
-
 		class CanvasMoveable {
 			cp: Point[];
 			x: number;
@@ -155,22 +151,12 @@
 		canvasContainer.addEventListener('click', animate);
 
 		fixDpi();
+		
+		ctx.fillStyle = 'hsl(350, 70%, 65%)';
 
 		firstPoint.draw();
 		secondPoint.draw();
 		thirdPoint.draw();
-
-		document.documentElement.addEventListener('theme-change', () => {
-			ctx.fillStyle = document.documentElement.classList.contains('dark')
-				? 'rgb(203 213 225)'
-				: 'rgb(15 23 42)';
-
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-			firstPoint.draw();
-			secondPoint.draw();
-			thirdPoint.draw();
-		});
 	});
 </script>
 

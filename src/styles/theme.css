@@ -3,17 +3,16 @@
 @tailwind utilities;
 
 body {
-	@apply bg-light-bg dark:bg-dark-bg;
-	@apply text-light-body dark:text-dark-body;
+	@apply bg-neutral-100 dark:bg-neutral-600;
+	@apply text-neutral-700 dark:text-neutral-100;
 	@apply transition-colors;
 }
 
 .bnt {
-	@apply bg-bnt-light-bg dark:bg-bnt-dark-bg;
-	@apply text-bnt-light-body dark:text-bnt-dark-body;
+	@apply bg-primary-300 text-neutral-100;
 	@apply transition-colors ease-out;
 }
 
 .bnt:hover {
-	@apply bg-bnt-hover-bg text-bnt-hover-body;
+	@apply bg-secondary-300 text-neutral-600;
 }

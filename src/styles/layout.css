@@ -5,7 +5,9 @@
 html {
 	box-sizing: border-box;
 }
-*, *::before, *::after {
+*,
+*::before,
+*::after {
 	box-sizing: inherit;
 }
 
@@ -23,4 +25,8 @@ html {
 .bnt img,
 .bnt svg {
 	@apply h-6;
+}
+
+.center-using-absolute {
+	@apply absolute top-1/2 -translate-x-1/2 left-1/2 -translate-y-1/2;
 }
