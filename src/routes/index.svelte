@@ -3,6 +3,7 @@
 	import Recomendation from '../lib/recomendation.svelte';
 	import Theme from '../lib/theme.svelte';
 	import Hamburger from '../lib/animation/hamburger.svelte';
+	import Footer from '../lib/footer.svelte';
 
 	import '../styles/layout.css';
 	import '../styles/theme.css';
@@ -73,6 +74,9 @@
 <main class="overflow-hidden bg-neutral-100 dark:bg-neutral-600">
 	<Recomendation />
 </main>
+<footer>
+	<Footer />
+</footer>
 
 <style lang="postcss">
 	:global(#svelte) {
