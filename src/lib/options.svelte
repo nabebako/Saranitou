@@ -54,10 +54,7 @@
 	<p>Saved!</p>
 </div>
 
-<div
-	class="options-container bg-neutral-100 dark:bg-neutral-600"
-	is-open={isOptionOpen}
->
+<div class="options-container bg-neutral-100 dark:bg-neutral-600" is-open={isOptionOpen}>
 	<form
 		id="option-form"
 		class="option-gird"

@@ -124,12 +124,10 @@
 </script>
 
 <div class="rec-container">
-	<div class="hidden lg:flex items-center justify-center">
+	<div class="hidden sm:flex items-center justify-center">
 		<button on:click={skip}>
 			<svg
 				class="skip-icon"
-				width="240"
-				height="240"
 				viewBox="0 0 240 240"
 				fill="none"
 				xmlns="http://www.w3.org/2000/svg"
@@ -215,12 +213,10 @@
 			</button>
 		</div>
 	</div>
-	<div class="hidden lg:flex items-center justify-center">
+	<div class="hidden sm:flex items-center justify-center">
 		<button on:click={save}>
 			<svg
 				class="save-icon"
-				width="240"
-				height="200"
 				viewBox="0 0 240 244"
 				fill="none"
 				xmlns="http://www.w3.org/2000/svg"
@@ -263,12 +259,28 @@
 	}
 
 	.rec-container {
-		@apply grid;
+		@apply grid max-w-xs mx-auto;
 		justify-items: stretch;
 	}
-	@media screen(md) {
+	@media screen(sm) {
 		.rec-container {
-			grid-template-columns: 1fr 36rem 1fr;
+			@apply max-w-none;
+			grid-template-columns: minmax(calc(120px + 4rem), 1fr) minmax(200px, 24rem) minmax(calc(120px + 4rem), 1fr);
+		}
+		.rec-container > :nth-child(1) svg,
+		.rec-container > :nth-child(3) svg {
+			width: 144px;
+			height: 120px;
+		}
+	}
+	@media screen(lg) {
+		.rec-container {
+			grid-template-columns: minmax(calc(240px + 2rem), 1fr) minmax(200px, 36rem) minmax(calc(240px + 2rem), 1fr);
+		}
+		.rec-container > :nth-child(1) svg,
+		.rec-container > :nth-child(3) svg {
+			width: 240px;
+			height: 200px;
 		}
 	}
 

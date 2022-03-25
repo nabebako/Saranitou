@@ -151,7 +151,7 @@
 		canvasContainer.addEventListener('click', animate);
 
 		fixDpi();
-		
+
 		ctx.fillStyle = 'hsl(350, 70%, 65%)';
 
 		firstPoint.draw();

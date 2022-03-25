@@ -267,7 +267,7 @@
 
 	.drop-down > :last-child {
 		@apply max-h-0 overflow-hidden;
-		@apply transition-all;
+		@apply transition-all duration-500;
 		@apply bg-primary-300 text-neutral-100;
 	}
 	.drop-down > :last-child button:hover {
