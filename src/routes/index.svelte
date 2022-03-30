@@ -14,9 +14,6 @@
 
 <svelte:head>
 	<title>Saraintou</title>
-	<meta charset="utf-8" />
-	<meta name="keywords" content="HTML, CSS, JavaScript, Food" />
-	<meta name="author" content="Ken" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
