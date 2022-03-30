@@ -1,6 +1,6 @@
-<div class="w-full text-neutral-100 bg-neutral-700">
+<footer class="w-full text-neutral-100 bg-neutral-700">
 	<div class="mx-6 sm:mx-auto sm:w-4/5 py-4 sm:py-6">
-		<div class="grid grid-flow-col">
+		<div class="grid grid-flow-col justify-between gap-6">
 			<div>
 				<ul>
 					<li>
@@ -8,6 +8,7 @@
 					</li>
 				</ul>
 			</div>
+			<slot></slot>
 			<div class="justify-self-end">
 				<ul class="flex space-x-3">
 					<li>
@@ -38,4 +39,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</footer>

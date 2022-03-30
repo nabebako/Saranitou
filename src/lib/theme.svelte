@@ -29,8 +29,7 @@
 
 	onMount(() => {
 		setTheme(
-			localStorage.getItem('theme') ??
-				(window?.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+			localStorage.getItem('theme') ?? 'system'
 		);
 		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
 			if (theme === 'system') setTheme('system');
