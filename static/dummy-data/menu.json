@@ -11,7 +11,8 @@
 				"Water (100 ml)",
 				"Grated radish",
 				"Tenpura sauce (50 ml)"
-			]
+			],
+			"image": ""
 		},
 		{
 			"name": "Japanese scrambled eggs",
@@ -25,7 +26,8 @@
 				"Eggs",
 				"Fish soup (2 tbsp.)",
 				"Water (200 ml)"
-			]
+			],
+			"image": ""
 		},
 		{
 			"name": "冷奴",
@@ -36,7 +38,8 @@
 				"Chopped spring onion",
 				"Dried bonito",
 				"Soy sauce"
-			]
+			],
+			"image": ""
 		},
 		{
 			"name": "手巻き",
@@ -53,7 +56,8 @@
 				"Cucumber",
 				"Carrot",
 				"Wasabi"
-			]
+			],
+			"image": ""
 		},
 		{
 			"name": "ちらし寿司",
@@ -72,7 +76,8 @@
 				"Cucumbers",
 				"Wasabi",
 				"Soy sauce"
-			]
+			],
+			"image": ""
 		},
 		{
 			"name": "ざるそば",
@@ -85,7 +90,8 @@
 				"Seaweed",
 				"Grounded ginger",
 				"Wasabi"
-			]
+			],
+			"image": ""
 		},
 		{
 			"name": "焼きそば",
@@ -100,7 +106,8 @@
 				"Vegetable oil",
 				"Salt & Pepper",
 				"Yakisoba sauce"
-			]
+			],
+			"image": ""
 		},
 		{
 			"name": "おにぎり",
@@ -119,7 +126,8 @@
 				"Water (100 ml)",
 				"Grounded ginger",
 				"Pickled ginger"
-			]
+			],
+			"image": ""
 		},
 		{
 			"name": "お好み焼き",
@@ -136,7 +144,8 @@
 				"Mayonnaise",
 				"Seaweed flakes",
 				"Dried bonito"
-			]
+			],
+			"image": ""
 		},
 		{
 			"name": "親子丼",
@@ -148,7 +157,8 @@
 				"Fish oil (3 tbsp.)",
 				"Chopped spring onion",
 				"Rice (2 cups)"
-			]
+			],
+			"image": ""
 		}
 	]
 }

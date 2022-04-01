@@ -13,7 +13,6 @@ export async function post({ request }) {
 		},
 		body: {
 			...recomedation,
-			img: 'favicon.jpg'
 		}
 	};
 }

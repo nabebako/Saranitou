@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import Loading from './animation/loading.svelte';
 
 	let name = '';
 	let description = '';
 	let loddingAnimation: HTMLDivElement;
 	let resultImage: HTMLImageElement;
 	let resultContainer: HTMLDivElement;
+	let resultContents: HTMLDivElement;
 
 	function animate() {}
 	function refresh() {
@@ -16,7 +18,7 @@
 			const res = JSON.parse(req.response);
 			name = res.name;
 			description = res.description;
-			resultImage.src = `/${res.img}`;
+			resultImage.src = res.image || '/default.svg';
 		};
 
 		loddingAnimation.classList.remove('hidden');
@@ -54,12 +56,12 @@
 		target.style.cursor = 'grab';
 
 		target.addEventListener('mousedown', () => {
-			target.classList.remove('transition-transform');
+			target.classList.remove('transition-transform', 'indicate-moveable');
 			shouldMove = true;
 			target.style.cursor = 'grabbing';
 		});
 		target.addEventListener('touchstart', (e) => {
-			target.classList.remove('transition-transform');
+			target.classList.remove('transition-transform', 'indicate-moveable');
 			startX = e.touches.item(0).pageX;
 			shouldMove = true;
 		});
@@ -68,12 +70,12 @@
 				x += e.movementX;
 				target.style.transform = `translate(${x}px) rotate(${x * 0.04}deg)`;
 			}
-			if (x > target.offsetWidth * 0.75) {
+			if (x > target.offsetWidth * 0.65) {
 				skip();
 				target.style.transform = 'translate(0px) rotate(0deg)';
 				x = 0;
 				shouldMove = false;
-			} else if (x < target.offsetWidth * -0.75) {
+			} else if (x < target.offsetWidth * -0.65) {
 				save();
 				target.style.transform = 'translate(0px) rotate(0deg)';
 				x = 0;
@@ -85,13 +87,13 @@
 				x = e.targetTouches.item(0).clientX - startX;
 				target.style.transform = `translate(${x}px) rotate(${x * 0.04}deg)`;
 			}
-			if (x > target.offsetWidth * 0.75) {
+			if (x > target.offsetWidth * 0.65) {
 				skip();
 
 				target.style.transform = 'translate(0px) rotate(0deg)';
 				x = 0;
 				shouldMove = false;
-			} else if (x < target.offsetWidth * -0.75) {
+			} else if (x < target.offsetWidth * -0.65) {
 				save();
 				target.style.transform = 'translate(0px) rotate(0deg)';
 				x = 0;
@@ -119,19 +121,14 @@
 			resultContainer.classList.remove('hidden');
 			loddingAnimation.classList.add('hidden');
 		});
-		createSlideable(resultContainer);
+		createSlideable(resultContents);
 	});
 </script>
 
 <div class="rec-container">
 	<div class="hidden sm:flex items-center justify-center">
 		<button on:click={skip}>
-			<svg
-				class="skip-icon"
-				viewBox="0 0 240 240"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
+			<svg class="skip-icon" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<rect x="196" y="10" width="18" height="220" rx="9" fill="#E4687C" fill-opacity="0.8" />
 				<path
 					class="tri-3"
@@ -155,25 +152,14 @@
 		</button>
 	</div>
 	<div class="pt-8">
-		<div
-			class="hidden w-full max-w-md sm:w-64 sm:h-64 aspect-square flex justify-center items-center"
-			bind:this={loddingAnimation}
-		>
-			<svg class="w-48 h-48" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path
-					d="M194.5 321.236C177.396 321.236 161.022 318.122 145.917 312.431C93.9534 292.855 57 242.79 57 184.118C57 108.39 118.561 47 194.5 47C270.439 47 332 108.39 332 184.118C332 218.503 319.308 249.932 298.341 274M194.5 321.236L163.792 247.649M194.5 321.236L118.417 361"
-					stroke="#B8B8B8"
-					stroke-width="64"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				/>
-			</svg>
+		<div class="grid justify-center items-center p-12 aspect-square" bind:this={loddingAnimation}>
+			<Loading />
 		</div>
 		<div class="hidden" bind:this={resultContainer}>
-			<div class="relative text-center mb-4">
+			<div class="relative text-center mb-4 indicate-moveable" bind:this={resultContents}>
 				<h1 class="title text-center pb-4 select-none">{name}</h1>
 				<img
-					class="mx-auto w-full object-cover moveable"
+					class="w-full object-cover"
 					src=""
 					alt={name}
 					id="food-img"
@@ -181,22 +167,22 @@
 					bind:this={resultImage}
 				/>
 				<p
-					class="absolute bottom-6 text-center left-1/2 -translate-x-1/2 text-neutral-100 select-none"
+					class="absolute bottom-6 text-center left-1/2 -translate-x-1/2 text-neutral-700 dark:text-white bg-neutral-100 dark:bg-neutral-600 select-none"
 					id="description"
 				>
 					{description}
 				</p>
 			</div>
-		</div>
-		<div class="my-2 mx-auto w-fit">
-			<a class="link-bnt" href="./">
-				<p>Learn more</p>
-				<svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-					<path
-						d="M9.76421 12.8216C9.37368 13.2121 9.37368 13.8453 9.76421 14.2358C10.1547 14.6263 10.7879 14.6263 11.1784 14.2358L9.76421 12.8216ZM22 2H23C23 1.44772 22.5523 1 22 1V2ZM12.4197 6.05737C12.972 6.05737 13.4197 5.60966 13.4197 5.05737C13.4197 4.50509 12.972 4.05737 12.4197 4.05737V6.05737ZM19.9426 11.7921C19.9426 11.2398 19.4949 10.7921 18.9426 10.7921C18.3903 10.7921 17.9426 11.2398 17.9426 11.7921H19.9426ZM13.0204 1C12.4681 1 12.0204 1.44772 12.0204 2C12.0204 2.55228 12.4681 3 13.0204 3V1ZM21 10.9796C21 11.5319 21.4477 11.9796 22 11.9796C22.5523 11.9796 23 11.5319 23 10.9796H21ZM16.9426 21H10.4713V23H16.9426V21ZM10.4713 21H4V23H10.4713V21ZM3 20V13.5287H1V20H3ZM3 13.5287V7.05737H1V13.5287H3ZM11.1784 14.2358L22.7071 2.70711L21.2929 1.29289L9.76421 12.8216L11.1784 14.2358ZM4 6.05737H10.4713V4.05737H4V6.05737ZM10.4713 6.05737H12.4197V4.05737H10.4713V6.05737ZM17.9426 13.5287V20H19.9426V13.5287H17.9426ZM17.9426 11.7921V13.5287H19.9426V11.7921H17.9426ZM22 1H13.0204V3H22V1ZM23 10.9796V2H21V10.9796H23ZM4 21C3.44771 21 3 20.5523 3 20H1C1 21.6569 2.34315 23 4 23V21ZM16.9426 23C18.5995 23 19.9426 21.6569 19.9426 20H17.9426C17.9426 20.5523 17.4949 21 16.9426 21V23ZM3 7.05737C3 6.50509 3.44772 6.05737 4 6.05737V4.05737C2.34315 4.05737 1 5.40052 1 7.05737H3Z"
-					/>
-				</svg>
-			</a>
+			<div class="my-2 mx-auto w-fit">
+				<a class="link-bnt" href="./">
+					<p>Learn more</p>
+					<svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+						<path
+							d="M9.76421 12.8216C9.37368 13.2121 9.37368 13.8453 9.76421 14.2358C10.1547 14.6263 10.7879 14.6263 11.1784 14.2358L9.76421 12.8216ZM22 2H23C23 1.44772 22.5523 1 22 1V2ZM12.4197 6.05737C12.972 6.05737 13.4197 5.60966 13.4197 5.05737C13.4197 4.50509 12.972 4.05737 12.4197 4.05737V6.05737ZM19.9426 11.7921C19.9426 11.2398 19.4949 10.7921 18.9426 10.7921C18.3903 10.7921 17.9426 11.2398 17.9426 11.7921H19.9426ZM13.0204 1C12.4681 1 12.0204 1.44772 12.0204 2C12.0204 2.55228 12.4681 3 13.0204 3V1ZM21 10.9796C21 11.5319 21.4477 11.9796 22 11.9796C22.5523 11.9796 23 11.5319 23 10.9796H21ZM16.9426 21H10.4713V23H16.9426V21ZM10.4713 21H4V23H10.4713V21ZM3 20V13.5287H1V20H3ZM3 13.5287V7.05737H1V13.5287H3ZM11.1784 14.2358L22.7071 2.70711L21.2929 1.29289L9.76421 12.8216L11.1784 14.2358ZM4 6.05737H10.4713V4.05737H4V6.05737ZM10.4713 6.05737H12.4197V4.05737H10.4713V6.05737ZM17.9426 13.5287V20H19.9426V13.5287H17.9426ZM17.9426 11.7921V13.5287H19.9426V11.7921H17.9426ZM22 1H13.0204V3H22V1ZM23 10.9796V2H21V10.9796H23ZM4 21C3.44771 21 3 20.5523 3 20H1C1 21.6569 2.34315 23 4 23V21ZM16.9426 23C18.5995 23 19.9426 21.6569 19.9426 20H17.9426C17.9426 20.5523 17.4949 21 16.9426 21V23ZM3 7.05737C3 6.50509 3.44772 6.05737 4 6.05737V4.05737C2.34315 4.05737 1 5.40052 1 7.05737H3Z"
+						/>
+					</svg>
+				</a>
+			</div>
 		</div>
 		<div class="my-4 mx-auto w-fit">
 			<button class="bnt !flex" on:click={refresh}>
@@ -215,12 +201,7 @@
 	</div>
 	<div class="hidden sm:flex items-center justify-center">
 		<button on:click={save}>
-			<svg
-				class="save-icon"
-				viewBox="0 0 240 244"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
+			<svg class="save-icon" viewBox="0 0 240 244" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path
 					d="M17 139V184.5V230H119H221V184.5V139"
 					stroke="#E4687C"
@@ -265,7 +246,10 @@
 	@media screen(sm) {
 		.rec-container {
 			@apply max-w-none;
-			grid-template-columns: minmax(calc(120px + 4rem), 1fr) minmax(200px, 24rem) minmax(calc(120px + 4rem), 1fr);
+			grid-template-columns: minmax(calc(120px + 4rem), 1fr) minmax(200px, 24rem) minmax(
+					calc(120px + 4rem),
+					1fr
+				);
 		}
 		.rec-container > :nth-child(1) svg,
 		.rec-container > :nth-child(3) svg {
@@ -275,7 +259,10 @@
 	}
 	@media screen(lg) {
 		.rec-container {
-			grid-template-columns: minmax(calc(240px + 2rem), 1fr) minmax(200px, 36rem) minmax(calc(240px + 2rem), 1fr);
+			grid-template-columns: minmax(calc(240px + 2rem), 1fr) minmax(200px, 36rem) minmax(
+					calc(240px + 2rem),
+					1fr
+				);
 		}
 		.rec-container > :nth-child(1) svg,
 		.rec-container > :nth-child(3) svg {
@@ -302,6 +289,24 @@
 
 	.link-bnt:hover svg {
 		@apply fill-neutral-600 stroke-neutral-600;
+	}
+
+	@keyframes indicate-moveable {
+		0%, 50%, 100% {
+			transform: translateX(0) rotate(0);
+		}
+		25% {
+			transform: translateX(5%) rotate(2deg);
+		}
+		75% {
+			transform: translateX(-5%) rotate(-2deg);
+		}
+	}
+	.indicate-moveable:hover {
+		animation-duration: 300ms;
+	  	animation-name: indicate-moveable;
+	 	animation-iteration-count: 1;
+	  	animation-direction: alternate;
 	}
 
 	.skip-icon {
