@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Loading from './animation/loading.svelte';
+	import Help from './help.svelte';
 
 	let name = '';
 	let description = '';
@@ -126,32 +127,50 @@
 </script>
 
 <div class="rec-container">
-	<div class="hidden sm:flex items-center justify-center">
-		<button on:click={skip}>
-			<svg class="skip-icon" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<rect x="196" y="10" width="18" height="220" rx="9" fill="#E4687C" fill-opacity="0.8" />
+	<div class="relative hidden sm:flex items-center justify-center">
+		<div class="absolute top-1/4">
+			<Help>
+				<p>Click here to save</p>
+			</Help>
+		</div>
+		<button on:click={save}>
+			<svg class="save-icon" viewBox="0 0 240 244" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M17 139V184.5V230H119H221V184.5V139"
+					stroke="#E4687C"
+					stroke-opacity="0.8"
+					stroke-width="16"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
 				<path
 					class="tri-3"
-					d="M192.483 112.247C197.395 116.249 197.395 123.751 192.483 127.753L96.066 206.301C89.5331 211.623 79.75 206.974 79.75 198.548L79.75 41.4521C79.75 33.0257 89.5331 28.377 96.066 33.6992L192.483 112.247Z"
+					d="M127.753 174.483C123.751 179.395 116.249 179.395 112.247 174.483L33.6992 78.066C28.377 71.5331 33.0257 61.75 41.4521 61.75L198.548 61.75C206.974 61.75 211.623 71.5331 206.301 78.066L127.753 174.483Z"
 					fill="#E4687C"
 					fill-opacity="0.8"
 				/>
 				<path
 					class="tri-2"
-					d="M140.483 112.247C145.395 116.249 145.395 123.751 140.483 127.753L44.066 206.301C37.5331 211.623 27.75 206.974 27.75 198.548L27.75 41.4521C27.75 33.0257 37.5331 28.377 44.066 33.6992L140.483 112.247Z"
+					d="M127.753 122.483C123.751 127.395 116.249 127.395 112.247 122.483L33.6992 26.066C28.377 19.5331 33.0257 9.75 41.4521 9.75L198.548 9.75C206.974 9.75 211.623 19.5331 206.301 26.066L127.753 122.483Z"
 					fill="#EC96A4"
 					fill-opacity="0.8"
 				/>
 				<path
 					class="tri-1"
-					d="M140.483 112.247C145.395 116.249 145.395 123.751 140.483 127.753L44.066 206.301C37.5331 211.623 27.75 206.974 27.75 198.548L27.75 41.4521C27.75 33.0257 37.5331 28.377 44.066 33.6992L140.483 112.247Z"
+					d="M127.753 122.483C123.751 127.395 116.249 127.395 112.247 122.483L33.6992 26.066C28.377 19.5331 33.0257 9.75 41.4521 9.75L198.548 9.75C206.974 9.75 211.623 19.5331 206.301 26.066L127.753 122.483Z"
 					fill="#DFE166"
 					fill-opacity="0.8"
 				/>
 			</svg>
 		</button>
 	</div>
-	<div class="pt-8">
+	<div class="relative pt-8">
+		<div class="absolute left-1/2 -translate-x-1/2 translate-y-1/2 z-20">
+			<Help>
+				<p>Swipe left to save</p>
+				<p>Swipe right to skip</p>
+			</Help>
+		</div>
 		<div class="grid justify-center items-center p-12 aspect-square" bind:this={loddingAnimation}>
 			<Loading />
 		</div>
@@ -199,32 +218,30 @@
 			</button>
 		</div>
 	</div>
-	<div class="hidden sm:flex items-center justify-center">
-		<button on:click={save}>
-			<svg class="save-icon" viewBox="0 0 240 244" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path
-					d="M17 139V184.5V230H119H221V184.5V139"
-					stroke="#E4687C"
-					stroke-opacity="0.8"
-					stroke-width="16"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				/>
+	<div class="relative hidden sm:flex items-center justify-center">
+		<div class="absolute top-1/4">
+			<Help>
+				<p>Click here to skip</p>
+			</Help>
+		</div>
+		<button on:click={skip}>
+			<svg class="skip-icon" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<rect x="196" y="10" width="18" height="220" rx="9" fill="#E4687C" fill-opacity="0.8" />
 				<path
 					class="tri-3"
-					d="M127.753 174.483C123.751 179.395 116.249 179.395 112.247 174.483L33.6992 78.066C28.377 71.5331 33.0257 61.75 41.4521 61.75L198.548 61.75C206.974 61.75 211.623 71.5331 206.301 78.066L127.753 174.483Z"
+					d="M192.483 112.247C197.395 116.249 197.395 123.751 192.483 127.753L96.066 206.301C89.5331 211.623 79.75 206.974 79.75 198.548L79.75 41.4521C79.75 33.0257 89.5331 28.377 96.066 33.6992L192.483 112.247Z"
 					fill="#E4687C"
 					fill-opacity="0.8"
 				/>
 				<path
 					class="tri-2"
-					d="M127.753 122.483C123.751 127.395 116.249 127.395 112.247 122.483L33.6992 26.066C28.377 19.5331 33.0257 9.75 41.4521 9.75L198.548 9.75C206.974 9.75 211.623 19.5331 206.301 26.066L127.753 122.483Z"
+					d="M140.483 112.247C145.395 116.249 145.395 123.751 140.483 127.753L44.066 206.301C37.5331 211.623 27.75 206.974 27.75 198.548L27.75 41.4521C27.75 33.0257 37.5331 28.377 44.066 33.6992L140.483 112.247Z"
 					fill="#EC96A4"
 					fill-opacity="0.8"
 				/>
 				<path
 					class="tri-1"
-					d="M127.753 122.483C123.751 127.395 116.249 127.395 112.247 122.483L33.6992 26.066C28.377 19.5331 33.0257 9.75 41.4521 9.75L198.548 9.75C206.974 9.75 211.623 19.5331 206.301 26.066L127.753 122.483Z"
+					d="M140.483 112.247C145.395 116.249 145.395 123.751 140.483 127.753L44.066 206.301C37.5331 211.623 27.75 206.974 27.75 198.548L27.75 41.4521C27.75 33.0257 37.5331 28.377 44.066 33.6992L140.483 112.247Z"
 					fill="#DFE166"
 					fill-opacity="0.8"
 				/>

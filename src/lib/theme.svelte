@@ -1,166 +1,49 @@
+<script lang="ts" context='module'>
+	import { writable } from 'svelte/store';
+
+	const theme = writable('');
+
+	function cycleTheme() {
+		theme.update((currentTheme) => {
+			if (currentTheme === 'light') return 'dark';
+			else if (currentTheme === 'dark') return 'system';
+			else if (currentTheme === 'system') return 'light';
+			else return 'system';
+		});
+	};
+</script>
+
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	let theme: string;
-
-	function setTheme(themeToSet: string): void {
-		if (themeToSet === 'light') {
-			document.documentElement.classList.remove('dark');
-		} else if (themeToSet === 'dark') {
-			document.documentElement.classList.add('dark');
-		} else if (themeToSet === 'system') {
-			window?.matchMedia('(prefers-color-scheme: dark)').matches
-				? document.documentElement.classList.add('dark')
-				: document.documentElement.classList.remove('dark');
-		} else {
-			setTheme('system');
-			return;
-		}
-		theme = themeToSet;
-		localStorage.setItem('theme', theme);
-		document.documentElement.dispatchEvent(new CustomEvent('theme-change'));
-	}
-	function cycleTheme() {
-		if (theme === 'light') setTheme('dark');
-		else if (theme === 'dark') setTheme('system');
-		else if (theme === 'system') setTheme('light');
-		else setTheme('system');
-	}
-
 	onMount(() => {
-		setTheme(
-			localStorage.getItem('theme') ?? 'system'
-		);
-		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-			if (theme === 'system') setTheme('system');
+		theme.set(localStorage.getItem('theme') ?? 'system');
+		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => theme.update((currentTheme) => currentTheme));
+
+		theme.subscribe((val) => {
+			if (val === 'light') {
+				document.documentElement.classList.remove('dark');
+			} else if (val === 'dark') {
+				document.documentElement.classList.add('dark');
+			} else if (val === 'system') {
+				window?.matchMedia('(prefers-color-scheme: dark)').matches
+					? document.documentElement.classList.add('dark')
+					: document.documentElement.classList.remove('dark');
+			} else {
+				theme.set('system');
+				return;
+			}
+			localStorage.setItem('theme', val);
+			document.documentElement.dispatchEvent(new CustomEvent('theme-change'));
 		});
 	});
 </script>
 
-<svelte:head>
-	<script>
-		const theme =
-			localStorage.getItem('theme') ??
-			(window?.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-		if (theme === 'light') document.documentElement.classList.remove('dark');
-		else if (theme === 'dark') document.documentElement.classList.add('dark');
-		else {
-			window?.matchMedia('(prefers-color-scheme: dark)').matches
-				? document.documentElement.classList.add('dark')
-				: document.documentElement.classList.remove('dark');
-		}
-	</script>
-</svelte:head>
-
-<div class="drop-down hidden lg:block">
-	<button class="bnt">Theme</button>
-	<div class="mt-2 absolute z-10 rounded-lg">
-		<div class="divide-y divide-neutral-100 p-2">
-			<button on:click={() => setTheme('light')}>
-				<p>Light</p>
-				<svg
-					class="change-color"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<circle cx="12.042" cy="11.9578" r="5.29849" />
-					<path
-						d="M11.5603 0.350483V2.45553C11.5603 2.64911 11.7172 2.80603 11.9108 2.80603C12.1044 2.80603 12.2613 2.64911 12.2613 2.45553V0.350483C12.2613 0.156908 12.1044 -1.64509e-05 11.9108 -1.64509e-05C11.7172 -1.64509e-05 11.5603 0.156908 11.5603 0.350483Z"
-					/>
-					<path
-						d="M11.5603 21.5445V23.6495C11.5603 23.8431 11.7172 24 11.9108 24C12.1044 24 12.2613 23.8431 12.2613 23.6495V21.5445C12.2613 21.3509 12.1044 21.194 11.9108 21.194C11.7172 21.194 11.5603 21.3509 11.5603 21.5445Z"
-					/>
-					<path
-						d="M23.6495 11.4762H21.5445C21.3509 11.4762 21.194 11.6331 21.194 11.8267C21.194 12.0203 21.3509 12.1772 21.5445 12.1772H23.6495C23.8431 12.1772 24 12.0203 24 11.8267C24 11.6331 23.8431 11.4762 23.6495 11.4762Z"
-					/>
-					<path
-						d="M22.7282 7.18166L20.7839 7.98699C20.605 8.06112 20.52 8.26629 20.5941 8.44526C20.6683 8.62422 20.8734 8.7092 21.0524 8.63507L22.9966 7.82974C23.1756 7.75561 23.2606 7.55044 23.1864 7.37148C23.1123 7.19252 22.9071 7.10753 22.7282 7.18166Z"
-					/>
-					<path
-						d="M16.6057 1.17508L15.8004 3.11932C15.7262 3.29828 15.8112 3.50345 15.9902 3.57758C16.1691 3.65171 16.3743 3.56673 16.4484 3.38776L17.2538 1.44352C17.3279 1.26456 17.2429 1.05939 17.0639 0.985261C16.885 0.911132 16.6798 0.996116 16.6057 1.17508Z"
-					/>
-					<path
-						d="M17.2539 22.41L16.4486 20.4658C16.3744 20.2868 16.1693 20.2018 15.9903 20.2759C15.8113 20.3501 15.7263 20.5552 15.8005 20.7342L16.6058 22.6785C16.6799 22.8574 16.8851 22.9424 17.0641 22.8683C17.243 22.7941 17.328 22.589 17.2539 22.41Z"
-					/>
-					<path
-						d="M8.36857 3.11947L7.56324 1.17524C7.48911 0.996274 7.28394 0.911289 7.10498 0.985417C6.92601 1.05955 6.84103 1.26472 6.91516 1.44368L7.72049 3.38792C7.79462 3.56688 7.99979 3.65186 8.17876 3.57773C8.35772 3.50361 8.4427 3.29844 8.36857 3.11947Z"
-					/>
-					<path
-						d="M7.8375 20.5827L7.03217 22.5269C6.95804 22.7059 7.04303 22.911 7.22199 22.9852C7.40095 23.0593 7.60612 22.9743 7.68025 22.7954L8.48558 20.8511C8.55971 20.6722 8.47473 20.467 8.29576 20.3929C8.1168 20.3187 7.91163 20.4037 7.8375 20.5827Z"
-					/>
-					<path
-						d="M1.25925 7.82973L3.20349 8.63507C3.38245 8.70919 3.58762 8.62421 3.66175 8.44525C3.73588 8.26628 3.65089 8.06111 3.47193 7.98699L1.52769 7.18165C1.34873 7.10753 1.14356 7.19251 1.06943 7.37147C0.9953 7.55043 1.08028 7.75561 1.25925 7.82973Z"
-					/>
-					<path
-						d="M1.52774 16.8191L3.47198 16.0137C3.65094 15.9396 3.73593 15.7344 3.6618 15.5555C3.58767 15.3765 3.3825 15.2915 3.20354 15.3657L1.2593 16.171C1.08034 16.2451 0.995351 16.4503 1.06948 16.6293C1.14361 16.8082 1.34878 16.8932 1.52774 16.8191Z"
-					/>
-					<path
-						d="M22.9964 16.171L21.0522 15.3657C20.8732 15.2915 20.6681 15.3765 20.5939 15.5555C20.5198 15.7344 20.6048 15.9396 20.7837 16.0137L22.728 16.8191C22.9069 16.8932 23.1121 16.8082 23.1862 16.6293C23.2604 16.4503 23.1754 16.2451 22.9964 16.171Z"
-					/>
-					<path
-						d="M2.45555 11.4762H0.350499C0.156924 11.4762 0 11.6331 0 11.8267C0 12.0203 0.156924 12.1772 0.3505 12.1772H2.45555C2.64912 12.1772 2.80605 12.0203 2.80605 11.8267C2.80605 11.6331 2.64912 11.4762 2.45555 11.4762Z"
-					/>
-					<path
-						d="M5.00963 18.5192L3.52157 20.0072C3.3846 20.1442 3.3846 20.3663 3.52157 20.5033C3.65854 20.6402 3.88062 20.6402 4.01759 20.5033L5.50565 19.0152C5.64262 18.8782 5.64262 18.6562 5.50565 18.5192C5.36868 18.3822 5.1466 18.3822 5.00963 18.5192Z"
-					/>
-					<path
-						d="M20.0913 3.43752L18.6032 4.92557C18.4663 5.06255 18.4663 5.28462 18.6032 5.42159C18.7402 5.55857 18.9623 5.55857 19.0993 5.42159L20.5873 3.93354C20.7243 3.79656 20.7243 3.57449 20.5873 3.43752C20.4503 3.30055 20.2283 3.30055 20.0913 3.43752Z"
-					/>
-					<path
-						d="M18.6033 19.015L20.0914 20.5031C20.2284 20.6401 20.4505 20.6401 20.5874 20.5031C20.7244 20.3661 20.7244 20.144 20.5874 20.0071L19.0994 18.519C18.9624 18.382 18.7403 18.382 18.6033 18.519C18.4664 18.656 18.4664 18.8781 18.6033 19.015Z"
-					/>
-					<path
-						d="M3.52163 3.93349L5.00968 5.42155C5.14665 5.55852 5.36873 5.55852 5.5057 5.42155C5.64267 5.28457 5.64267 5.0625 5.5057 4.92553L4.01765 3.43747C3.88067 3.30049 3.6586 3.30049 3.52163 3.43747C3.38466 3.57444 3.38466 3.79651 3.52163 3.93349Z"
-					/>
-				</svg>
-			</button>
-			<button on:click={() => setTheme('dark')}>
-				<p>Dark</p>
-				<svg
-					class="change-color"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path
-						d="M1 12C1 18.0751 5.95826 23 12.0746 23C17.5703 23 22.1311 19.0238 23 13.8097C23 13.8097 21.2103 16.9845 17.5972 17.7987C11.6132 19.1471 8.39537 14.4277 8.39537 14.4277C8.39537 14.4277 5.06463 9.93307 8.22601 4.87661C10.71 1.39328 13.9278 1.15333 13.9278 1.15333C13.3252 1.0525 12.7061 1 12.0746 1C5.95826 1 1 5.92487 1 12Z"
-					/>
-				</svg>
-			</button>
-			<button on:click={() => setTheme('system')}>
-				<p>System</p>
-				<svg
-					class="change-color"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path
-						d="M5.13684 4H18.6236C18.8997 4 19.1236 4.22386 19.1236 4.5V12.5C19.1236 12.7761 18.8997 13 18.6236 13H5.13684C4.8607 13 4.63684 12.7761 4.63684 12.5V4.5C4.63684 4.22386 4.8607 4 5.13684 4Z"
-						stroke-width="2"
-						stroke-linejoin="round"
-					/>
-					<path
-						d="M3.79045 15.5354L0.903335 18.1723C0.229271 18.788 0.664824 19.9107 1.57772 19.9107L22.1828 19.9107C23.0957 19.9107 23.5313 18.788 22.8572 18.1723L19.9701 15.5354C19.7858 15.3671 19.5453 15.2738 19.2957 15.2738H4.46484C4.21527 15.2738 3.97473 15.3671 3.79045 15.5354Z"
-					/>
-				</svg>
-			</button>
-		</div>
-	</div>
-</div>
-
-<div class="lg:hidden">
-	<button on:click={cycleTheme}>
-		{#if theme === 'light'}
+<div class="rounded-full bg-primary-300 hover:bg-primary-200 w-fit">
+	<button class="flex items-center justify-center h-10 w-10" on:click={cycleTheme} title="Theme | {$theme}">
+		{#if $theme === 'light'}
 			<svg
-				class="constant-color"
+				class="change-color"
 				width="24"
 				height="24"
 				viewBox="0 0 24 24"
@@ -217,9 +100,9 @@
 					d="M3.52163 3.93349L5.00968 5.42155C5.14665 5.55852 5.36873 5.55852 5.5057 5.42155C5.64267 5.28457 5.64267 5.0625 5.5057 4.92553L4.01765 3.43747C3.88067 3.30049 3.6586 3.30049 3.52163 3.43747C3.38466 3.57444 3.38466 3.79651 3.52163 3.93349Z"
 				/>
 			</svg>
-		{:else if theme === 'dark'}
+		{:else if $theme === 'dark'}
 			<svg
-				class="constant-color"
+				class="change-color"
 				width="24"
 				height="24"
 				viewBox="0 0 24 24"
@@ -232,7 +115,7 @@
 			</svg>
 		{:else}
 			<svg
-				class="constant-color"
+				class="change-color"
 				width="24"
 				height="24"
 				viewBox="0 0 24 24"
@@ -253,32 +136,8 @@
 </div>
 
 <style lang="postcss">
-	.constant-color * {
-		@apply fill-primary-300 stroke-primary-300;
-	}
-
-	.change-color * {
-		@apply fill-neutral-100 stroke-neutral-100;
-	}
-	button:hover .change-color * {
-		@apply fill-neutral-600 stroke-neutral-600;
-	}
-
-	.drop-down > :last-child {
-		@apply max-h-0 overflow-hidden;
-		@apply transition-all duration-500;
-		@apply bg-primary-300 text-neutral-100;
-	}
-	.drop-down > :last-child button:hover {
-		@apply bg-secondary-300 text-neutral-600;
-	}
-	.drop-down > :first-child:focus ~ :last-child {
-		@apply max-h-screen;
-	}
-	.drop-down button {
-		@apply flex justify-between space-x-2;
-		@apply w-full px-3 py-2;
-		@apply select-none hover:cursor-pointer;
-		@apply transition-colors ease-out;
+	svg.change-color * {
+		@apply fill-neutral-100 dark:fill-neutral-700 ;
+		@apply stroke-neutral-100 dark:stroke-neutral-700;
 	}
 </style>

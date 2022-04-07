@@ -1,26 +1,26 @@
 <script lang="ts">
-	import Theme from '../lib/theme.svelte';
 	import Header from '../lib/header.svelte';
 	import Footer from '../lib/footer.svelte';
+	import SaveList from '../lib/save-list.svelte';
 	import Sidebar from '../lib/sidebar.svelte';
+	import Help from '../lib/help.svelte';
+	import Theme from '../lib/theme.svelte';
 
 	import { browser } from '$app/env';
-	
 	import '../styles/layout.css';
 	import '../styles/theme.css';
 
 	export const router = browser;
-	export const prerender = true;
 </script>
 
 <svelte:head>
-	<title>About • Creator</title>
+	<title>Liked Dishes • Saranitou</title>
 </svelte:head>
 
 <Header>
 	<div slot="left">
 		<Sidebar/>
-	</div>	
+	</div>
 	<a class="w-fit block lg:flex space-x-1" href="/" slot="center">
 		<svg
 			width="32"
@@ -50,11 +50,13 @@
 	</a>
 	<div class="flex space-x-2" slot="right">
 		<Theme />
+		<Help />
 	</div>
 </Header>
 
 <main>
-	<h1 class="text-center">About</h1>
+	<h1 class="text-center">Saved list</h1>
+	<SaveList />
 </main>
 
 <Footer />
