@@ -51,6 +51,7 @@
 	}
 
 	function createSlideable(target: HTMLElement, slideThreshold = 0.6, slideSpeed = 1.5) {
+		const body = document.querySelector('body');
 		let shouldMove = false;
 		let x = 0;
 		let startX = 0;
@@ -61,12 +62,14 @@
 		target.addEventListener('mousedown', () => {
 			target.classList.remove('transition-transform', 'indicate-moveable');
 			target.classList.add('z-40');
+			body.classList.add('h-full', 'overflow-y-hidden');
 			shouldMove = true;
 			target.style.cursor = 'grabbing';
 		});
 		target.addEventListener('touchstart', (e) => {
 			target.classList.remove('transition-transform', 'indicate-moveable');
 			target.classList.add('z-40');
+			body.classList.add('h-full', 'overflow-y-hidden');
 			startX = e.touches.item(0).pageX;
 			shouldMove = true;
 		});
@@ -109,6 +112,7 @@
 			x = 0;
 			target.classList.add('transition-transform');
 			target.classList.remove('z-40');
+			body.classList.remove('h-full', 'overflow-y-hidden');
 			target.style.transform = 'translate(0px) rotate(0deg)';
 			shouldMove = false;
 			target.style.cursor = 'grab';
@@ -117,6 +121,7 @@
 			x = 0;
 			target.classList.add('transition-transform');
 			target.classList.remove('z-40');
+			body.classList.remove('h-full', 'overflow-y-hidden');
 			target.style.transform = 'translate(0px) rotate(0deg)';
 			shouldMove = false;
 		});
