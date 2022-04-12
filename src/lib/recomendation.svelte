@@ -8,9 +8,9 @@
 	let loddingAnimation: HTMLDivElement;
 	let resultImage: HTMLImageElement;
 	let resultContainer: HTMLDivElement;
-	let resultContents: HTMLDivElement;
 
 	function animate() {}
+
 	function refresh() {
 		const req = new XMLHttpRequest();
 		const options = JSON.parse(localStorage.getItem('options')) ?? {};
@@ -44,39 +44,43 @@
 		}
 		refresh();
 	}
+
 	function skip() {
 		// window.alert('disliked!');
 		refresh();
 	}
 
-	function createSlideable(target: HTMLElement) {
+	function createSlideable(target: HTMLElement, slideThreshold = 0.6, slideSpeed = 1.5) {
 		let shouldMove = false;
 		let x = 0;
 		let startX = 0;
 
 		target.style.cursor = 'grab';
+		target.classList.add('relative');
 
 		target.addEventListener('mousedown', () => {
 			target.classList.remove('transition-transform', 'indicate-moveable');
+			target.classList.add('z-40');
 			shouldMove = true;
 			target.style.cursor = 'grabbing';
 		});
 		target.addEventListener('touchstart', (e) => {
 			target.classList.remove('transition-transform', 'indicate-moveable');
+			target.classList.add('z-40');
 			startX = e.touches.item(0).pageX;
 			shouldMove = true;
 		});
 		window.addEventListener('mousemove', (e) => {
 			if (shouldMove) {
-				x += e.movementX;
+				x += e.movementX * slideSpeed;
 				target.style.transform = `translate(${x}px) rotate(${x * 0.04}deg)`;
 			}
-			if (x > target.offsetWidth * 0.65) {
+			if (x > target.offsetWidth * slideThreshold) {
 				skip();
 				target.style.transform = 'translate(0px) rotate(0deg)';
 				x = 0;
 				shouldMove = false;
-			} else if (x < target.offsetWidth * -0.65) {
+			} else if (x < target.offsetWidth * -1 * slideThreshold) {
 				save();
 				target.style.transform = 'translate(0px) rotate(0deg)';
 				x = 0;
@@ -85,16 +89,16 @@
 		});
 		window.addEventListener('touchmove', (e) => {
 			if (shouldMove) {
-				x = e.targetTouches.item(0).clientX - startX;
+				x = (e.targetTouches.item(0).clientX - startX) * slideSpeed;
 				target.style.transform = `translate(${x}px) rotate(${x * 0.04}deg)`;
 			}
-			if (x > target.offsetWidth * 0.65) {
+			if (x > target.offsetWidth * slideThreshold) {
 				skip();
 
 				target.style.transform = 'translate(0px) rotate(0deg)';
 				x = 0;
 				shouldMove = false;
-			} else if (x < target.offsetWidth * -0.65) {
+			} else if (x < target.offsetWidth * -1 * slideThreshold) {
 				save();
 				target.style.transform = 'translate(0px) rotate(0deg)';
 				x = 0;
@@ -104,6 +108,7 @@
 		window.addEventListener('mouseup', () => {
 			x = 0;
 			target.classList.add('transition-transform');
+			target.classList.remove('z-40');
 			target.style.transform = 'translate(0px) rotate(0deg)';
 			shouldMove = false;
 			target.style.cursor = 'grab';
@@ -111,6 +116,7 @@
 		window.addEventListener('touchend', () => {
 			x = 0;
 			target.classList.add('transition-transform');
+			target.classList.remove('z-40');
 			target.style.transform = 'translate(0px) rotate(0deg)';
 			shouldMove = false;
 		});
@@ -122,17 +128,18 @@
 			resultContainer.classList.remove('hidden');
 			loddingAnimation.classList.add('hidden');
 		});
-		createSlideable(resultContents);
+		resultImage.addEventListener('error', () => {
+			resultImage.src = '/default.svg';
+		});
+		createSlideable(resultImage);
 	});
 </script>
 
 <div class="rec-container">
-	<div class="relative hidden sm:flex items-center justify-center">
-		<div class="absolute top-1/4">
-			<Help>
-				<p>Click here to save</p>
-			</Help>
-		</div>
+	<div class="side-control relative hidden sm:flex items-center justify-center">
+		<Help position='top-1/4'>
+			<p>Click here to save</p>
+		</Help>
 		<button on:click={save}>
 			<svg class="save-icon" viewBox="0 0 240 244" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path
@@ -165,30 +172,25 @@
 		</button>
 	</div>
 	<div class="relative pt-8">
-		<div class="absolute left-1/2 -translate-x-1/2 translate-y-1/2 z-20">
-			<Help>
-				<p>Swipe left to save</p>
-				<p>Swipe right to skip</p>
-			</Help>
-		</div>
+		<Help position='left-1/2 -translate-x-1/2 translate-y-1/2'>
+			<p>Swipe left to save</p>
+			<p>Swipe right to skip</p>
+		</Help>
 		<div class="grid justify-center items-center p-12 aspect-square" bind:this={loddingAnimation}>
 			<Loading />
 		</div>
 		<div class="hidden" bind:this={resultContainer}>
-			<div class="relative text-center mb-4 indicate-moveable" bind:this={resultContents}>
-				<h1 class="title text-center pb-4 select-none">{name}</h1>
+			<div class="relative text-center mb-4">
+				<h1 class="title text-center pb-4">{name}</h1>
 				<img
-					class="w-full object-cover"
+					class="w-full aspect-square object-cover indicate-moveable"
 					src=""
 					alt={name}
 					id="food-img"
 					draggable="false"
 					bind:this={resultImage}
 				/>
-				<p
-					class="absolute bottom-6 text-center left-1/2 -translate-x-1/2 text-neutral-700 dark:text-white bg-neutral-100 dark:bg-neutral-600 select-none"
-					id="description"
-				>
+				<p class="mt-4 max-w-text text-neutral-700 dark:text-white">
 					{description}
 				</p>
 			</div>
@@ -218,12 +220,10 @@
 			</button>
 		</div>
 	</div>
-	<div class="relative hidden sm:flex items-center justify-center">
-		<div class="absolute top-1/4">
-			<Help>
-				<p>Click here to skip</p>
-			</Help>
-		</div>
+	<div class="side-control relative z-0 hidden sm:flex items-center justify-center">
+		<Help position="top-1/4">
+			<p>Click here to skip</p>
+		</Help>
 		<button on:click={skip}>
 			<svg class="skip-icon" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<rect x="196" y="10" width="18" height="220" rx="9" fill="#E4687C" fill-opacity="0.8" />
@@ -268,21 +268,16 @@
 					1fr
 				);
 		}
-		.rec-container > :nth-child(1) svg,
-		.rec-container > :nth-child(3) svg {
+		.rec-container .side-control svg {
 			width: 144px;
 			height: 120px;
 		}
 	}
 	@media screen(lg) {
 		.rec-container {
-			grid-template-columns: minmax(calc(240px + 2rem), 1fr) minmax(200px, 36rem) minmax(
-					calc(240px + 2rem),
-					1fr
-				);
+			grid-template-columns: minmax(calc(240px + 2rem), 1fr) minmax(200px, 36rem) minmax(calc(240px + 2rem), 1fr);
 		}
-		.rec-container > :nth-child(1) svg,
-		.rec-container > :nth-child(3) svg {
+		.rec-container .side-control svg {
 			width: 240px;
 			height: 200px;
 		}

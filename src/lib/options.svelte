@@ -31,7 +31,7 @@
 		});
 	}
 
-	onMount(() => loadOptions());
+	onMount(loadOptions);
 </script>
 
 <div class="mx-auto hidden lg:block">
