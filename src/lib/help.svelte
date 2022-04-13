@@ -1,61 +1,45 @@
 <script lang="ts" context="module">
+	import { writable } from 'svelte/store';
 
-	let elements = new Set<HTMLDivElement>();
 	let shouldHelpPersist = false;
+	let isMouseOnHelp = false;
+	const shouldShowHelp = writable(false);
 
 	function showHelp() {
-		elements.forEach((element) => {
-			element.classList.remove('hide-help');
-			element.classList.add('show-help')
-		});
+		isMouseOnHelp = true;
+		shouldShowHelp.set(true);
 	}
 	function hideHelp() {
-		if(!shouldHelpPersist) {
-			elements.forEach((element) => {
-				element.classList.add('hide-help');
-				element.classList.remove('show-help');
-			});
-		}
+		isMouseOnHelp = false;
+		if(!shouldHelpPersist) shouldShowHelp.set(false);
 	}
-	function toggleHelp() {
+	function togglePersistantHelp() {
 		shouldHelpPersist = !shouldHelpPersist;
 		if(shouldHelpPersist) {
-			elements.forEach((element) => {
-				element.classList.remove('hide-help');
-				element.classList.add('show-help');
-			});
+			shouldShowHelp.set(true);
 		} else {
-			elements.forEach((element) => {
-				element.classList.add('hide-help');
-				element.classList.remove('show-help');
-			});
+			if(!isMouseOnHelp) shouldShowHelp.set(false);
 		}
 	}
 </script>
 
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
+	import { cubicInOut } from 'svelte/easing';
 
 	export let position = '';
-
-	let advice: HTMLDivElement;
-
-	onMount(() => {
-		if(advice) {
-			elements.add(advice);
-			return () => elements.delete(advice);
-		}
-	});
 </script>
 
 {#if $$slots.default}
-	<div class="absolute {position} hide-help duration-300 transition-opacity" bind:this={advice}>
-		<div class="p-4 rounded-md bg-neutral-700 text-white">
-			<slot />
+	{#if $shouldShowHelp}
+		<div transition:fade={{duration: 300, easing: cubicInOut}} class="absolute {position} z-50">
+			<div class="p-4 rounded-md bg-neutral-700 text-white">
+				<slot />
+			</div>
 		</div>
-	</div>
+	{/if}
 {:else}
-	<div class="rounded-full p-2 hover:cursor-pointer bg-primary-300 hover:bg-primary-200 transition-colors duration-200" on:mouseover={showHelp} on:mouseleave="{hideHelp}" on:click={toggleHelp} on:focus>
+	<div class="rounded-full p-2 hover:cursor-pointer bg-primary-300 hover:bg-primary-200 transition-colors duration-200" on:mouseover={showHelp} on:mouseleave="{hideHelp}" on:click={togglePersistantHelp} on:focus>
 		<div class="w-6 h-6 change-color">
 			<p class="text-center">?</p>
 		</div>
@@ -63,13 +47,6 @@
 {/if}
 
 <style lang="postcss">
-	.hide-help {
-		@apply -z-10 opacity-0;
-	}
-	.show-help {
-		@apply z-50 opacity-100;
-	}
-
 	.change-color * {
 		@apply text-neutral-100 dark:text-neutral-700;
 		@apply fill-neutral-100 dark:fill-neutral-700 ;
