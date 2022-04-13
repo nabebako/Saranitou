@@ -2,7 +2,9 @@
 	import { onMount } from 'svelte';
 	import Loading from './animation/loading.svelte';
 	import Help from './help.svelte';
+	import { Slide } from './slide';
 
+	let id = '';
 	let name = '';
 	let description = '';
 	let loddingAnimation: HTMLDivElement;
@@ -17,6 +19,7 @@
 
 		req.onload = () => {
 			const res = JSON.parse(req.response);
+			id = res.id;
 			name = res.name;
 			description = res.description;
 			resultImage.src = res.image || '/default.svg';
@@ -38,9 +41,9 @@
 	}
 
 	function save() {
-		const likedList: string[] = JSON.parse(localStorage.getItem('like-list')) ?? [];
-		if (likedList.indexOf(name) === -1) {
-			localStorage.setItem('like-list', JSON.stringify([...likedList, name]));
+		const dishIds: string[] = JSON.parse(localStorage.getItem('dish-ids')) ?? [];
+		if (dishIds.indexOf(id) === -1) {
+			localStorage.setItem('dish-ids', JSON.stringify([...dishIds, id]));
 		}
 		refresh();
 	}
@@ -48,83 +51,6 @@
 	function skip() {
 		// window.alert('disliked!');
 		refresh();
-	}
-
-	function createSlideable(target: HTMLElement, slideThreshold = 0.6, slideSpeed = 1.5) {
-		const body = document.querySelector('body');
-		let shouldMove = false;
-		let x = 0;
-		let startX = 0;
-
-		target.style.cursor = 'grab';
-		target.classList.add('relative');
-
-		target.addEventListener('mousedown', () => {
-			target.classList.remove('transition-transform', 'indicate-moveable');
-			target.classList.add('z-40');
-			body.classList.add('h-full', 'overflow-y-hidden');
-			shouldMove = true;
-			target.style.cursor = 'grabbing';
-		});
-		target.addEventListener('touchstart', (e) => {
-			target.classList.remove('transition-transform', 'indicate-moveable');
-			target.classList.add('z-40');
-			body.classList.add('h-full', 'overflow-y-hidden');
-			startX = e.touches.item(0).pageX;
-			shouldMove = true;
-		});
-		window.addEventListener('mousemove', (e) => {
-			if (shouldMove) {
-				x += e.movementX * slideSpeed;
-				target.style.transform = `translate(${x}px) rotate(${x * 0.04}deg)`;
-			}
-			if (x > target.offsetWidth * slideThreshold) {
-				skip();
-				target.style.transform = 'translate(0px) rotate(0deg)';
-				x = 0;
-				shouldMove = false;
-			} else if (x < target.offsetWidth * -1 * slideThreshold) {
-				save();
-				target.style.transform = 'translate(0px) rotate(0deg)';
-				x = 0;
-				shouldMove = false;
-			}
-		});
-		window.addEventListener('touchmove', (e) => {
-			if (shouldMove) {
-				x = (e.targetTouches.item(0).clientX - startX) * slideSpeed;
-				target.style.transform = `translate(${x}px) rotate(${x * 0.04}deg)`;
-			}
-			if (x > target.offsetWidth * slideThreshold) {
-				skip();
-
-				target.style.transform = 'translate(0px) rotate(0deg)';
-				x = 0;
-				shouldMove = false;
-			} else if (x < target.offsetWidth * -1 * slideThreshold) {
-				save();
-				target.style.transform = 'translate(0px) rotate(0deg)';
-				x = 0;
-				shouldMove = false;
-			}
-		});
-		window.addEventListener('mouseup', () => {
-			x = 0;
-			target.classList.add('transition-transform');
-			target.classList.remove('z-40');
-			body.classList.remove('h-full', 'overflow-y-hidden');
-			target.style.transform = 'translate(0px) rotate(0deg)';
-			shouldMove = false;
-			target.style.cursor = 'grab';
-		});
-		window.addEventListener('touchend', () => {
-			x = 0;
-			target.classList.add('transition-transform');
-			target.classList.remove('z-40');
-			body.classList.remove('h-full', 'overflow-y-hidden');
-			target.style.transform = 'translate(0px) rotate(0deg)';
-			shouldMove = false;
-		});
 	}
 
 	onMount(() => {
@@ -136,45 +62,49 @@
 		resultImage.addEventListener('error', () => {
 			resultImage.src = '/default.svg';
 		});
-		createSlideable(resultImage);
+
+		new Slide(resultImage, 0.6, 1.2).setOnLeft(save).setOnRight(skip);
 	});
 </script>
 
 <div class="rec-container">
-	<div class="side-control relative hidden sm:flex items-center justify-center">
-		<Help position='top-1/4'>
-			<p>Click here to save</p>
-		</Help>
-		<button on:click={save}>
-			<svg class="save-icon" viewBox="0 0 240 244" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path
-					d="M17 139V184.5V230H119H221V184.5V139"
-					stroke="#E4687C"
-					stroke-opacity="0.8"
-					stroke-width="16"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				/>
-				<path
-					class="tri-3"
-					d="M127.753 174.483C123.751 179.395 116.249 179.395 112.247 174.483L33.6992 78.066C28.377 71.5331 33.0257 61.75 41.4521 61.75L198.548 61.75C206.974 61.75 211.623 71.5331 206.301 78.066L127.753 174.483Z"
-					fill="#E4687C"
-					fill-opacity="0.8"
-				/>
-				<path
-					class="tri-2"
-					d="M127.753 122.483C123.751 127.395 116.249 127.395 112.247 122.483L33.6992 26.066C28.377 19.5331 33.0257 9.75 41.4521 9.75L198.548 9.75C206.974 9.75 211.623 19.5331 206.301 26.066L127.753 122.483Z"
-					fill="#EC96A4"
-					fill-opacity="0.8"
-				/>
-				<path
-					class="tri-1"
-					d="M127.753 122.483C123.751 127.395 116.249 127.395 112.247 122.483L33.6992 26.066C28.377 19.5331 33.0257 9.75 41.4521 9.75L198.548 9.75C206.974 9.75 211.623 19.5331 206.301 26.066L127.753 122.483Z"
-					fill="#DFE166"
-					fill-opacity="0.8"
-				/>
-			</svg>
-		</button>
+	<div class="flex flex-center">
+		<div class="side-control relative hidden md:flex flex-center">
+			<Help position='-top-1/4'>
+				<p>Click here to save</p>
+			</Help>
+			<button class="py-16 px-4 lg:px-12 glass rounded-xl" on:click={save}>
+				<svg class="save-icon" viewBox="0 0 240 244" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="M17 139V184.5V230H119H221V184.5V139"
+						stroke="#E4687C"
+						stroke-opacity="0.8"
+						stroke-width="16"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+					<path
+						class="tri-3"
+						d="M127.753 174.483C123.751 179.395 116.249 179.395 112.247 174.483L33.6992 78.066C28.377 71.5331 33.0257 61.75 41.4521 61.75L198.548 61.75C206.974 61.75 211.623 71.5331 206.301 78.066L127.753 174.483Z"
+						fill="#E4687C"
+						fill-opacity="0.8"
+					/>
+					<path
+						class="tri-2"
+						d="M127.753 122.483C123.751 127.395 116.249 127.395 112.247 122.483L33.6992 26.066C28.377 19.5331 33.0257 9.75 41.4521 9.75L198.548 9.75C206.974 9.75 211.623 19.5331 206.301 26.066L127.753 122.483Z"
+						fill="#EC96A4"
+						fill-opacity="0.8"
+					/>
+					<path
+						class="tri-1"
+						d="M127.753 122.483C123.751 127.395 116.249 127.395 112.247 122.483L33.6992 26.066C28.377 19.5331 33.0257 9.75 41.4521 9.75L198.548 9.75C206.974 9.75 211.623 19.5331 206.301 26.066L127.753 122.483Z"
+						fill="#DFE166"
+						fill-opacity="0.8"
+					/>
+				</svg>
+			</button>
+		</div>
+		<span class="block md:hidden bg-black w-full h-full"></span>
 	</div>
 	<div class="relative pt-8">
 		<Help position='left-1/2 -translate-x-1/2 translate-y-1/2'>
@@ -225,66 +155,70 @@
 			</button>
 		</div>
 	</div>
-	<div class="side-control relative z-0 hidden sm:flex items-center justify-center">
-		<Help position="top-1/4">
-			<p>Click here to skip</p>
-		</Help>
-		<button on:click={skip}>
-			<svg class="skip-icon" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<rect x="196" y="10" width="18" height="220" rx="9" fill="#E4687C" fill-opacity="0.8" />
-				<path
-					class="tri-3"
-					d="M192.483 112.247C197.395 116.249 197.395 123.751 192.483 127.753L96.066 206.301C89.5331 211.623 79.75 206.974 79.75 198.548L79.75 41.4521C79.75 33.0257 89.5331 28.377 96.066 33.6992L192.483 112.247Z"
-					fill="#E4687C"
-					fill-opacity="0.8"
-				/>
-				<path
-					class="tri-2"
-					d="M140.483 112.247C145.395 116.249 145.395 123.751 140.483 127.753L44.066 206.301C37.5331 211.623 27.75 206.974 27.75 198.548L27.75 41.4521C27.75 33.0257 37.5331 28.377 44.066 33.6992L140.483 112.247Z"
-					fill="#EC96A4"
-					fill-opacity="0.8"
-				/>
-				<path
-					class="tri-1"
-					d="M140.483 112.247C145.395 116.249 145.395 123.751 140.483 127.753L44.066 206.301C37.5331 211.623 27.75 206.974 27.75 198.548L27.75 41.4521C27.75 33.0257 37.5331 28.377 44.066 33.6992L140.483 112.247Z"
-					fill="#DFE166"
-					fill-opacity="0.8"
-				/>
-			</svg>
-		</button>
+	<div class="flex flex-center">
+		<div class="side-control relative hidden md:flex flex-center">
+			<Help position="-top-1/4">
+				<p>Click here to skip</p>
+			</Help>
+			<button class="py-16 px-4 lg:px-12 glass rounded-xl" on:click={skip}>
+				<svg class="skip-icon" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<rect x="196" y="10" width="18" height="220" rx="9" fill="#E4687C" fill-opacity="0.8" />
+					<path
+						class="tri-3"
+						d="M192.483 112.247C197.395 116.249 197.395 123.751 192.483 127.753L96.066 206.301C89.5331 211.623 79.75 206.974 79.75 198.548L79.75 41.4521C79.75 33.0257 89.5331 28.377 96.066 33.6992L192.483 112.247Z"
+						fill="#E4687C"
+						fill-opacity="0.8"
+					/>
+					<path
+						class="tri-2"
+						d="M140.483 112.247C145.395 116.249 145.395 123.751 140.483 127.753L44.066 206.301C37.5331 211.623 27.75 206.974 27.75 198.548L27.75 41.4521C27.75 33.0257 37.5331 28.377 44.066 33.6992L140.483 112.247Z"
+						fill="#EC96A4"
+						fill-opacity="0.8"
+					/>
+					<path
+						class="tri-1"
+						d="M140.483 112.247C145.395 116.249 145.395 123.751 140.483 127.753L44.066 206.301C37.5331 211.623 27.75 206.974 27.75 198.548L27.75 41.4521C27.75 33.0257 37.5331 28.377 44.066 33.6992L140.483 112.247Z"
+						fill="#DFE166"
+						fill-opacity="0.8"
+					/>
+				</svg>
+			</button>
+		</div>
+		<span class="block md:hidden bg-black w-full h-full"></span>
 	</div>
 </div>
 
 <style lang="postcss">
+	.flex-center {
+		@apply items-center justify-center;
+	}
+
 	.title {
 		@apply text-2xl;
 		@apply text-primary-300;
 	}
 
 	.rec-container {
-		@apply grid max-w-xs mx-auto;
+		@apply grid;
 		justify-items: stretch;
+		grid-template-columns: 1fr 20rem 1fr;
 	}
-	@media screen(sm) {
+	@media screen(md) {
 		.rec-container {
-			@apply max-w-none;
-			grid-template-columns: minmax(calc(120px + 4rem), 1fr) minmax(200px, 24rem) minmax(
-					calc(120px + 4rem),
-					1fr
-				);
+			grid-template-columns: minmax(calc(140px + 4rem), 1fr) minmax(20rem, 26rem) minmax(calc(140px + 4rem), 1fr);
 		}
 		.rec-container .side-control svg {
-			width: 144px;
-			height: 120px;
+			width: 108px;
+			height: 90px;
 		}
 	}
 	@media screen(lg) {
 		.rec-container {
-			grid-template-columns: minmax(calc(240px + 2rem), 1fr) minmax(200px, 36rem) minmax(calc(240px + 2rem), 1fr);
+			grid-template-columns: minmax(calc(240px + 4rem), 1fr) minmax(26rem, 30rem) minmax(calc(240px + 4rem), 1fr);
 		}
 		.rec-container .side-control svg {
-			width: 240px;
-			height: 200px;
+			width: 144px;
+			height: 120px;
 		}
 	}
 
@@ -336,19 +270,19 @@
 	}
 	.skip-icon .tri-1 {
 		transform: translateX(-60%);
-		opacity: 0;
+		@apply opacity-0;
 	}
-	.skip-icon:hover .tri-1 {
+	button:hover > .skip-icon .tri-1 {
 		transform: translateX(0);
-		opacity: 1;
+		@apply opacity-100;
 	}
-	.skip-icon:hover .tri-2 {
+	button:hover > .skip-icon .tri-2 {
 		transform: translateX(22%);
 		@apply fill-primary-300;
 	}
-	.skip-icon:hover .tri-3 {
-		/* transform: translateX(60%); */
-		opacity: 0;
+	button:hover > .skip-icon .tri-3 {
+		transform: translateX(60%);
+		@apply opacity-0;
 	}
 
 	.save-icon {
@@ -361,17 +295,17 @@
 	}
 	.save-icon .tri-1 {
 		transform: translateY(-60%);
-		opacity: 0;
+		@apply opacity-0;
 	}
-	.save-icon:hover .tri-1 {
+	button:hover > .save-icon .tri-1 {
 		transform: translateY(0);
-		opacity: 1;
+		@apply opacity-100;
 	}
-	.save-icon:hover .tri-2 {
+	button:hover > .save-icon .tri-2 {
 		transform: translateY(20%);
 		@apply fill-primary-300;
 	}
-	.save-icon:hover .tri-3 {
-		opacity: 0;
+	button:hover > .save-icon .tri-3 {
+		@apply opacity-0;
 	}
 </style>

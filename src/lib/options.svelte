@@ -3,7 +3,6 @@
 
 	let optionForm: HTMLFormElement;
 	let displaySave: HTMLDivElement;
-	let isOptionOpen = false;
 
 	function saveOptions() {
 		const options = {};
@@ -11,7 +10,6 @@
 			options[key] = val;
 		});
 		localStorage.setItem('options', JSON.stringify(options));
-		isOptionOpen = false;
 
 		//  play save animation
 		displaySave.classList.remove('hidden');
@@ -34,33 +32,17 @@
 	onMount(loadOptions);
 </script>
 
-<div class="mx-auto hidden lg:block">
-	<button
-		class="bnt"
-		on:click={() => {
-			loadOptions();
-			isOptionOpen = !isOptionOpen;
-		}}
-	>
-		{#if !isOptionOpen}
-			<p>Options</p>
-		{:else}
-			<p>Cancel</p>
-		{/if}
-	</button>
-</div>
-
 <div class="center-using-absolute z-30 hidden w-24 h-12 bg-neutral-700" bind:this={displaySave}>
 	<p>Saved!</p>
 </div>
 
-<div class="options-container bg-neutral-100 dark:bg-neutral-600" is-open={isOptionOpen}>
+<div>
 	<form
 		id="option-form"
-		class="option-gird"
 		on:submit|preventDefault={saveOptions}
 		bind:this={optionForm}
 	>
+	<div class="option-gird">
 		<fieldset class="collapsible" name="meal">
 			<legend>
 				<button
@@ -125,20 +107,20 @@
 				</li>
 			</ul>
 		</fieldset>
-		<input class="bnt h-fit mx-auto" type="submit" name="submit" value="Save" />
+	</div>
+	<input class="bnt h-fit mx-auto" type="submit" name="submit" value="Save" />
 	</form>
 </div>
 
 <style lang="postcss">
 	.option-gird {
 		@apply grid gap-4;
-		grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
-		grid-template-rows: repeat(auto-fill, fit-content);
+		grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
 	}
 
-	.option-gird > :last-child {
+	/* .option-gird > :last-child {
 		grid-column: 1 / -1;
-	}
+	} */
 
 	.collapsible > :first-child {
 		@apply w-full;
@@ -236,16 +218,5 @@
 	}
 	.text-input input:focus ~ label {
 		@apply text-primary-300;
-	}
-
-	@media screen(lg) {
-		.options-container {
-			@apply w-1/2 p-4 !m-0;
-			@apply fixed left-1/2 -translate-x-1/2 bottom-1/2 translate-y-1/2 z-10;
-			@apply hidden rounded-xl;
-		}
-		.options-container[is-open='true'] {
-			@apply block;
-		}
 	}
 </style>

@@ -4,6 +4,7 @@
 	import Sidebar from "../lib/sidebar.svelte";
 	import Help from "../lib/help.svelte";
 	import Theme from "../lib/theme.svelte";
+	import Footer from '../lib/footer.svelte';
 
 	import '../styles/layout.css';
 	import '../styles/theme.css';
@@ -16,7 +17,9 @@
 <body>
 	<Header>
 		<div class="w-10 flex items-center justify-center" slot="left">
-			<Sidebar/>
+			<Sidebar>
+				<a class="bnt" slot="before" href="/">Recomendation</a>
+			</Sidebar>
 		</div>
 		<a class="w-fit block justify-self-center lg:flex space-x-1" href="./" slot="center">
 			<svg
@@ -51,6 +54,9 @@
 		</div>
 	</Header>
 	<main>
-		<Options/>
+		<div class="main-container">
+			<Options/>
+		</div>
 	</main>
+	<Footer></Footer>
 </body>

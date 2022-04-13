@@ -30,3 +30,8 @@ html {
 .center-using-absolute {
 	@apply absolute top-1/2 -translate-x-1/2 left-1/2 -translate-y-1/2;
 }
+
+.main-container {
+	max-width: 80rem;
+	@apply mx-auto px-8 my-12;
+}
