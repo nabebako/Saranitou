@@ -1,15 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import Slide from './slide.svelte'
 	import Loading from './animation/loading.svelte';
 	import Help from './help.svelte';
-	import { Slide } from './slide';
 
 	let id = '';
 	let name = '';
 	let description = '';
-	let loddingAnimation: HTMLDivElement;
-	let resultImage: HTMLImageElement;
-	let resultContainer: HTMLDivElement;
+	let src = '';
+	let shouldShowLoading = false;
 
 	function animate() {}
 
@@ -22,11 +21,11 @@
 			id = res.id;
 			name = res.name;
 			description = res.description;
-			resultImage.src = res.image || '/default.svg';
+			src = res.image || '/default.svg';
+			shouldShowLoading = false;
 		};
 
-		loddingAnimation.classList.remove('hidden');
-		resultContainer.classList.add('hidden');
+		shouldShowLoading = true;
 
 		animate();
 
@@ -53,18 +52,7 @@
 		refresh();
 	}
 
-	onMount(() => {
-		refresh();
-		resultImage.addEventListener('load', () => {
-			resultContainer.classList.remove('hidden');
-			loddingAnimation.classList.add('hidden');
-		});
-		resultImage.addEventListener('error', () => {
-			resultImage.src = '/default.svg';
-		});
-
-		new Slide(resultImage, 0.6, 1.2).setOnLeft(save).setOnRight(skip);
-	});
+	onMount(refresh);
 </script>
 
 <div class="rec-container">
@@ -111,35 +99,38 @@
 			<p>Swipe left to save</p>
 			<p>Swipe right to skip</p>
 		</Help>
-		<div class="grid justify-center items-center p-12 aspect-square" bind:this={loddingAnimation}>
-			<Loading />
-		</div>
-		<div class="hidden" bind:this={resultContainer}>
-			<div class="relative text-center mb-4">
-				<h1 class="title text-center pb-4">{name}</h1>
-				<img
-					class="w-full aspect-square object-cover indicate-moveable"
-					src=""
-					alt={name}
-					id="food-img"
-					draggable="false"
-					bind:this={resultImage}
-				/>
-				<p class="mt-4 max-w-text text-neutral-700 dark:text-white">
-					{description}
-				</p>
+		{#if shouldShowLoading}
+			<div class="grid justify-center items-center p-12 aspect-square">
+				<Loading />
 			</div>
-			<div class="my-2 mx-auto w-fit">
-				<a class="link-bnt" href="./">
-					<p>Learn more</p>
-					<svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-						<path
-							d="M9.76421 12.8216C9.37368 13.2121 9.37368 13.8453 9.76421 14.2358C10.1547 14.6263 10.7879 14.6263 11.1784 14.2358L9.76421 12.8216ZM22 2H23C23 1.44772 22.5523 1 22 1V2ZM12.4197 6.05737C12.972 6.05737 13.4197 5.60966 13.4197 5.05737C13.4197 4.50509 12.972 4.05737 12.4197 4.05737V6.05737ZM19.9426 11.7921C19.9426 11.2398 19.4949 10.7921 18.9426 10.7921C18.3903 10.7921 17.9426 11.2398 17.9426 11.7921H19.9426ZM13.0204 1C12.4681 1 12.0204 1.44772 12.0204 2C12.0204 2.55228 12.4681 3 13.0204 3V1ZM21 10.9796C21 11.5319 21.4477 11.9796 22 11.9796C22.5523 11.9796 23 11.5319 23 10.9796H21ZM16.9426 21H10.4713V23H16.9426V21ZM10.4713 21H4V23H10.4713V21ZM3 20V13.5287H1V20H3ZM3 13.5287V7.05737H1V13.5287H3ZM11.1784 14.2358L22.7071 2.70711L21.2929 1.29289L9.76421 12.8216L11.1784 14.2358ZM4 6.05737H10.4713V4.05737H4V6.05737ZM10.4713 6.05737H12.4197V4.05737H10.4713V6.05737ZM17.9426 13.5287V20H19.9426V13.5287H17.9426ZM17.9426 11.7921V13.5287H19.9426V11.7921H17.9426ZM22 1H13.0204V3H22V1ZM23 10.9796V2H21V10.9796H23ZM4 21C3.44771 21 3 20.5523 3 20H1C1 21.6569 2.34315 23 4 23V21ZM16.9426 23C18.5995 23 19.9426 21.6569 19.9426 20H17.9426C17.9426 20.5523 17.4949 21 16.9426 21V23ZM3 7.05737C3 6.50509 3.44772 6.05737 4 6.05737V4.05737C2.34315 4.05737 1 5.40052 1 7.05737H3Z"
-						/>
-					</svg>
-				</a>
+		{:else}
+			<div>
+				<div class="relative text-center mb-4">
+					<h1 class="title text-center pb-4">{name}</h1>
+					<Slide onLeft={save} onRight={skip} slideSpeed={1.2}>
+						<img
+						class="w-full aspect-square object-cover indicate-moveable"
+						src={src}
+						alt={name}
+						draggable="false"
+					/>
+					</Slide>
+					<p class="mt-4 max-w-text text-neutral-700 dark:text-white">
+						{description}
+					</p>
+				</div>
+				<div class="my-2 mx-auto w-fit">
+					<a class="link-bnt" href="./">
+						<p>Learn more</p>
+						<svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path
+								d="M9.76421 12.8216C9.37368 13.2121 9.37368 13.8453 9.76421 14.2358C10.1547 14.6263 10.7879 14.6263 11.1784 14.2358L9.76421 12.8216ZM22 2H23C23 1.44772 22.5523 1 22 1V2ZM12.4197 6.05737C12.972 6.05737 13.4197 5.60966 13.4197 5.05737C13.4197 4.50509 12.972 4.05737 12.4197 4.05737V6.05737ZM19.9426 11.7921C19.9426 11.2398 19.4949 10.7921 18.9426 10.7921C18.3903 10.7921 17.9426 11.2398 17.9426 11.7921H19.9426ZM13.0204 1C12.4681 1 12.0204 1.44772 12.0204 2C12.0204 2.55228 12.4681 3 13.0204 3V1ZM21 10.9796C21 11.5319 21.4477 11.9796 22 11.9796C22.5523 11.9796 23 11.5319 23 10.9796H21ZM16.9426 21H10.4713V23H16.9426V21ZM10.4713 21H4V23H10.4713V21ZM3 20V13.5287H1V20H3ZM3 13.5287V7.05737H1V13.5287H3ZM11.1784 14.2358L22.7071 2.70711L21.2929 1.29289L9.76421 12.8216L11.1784 14.2358ZM4 6.05737H10.4713V4.05737H4V6.05737ZM10.4713 6.05737H12.4197V4.05737H10.4713V6.05737ZM17.9426 13.5287V20H19.9426V13.5287H17.9426ZM17.9426 11.7921V13.5287H19.9426V11.7921H17.9426ZM22 1H13.0204V3H22V1ZM23 10.9796V2H21V10.9796H23ZM4 21C3.44771 21 3 20.5523 3 20H1C1 21.6569 2.34315 23 4 23V21ZM16.9426 23C18.5995 23 19.9426 21.6569 19.9426 20H17.9426C17.9426 20.5523 17.4949 21 16.9426 21V23ZM3 7.05737C3 6.50509 3.44772 6.05737 4 6.05737V4.05737C2.34315 4.05737 1 5.40052 1 7.05737H3Z"
+							/>
+						</svg>
+					</a>
+				</div>
 			</div>
-		</div>
+		{/if}
 		<div class="my-4 mx-auto w-fit">
 			<button class="bnt !flex" on:click={refresh}>
 				<p>Refresh</p>
