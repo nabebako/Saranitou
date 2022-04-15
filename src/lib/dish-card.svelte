@@ -4,7 +4,7 @@
 
 <div class="media-card glass">
 	<div class="relative flex justify-end flex-col">
-		<a class="absolute block h-full w-full bg-white" href="/{item.id}">
+		<a class="absolute block h-full w-full bg-white" href="dish/{item.id}">
 			<img class="w-full h-full object-cover select-none" src={item.image} alt={item.name} on:error={function(){this.src = '/default.svg'}}>
 		</a>
 		<div class="overlay p-4">
