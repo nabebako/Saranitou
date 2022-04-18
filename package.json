@@ -1,6 +1,6 @@
 {
 	"name": "saranitou",
-	"version": "0.2.15",
+	"version": "0.2.19",
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build",
