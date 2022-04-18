@@ -5,7 +5,7 @@
 	import Sidebar from '../lib/sidebar.svelte';
 
 	import { browser } from '$app/env';
-	
+
 	import '../styles/layout.css';
 	import '../styles/theme.css';
 
@@ -19,8 +19,8 @@
 
 <Header>
 	<div slot="left">
-		<Sidebar/>
-	</div>	
+		<Sidebar />
+	</div>
 	<a class="w-fit block lg:flex space-x-1" href="/" slot="center">
 		<svg
 			width="32"

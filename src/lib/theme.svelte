@@ -1,4 +1,4 @@
-<script lang="ts" context='module'>
+<script lang="ts" context="module">
 	import { writable } from 'svelte/store';
 
 	const theme = writable('');
@@ -10,7 +10,7 @@
 			else if (currentTheme === 'system') return 'light';
 			else return 'system';
 		});
-	};
+	}
 </script>
 
 <script lang="ts">
@@ -18,7 +18,9 @@
 
 	onMount(() => {
 		theme.set(localStorage.getItem('theme') ?? 'system');
-		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => theme.update((currentTheme) => currentTheme));
+		window
+			.matchMedia('(prefers-color-scheme: dark)')
+			.addEventListener('change', () => theme.update((currentTheme) => currentTheme));
 
 		theme.subscribe((val) => {
 			if (val === 'light') {
@@ -40,7 +42,11 @@
 </script>
 
 <div class="rounded-full bg-primary-300 hover:bg-primary-200 w-fit">
-	<button class="flex items-center justify-center h-10 w-10" on:click={cycleTheme} title="Theme | {$theme}">
+	<button
+		class="flex items-center justify-center h-10 w-10"
+		on:click={cycleTheme}
+		title="Theme | {$theme}"
+	>
 		{#if $theme === 'light'}
 			<svg
 				class="change-color"
@@ -137,7 +143,7 @@
 
 <style lang="postcss">
 	svg.change-color * {
-		@apply fill-neutral-100 dark:fill-neutral-700 ;
+		@apply fill-neutral-100 dark:fill-neutral-700;
 		@apply stroke-neutral-100 dark:stroke-neutral-700;
 	}
 </style>

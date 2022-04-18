@@ -18,7 +18,7 @@
 	<div class="w-10 flex items-center justify-center" slot="left">
 		<Sidebar iconSize={24}>
 			<div class="sm:hidden" slot="before">
-				<Theme/>
+				<Theme />
 			</div>
 		</Sidebar>
 	</div>

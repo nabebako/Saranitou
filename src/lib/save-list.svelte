@@ -5,13 +5,15 @@
 	let items = [];
 
 	onMount(async () => {
-		items = (await fetch('/db', {
-			method: 'post',
-			headers: {
-      			'Content-Type': 'application/json'
-    		},
-			body: JSON.stringify(localStorage.getItem('dish-ids') ?? '')
-		}).then((res) => res.json())).items;
+		items = (
+			await fetch('/db', {
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(localStorage.getItem('dish-ids') ?? '')
+			}).then((res) => res.json())
+		).items;
 	});
 </script>
 
@@ -19,7 +21,7 @@
 	<h1 class="text-center">Saved list</h1>
 	<div class="media-card-container">
 		{#each items as item}
-			<DishCard {item}/>
+			<DishCard {item} />
 		{/each}
 	</div>
 </div>

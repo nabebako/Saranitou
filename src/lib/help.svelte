@@ -11,14 +11,14 @@
 	}
 	function hideHelp() {
 		isMouseOnHelp = false;
-		if(!shouldHelpPersist) shouldShowHelp.set(false);
+		if (!shouldHelpPersist) shouldShowHelp.set(false);
 	}
 	function togglePersistantHelp() {
 		shouldHelpPersist = !shouldHelpPersist;
-		if(shouldHelpPersist) {
+		if (shouldHelpPersist) {
 			shouldShowHelp.set(true);
 		} else {
-			if(!isMouseOnHelp) shouldShowHelp.set(false);
+			if (!isMouseOnHelp) shouldShowHelp.set(false);
 		}
 	}
 </script>
@@ -32,14 +32,20 @@
 
 {#if $$slots.default}
 	{#if $shouldShowHelp}
-		<div transition:fade={{duration: 300, easing: cubicInOut}} class="absolute {position} z-50">
+		<div transition:fade={{ duration: 300, easing: cubicInOut }} class="absolute {position} z-50">
 			<div class="p-4 rounded-md bg-neutral-700 text-white">
 				<slot />
 			</div>
 		</div>
 	{/if}
 {:else}
-	<div class="rounded-full p-2 hover:cursor-pointer bg-primary-300 hover:bg-primary-200 transition-colors duration-200" on:mouseover={showHelp} on:mouseleave="{hideHelp}" on:click={togglePersistantHelp} on:focus>
+	<div
+		class="rounded-full p-2 hover:cursor-pointer bg-primary-300 hover:bg-primary-200 transition-colors duration-200"
+		on:mouseover={showHelp}
+		on:mouseleave={hideHelp}
+		on:click={togglePersistantHelp}
+		on:focus
+	>
 		<div class="w-6 h-6 change-color">
 			<p class="text-center">?</p>
 		</div>
@@ -49,7 +55,7 @@
 <style lang="postcss">
 	.change-color * {
 		@apply text-neutral-100 dark:text-neutral-700;
-		@apply fill-neutral-100 dark:fill-neutral-700 ;
+		@apply fill-neutral-100 dark:fill-neutral-700;
 		@apply stroke-neutral-100 dark:stroke-neutral-700;
 	}
 </style>

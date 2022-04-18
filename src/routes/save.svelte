@@ -17,7 +17,6 @@
 	<title>Liked Dishes • Saranitou</title>
 </svelte:head>
 
-
 <body>
 	<Header>
 		<div slot="left">
@@ -64,4 +63,3 @@
 	</main>
 	<Footer />
 </body>
-

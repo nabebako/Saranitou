@@ -12,7 +12,7 @@ export async function post({ request }) {
 			'Content-Type': 'application/json'
 		},
 		body: {
-			...recomedation,
+			...recomedation
 		}
 	};
 }

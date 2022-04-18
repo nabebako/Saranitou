@@ -95,12 +95,17 @@
 			transform: translate(30%, -40%) rotate(20deg);
 			opacity: 0;
 		}
-		20% { opacity: 1; }
+		20% {
+			opacity: 1;
+		}
 		50% {
 			transform: translate(0px, 0px) rotate(0deg);
 			opacity: 1;
 		}
-		80%, 100% { opacity: 0; }
+		80%,
+		100% {
+			opacity: 0;
+		}
 	}
 
 	@keyframes text-loading {
@@ -120,15 +125,15 @@
 
 	.knife {
 		animation-duration: 1200ms;
-	  	animation-name: loading;
-	 	animation-iteration-count: infinite;
-	  	animation-direction: normal;
+		animation-name: loading;
+		animation-iteration-count: infinite;
+		animation-direction: normal;
 	}
 	.loading-text::after {
 		content: '';
 		animation-duration: 2400ms;
-	  	animation-name: text-loading;
-	 	animation-iteration-count: infinite;
-	  	animation-direction: normal;
+		animation-name: text-loading;
+		animation-iteration-count: infinite;
+		animation-direction: normal;
 	}
 </style>

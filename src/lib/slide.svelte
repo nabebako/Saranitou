@@ -53,7 +53,7 @@
 	function onMouseMove(e: MouseEvent) {
 		if (shouldMove) {
 			x += e.movementX * slideSpeed;
-				target.style.transform = `translate(${x}px) rotate(${x * rotateSpeed}deg)`;
+			target.style.transform = `translate(${x}px) rotate(${x * rotateSpeed}deg)`;
 		}
 		if (x > target.offsetWidth * slideThreshold) {
 			onRight();
@@ -95,8 +95,13 @@
 	on:touchend={onTouchEnd}
 	on:mousemove={onMouseMove}
 	on:touchmove={onTouchMove}
-></svelte:window>
+/>
 
-<div class="relative cursor-grab" bind:this={target} on:mousedown={onMouseDown} on:touchstart={onTouchStart}>
-	<slot></slot>
+<div
+	class="relative cursor-grab"
+	bind:this={target}
+	on:mousedown={onMouseDown}
+	on:touchstart={onTouchStart}
+>
+	<slot />
 </div>

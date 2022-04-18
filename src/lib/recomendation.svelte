@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Slide from './slide.svelte'
+	import Slide from './slide.svelte';
 	import Loading from './animation/loading.svelte';
 	import Help from './help.svelte';
 
@@ -58,7 +58,7 @@
 <div class="rec-container">
 	<div class="flex flex-center">
 		<div class="side-control relative hidden md:flex flex-center">
-			<Help position='-top-1/4'>
+			<Help position="-top-1/4">
 				<p>Click here to save</p>
 			</Help>
 			<button class="py-16 px-4 lg:px-12 glass rounded-xl" on:click={save}>
@@ -92,10 +92,10 @@
 				</svg>
 			</button>
 		</div>
-		<span class="block md:hidden bg-black w-full h-full"></span>
+		<span class="block md:hidden bg-black w-full h-full" />
 	</div>
 	<div class="relative pt-8">
-		<Help position='left-1/2 -translate-x-1/2 translate-y-1/2'>
+		<Help position="left-1/2 -translate-x-1/2 translate-y-1/2">
 			<p>Swipe left to save</p>
 			<p>Swipe right to skip</p>
 		</Help>
@@ -109,11 +109,11 @@
 					<h1 class="title text-center pb-4">{name}</h1>
 					<Slide onLeft={save} onRight={skip} slideSpeed={1.2}>
 						<img
-						class="w-full aspect-square object-cover indicate-moveable"
-						src={src}
-						alt={name}
-						draggable="false"
-					/>
+							class="w-full aspect-square object-cover indicate-moveable"
+							{src}
+							alt={name}
+							draggable="false"
+						/>
 					</Slide>
 					<p class="mt-4 max-w-text text-neutral-700 dark:text-white">
 						{description}
@@ -175,7 +175,7 @@
 				</svg>
 			</button>
 		</div>
-		<span class="block md:hidden bg-black w-full h-full"></span>
+		<span class="block md:hidden bg-black w-full h-full" />
 	</div>
 </div>
 
@@ -196,7 +196,10 @@
 	}
 	@media screen(md) {
 		.rec-container {
-			grid-template-columns: minmax(calc(140px + 4rem), 1fr) minmax(20rem, 26rem) minmax(calc(140px + 4rem), 1fr);
+			grid-template-columns: minmax(calc(140px + 4rem), 1fr) minmax(20rem, 26rem) minmax(
+					calc(140px + 4rem),
+					1fr
+				);
 		}
 		.rec-container .side-control svg {
 			width: 108px;
@@ -205,7 +208,10 @@
 	}
 	@media screen(lg) {
 		.rec-container {
-			grid-template-columns: minmax(calc(240px + 4rem), 1fr) minmax(26rem, 30rem) minmax(calc(240px + 4rem), 1fr);
+			grid-template-columns: minmax(calc(240px + 4rem), 1fr) minmax(26rem, 30rem) minmax(
+					calc(240px + 4rem),
+					1fr
+				);
 		}
 		.rec-container .side-control svg {
 			width: 144px;
@@ -234,7 +240,9 @@
 	}
 
 	@keyframes indicate-moveable {
-		0%, 50%, 100% {
+		0%,
+		50%,
+		100% {
 			transform: translateX(0) rotate(0);
 		}
 		25% {
@@ -246,9 +254,9 @@
 	}
 	.indicate-moveable:hover {
 		animation-duration: 300ms;
-	  	animation-name: indicate-moveable;
-	 	animation-iteration-count: 1;
-	  	animation-direction: alternate;
+		animation-name: indicate-moveable;
+		animation-iteration-count: 1;
+		animation-direction: alternate;
 	}
 
 	.skip-icon {

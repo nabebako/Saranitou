@@ -1,9 +1,9 @@
 <script>
-	import Options from "../lib/options.svelte";
-	import Header from "../lib/header.svelte";
-	import Sidebar from "../lib/sidebar.svelte";
-	import Help from "../lib/help.svelte";
-	import Theme from "../lib/theme.svelte";
+	import Options from '../lib/options.svelte';
+	import Header from '../lib/header.svelte';
+	import Sidebar from '../lib/sidebar.svelte';
+	import Help from '../lib/help.svelte';
+	import Theme from '../lib/theme.svelte';
 	import Footer from '../lib/footer.svelte';
 
 	import '../styles/layout.css';
@@ -55,8 +55,8 @@
 	</Header>
 	<main>
 		<div class="main-container">
-			<Options/>
+			<Options />
 		</div>
 	</main>
-	<Footer></Footer>
+	<Footer />
 </body>

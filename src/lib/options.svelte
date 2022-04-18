@@ -37,78 +37,74 @@
 </div>
 
 <div>
-	<form
-		id="option-form"
-		on:submit|preventDefault={saveOptions}
-		bind:this={optionForm}
-	>
-	<div class="option-gird">
-		<fieldset class="collapsible" name="meal">
-			<legend>
-				<button
-					on:click|preventDefault={function () {
-						this.focus();
-					}}
-					>Meal
-					<!-- icon indicating collapse -->
-				</button>
-			</legend>
-			<ul>
-				<li class="checkbox-input">
-					<input
-						type="checkbox"
-						name="breakfast"
-						id="breakfast"
-						value="breakfast"
-						on:click={function () {
+	<form id="option-form" on:submit|preventDefault={saveOptions} bind:this={optionForm}>
+		<div class="option-gird">
+			<fieldset class="collapsible" name="meal">
+				<legend>
+					<button
+						on:click|preventDefault={function () {
 							this.focus();
 						}}
-					/>
-					<label for="breakfast"> Breakfast </label>
-				</li>
-				<li class="checkbox-input">
-					<input
-						type="checkbox"
-						name="lunch"
-						id="lunch"
-						value="lunch"
-						on:click={function () {
+						>Meal
+						<!-- icon indicating collapse -->
+					</button>
+				</legend>
+				<ul>
+					<li class="checkbox-input">
+						<input
+							type="checkbox"
+							name="breakfast"
+							id="breakfast"
+							value="breakfast"
+							on:click={function () {
+								this.focus();
+							}}
+						/>
+						<label for="breakfast"> Breakfast </label>
+					</li>
+					<li class="checkbox-input">
+						<input
+							type="checkbox"
+							name="lunch"
+							id="lunch"
+							value="lunch"
+							on:click={function () {
+								this.focus();
+							}}
+						/>
+						<label for="lunch"> Lunch </label>
+					</li>
+					<li class="checkbox-input">
+						<input
+							type="checkbox"
+							name="dinner"
+							id="dinner"
+							value="dinner"
+							on:click={function () {
+								this.focus();
+							}}
+						/>
+						<label for="dinner"> Dinner </label>
+					</li>
+				</ul>
+			</fieldset>
+			<fieldset class="collapsible" name="tag-setting">
+				<legend
+					><button
+						on:click|preventDefault={function () {
 							this.focus();
-						}}
-					/>
-					<label for="lunch"> Lunch </label>
-				</li>
-				<li class="checkbox-input">
-					<input
-						type="checkbox"
-						name="dinner"
-						id="dinner"
-						value="dinner"
-						on:click={function () {
-							this.focus();
-						}}
-					/>
-					<label for="dinner"> Dinner </label>
-				</li>
-			</ul>
-		</fieldset>
-		<fieldset class="collapsible" name="tag-setting">
-			<legend
-				><button
-					on:click|preventDefault={function () {
-						this.focus();
-					}}>Tags</button
-				></legend
-			>
-			<ul>
-				<li class="text-input">
-					<input type="text" name="tags" id="tags-input" />
-					<label for="tags">Tags</label>
-				</li>
-			</ul>
-		</fieldset>
-	</div>
-	<input class="bnt h-fit mx-auto" type="submit" name="submit" value="Save" />
+						}}>Tags</button
+					></legend
+				>
+				<ul>
+					<li class="text-input">
+						<input type="text" name="tags" id="tags-input" />
+						<label for="tags">Tags</label>
+					</li>
+				</ul>
+			</fieldset>
+		</div>
+		<input class="bnt h-fit mx-auto" type="submit" name="submit" value="Save" />
 	</form>
 </div>
 
