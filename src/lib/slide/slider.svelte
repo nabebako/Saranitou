@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	export let x = 0;
 	export let slideSpeed = 1.5;
 	export let rotateSpeed = 0.04;
 	export let slideThreshold = 0.6;
@@ -13,7 +14,6 @@
 
 	let shouldMove = false;
 	let startX = 0;
-	let x = 0;
 
 	// Event listeners to initiate drag
 	function onMouseDown() {

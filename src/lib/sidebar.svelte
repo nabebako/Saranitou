@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Hamburger from './animation/hamburger.svelte';
+	import Hamburger from '$lib/animation/hamburger.svelte';
 
 	export let iconSize: number = 24;
 
@@ -15,8 +15,7 @@
 </div>
 
 <div
-	class="absolute top-0 left-0 z-10 overflow-hidden h-screen transition-width bg-neutral-700
-	{shouldShow ? 'max-w-screen' : 'max-w-0'}"
+	class="sidebar-container absolute top-0 left-0 z-10 bg-neutral-700" should-show={shouldShow}
 >
 	<div class="px-4 pt-24 md:pt-32 pb-8 grid gap-4 bg-neutral-100 dark:bg-neutral-600">
 		<slot name="before" />
@@ -29,3 +28,17 @@
 		<slot name="after" />
 	</div>
 </div>
+
+<style lang="postcss">
+	.sidebar-container {
+		@apply h-screen;
+		@apply overflow-hidden;
+		transform: translateX(-100%);
+		transition-property: transform;
+		transition-duration: 100ms;
+		transition-timing-function: ease-out;
+	}
+	.sidebar-container[should-show='true'] {
+		transform: translateX(0);
+	}
+</style>

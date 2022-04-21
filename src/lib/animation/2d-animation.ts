@@ -1,4 +1,4 @@
-interface Position2D {
+export interface Position2D {
 	x: number;
 	y: number;
 }
@@ -15,13 +15,10 @@ export class Canvas {
 		public canvasElement: HTMLCanvasElement,
 		public canvasWidth: number,
 		public canvasHeight: number,
-		public elementWidth: number,
-		public elementHeight: number,
+		public scale: number = 1,
 		public objects: CanvasObject[] = []
 	) {
 		this.ctx = canvasElement.getContext('2d');
-		canvasElement.width = canvasWidth;
-		canvasElement.height = canvasHeight;
 	}
 
 	clear() {
@@ -30,7 +27,7 @@ export class Canvas {
 	}
 	render() {
 		this.objects.forEach((object) => {
-			object.render(this.ctx);
+			object.render(this.ctx, this.scale);
 		});
 		return this;
 	}
@@ -40,10 +37,10 @@ export class Canvas {
 	}
 	fixDpi() {
 		const ratio = window.devicePixelRatio;
-		this.canvasElement.width = this.elementWidth * ratio;
-		this.canvasElement.height = this.elementHeight * ratio;
-		this.canvasElement.style.width = `${this.elementWidth}px`;
-		this.canvasElement.style.height = `${this.elementHeight}px`;
+		this.canvasElement.width = this.canvasWidth * ratio;
+		this.canvasElement.height = this.canvasHeight * ratio;
+		this.canvasElement.style.width = `${this.canvasWidth}px`;
+		this.canvasElement.style.height = `${this.canvasHeight}px`;
 		this.ctx.scale(ratio, ratio);
 
 		return this;
@@ -53,8 +50,8 @@ export class Canvas {
 	}
 }
 
-abstract class CanvasObject {
-	abstract render(renderingContext: CanvasRenderingContext2D): void;
+export abstract class CanvasObject {
+	abstract render(renderingContext: CanvasRenderingContext2D, scale: number): void;
 
 	position: Position2D;
 
@@ -78,6 +75,7 @@ abstract class CanvasObject {
 				animation = new SpringAnimation(cps, this);
 				break;
 			default:
+				throw new Error('animationType not valid');
 				break;
 		}
 		if (controler) animation.attatchToController(controler);
@@ -89,9 +87,9 @@ export class Circle extends CanvasObject {
 		super(x, y);
 	}
 
-	render(renderingContext: CanvasRenderingContext2D): void {
+	render(renderingContext: CanvasRenderingContext2D, scale: number): void {
 		renderingContext.beginPath();
-		renderingContext.arc(this.position.x, this.position.y, this.r, 0, Math.PI * 2);
+		renderingContext.arc(this.position.x * scale, this.position.y * scale, this.r, 0, Math.PI * 2);
 		renderingContext.fill();
 	}
 }
@@ -100,17 +98,18 @@ export class Square extends CanvasObject {
 		super(x, y);
 	}
 
-	render(renderingContext: CanvasRenderingContext2D) {}
+	render(renderingContext: CanvasRenderingContext2D, scale: number) {}
 }
 
 export class AnimationControler {
 	private shouldRenderLoop: boolean;
 	private animationQueue = 0;
 	private updateLoop: any = 0;
+	private updateInterval = 10; //ms
+	private animationDirection: 1 | -1 = 1;
 	private t = 0;
 
-	tickPerSecond = 100;
-
+	animationDuration = 200;
 	shouldLoop = false;
 	shouldReverse = false;
 	shouldReduceQueue = false;
@@ -119,17 +118,17 @@ export class AnimationControler {
 		public canvas: Canvas = undefined,
 		private animations: Animation[] = [],
 		options: {
-			tickPerSecond?: number;
+			animationDuration?: number;
 			shouldReverse?: boolean;
 			shouldLoop?: boolean;
 			shouldReduceQueue?: boolean;
 		} = {}
 	) {
 		if (options) {
-			this.tickPerSecond = options?.tickPerSecond ?? this.tickPerSecond;
-			this.shouldLoop = options?.shouldLoop ?? this.shouldLoop;
-			this.shouldReverse = options?.shouldReverse ?? this.shouldReverse;
-			this.shouldReduceQueue = options?.shouldReduceQueue ?? this.shouldReduceQueue;
+			this.animationDuration = options.animationDuration ?? this.animationDuration
+			this.shouldLoop = options.shouldLoop ?? this.shouldLoop;
+			this.shouldReverse = options.shouldReverse ?? this.shouldReverse;
+			this.shouldReduceQueue = options.shouldReduceQueue ?? this.shouldReduceQueue;
 		}
 
 		this.tick = this.tick.bind(this);
@@ -141,61 +140,25 @@ export class AnimationControler {
 		this.reset = this.reset.bind(this);
 	}
 
-	attatchNewCanvas(canvas: Canvas): AnimationControler {
-		this.canvas = canvas;
-		this.animations.forEach((animation) => this.canvas.addObject(animation.object));
-		return this;
-	}
-	crateNewCanvas(
-		canvasElement: HTMLCanvasElement,
-		canvasWidth: number,
-		canvasHeight: number,
-		elementWidth: number,
-		elementHeight: number
-	): AnimationControler {
-		this.canvas = new Canvas(canvasElement, canvasWidth, canvasHeight, elementWidth, elementHeight);
-		this.animations.forEach((animation) => this.canvas.addObject(animation.object));
-		return this;
-	}
-	addAnimation(animation: Animation): AnimationControler {
-		this.animations = [...this.animations, animation];
-		this.canvas?.addObject(animation.object);
-		return this;
-	}
-	setOptions(options: {
-		tickPerSecond?: number;
-		shouldReverse?: boolean;
-		shouldLoop?: boolean;
-		shouldReduceQueue?: boolean;
-	}): AnimationControler {
-		this.tickPerSecond = options?.tickPerSecond ?? this.tickPerSecond;
-		this.shouldLoop = options?.shouldLoop ?? this.shouldLoop;
-		this.shouldReverse = options?.shouldReverse ?? this.shouldReverse;
-		this.shouldReduceQueue = options?.shouldReduceQueue ?? this.shouldReduceQueue;
-		return this;
-	}
-
-	tick(): AnimationControler {
-		this.t += (0.01 * this.tickPerSecond) / 100;
+	private tick(): AnimationControler {
+		this.t += this.animationDirection * this.updateInterval / this.animationDuration;
 		if (this.t > 1) this.t = 1;
 		if (this.t < 0) this.t = 0;
 		return this;
 	}
-	update(): AnimationControler {
+	private update(): AnimationControler {
 		this.tick();
-		this.animations.forEach((object) => {
-			object.update(this.t);
-		});
+		this.animations.forEach((object) => object.update(this.t));
 
 		if (this.t >= 1 || this.t <= 0) {
 			if (this.shouldReverse && this.shouldLoop) {
-				this.tickPerSecond *= -1;
+				this.animationDirection *= -1;
 			} else if (this.shouldLoop) {
 				this.reset();
 				this.start();
 			} else if (this.shouldReverse) {
 				this.pause();
-				this.tickPerSecond *= -1;
+				this.animationDirection *= -1;
 			} else {
 			}
 
@@ -204,14 +167,13 @@ export class AnimationControler {
 				this.animationQueue--;
 			}
 		}
-
 		return this;
 	}
+
 	clear(): AnimationControler {
 		this.canvas.clear();
 		return this;
 	}
-
 	render(): void {
 		if (!this.canvas) {
 			throw new Error(
@@ -232,7 +194,7 @@ export class AnimationControler {
 			requestAnimationFrame(this.render);
 		}
 		if (this.updateLoop === 0) {
-			this.updateLoop = setInterval(this.update, 10);
+			this.updateLoop = setInterval(this.update, this.updateInterval);
 		} else {
 			this.animationQueue++;
 			if (this.shouldReduceQueue) this.animationQueue = this.animationQueue % 2;
@@ -260,9 +222,41 @@ export class AnimationControler {
 		this.t = 0;
 		this.update().render();
 	}
+
+	attatchNewCanvas(canvas: Canvas): AnimationControler {
+		this.canvas = canvas;
+		this.animations.forEach((animation) => this.canvas.addObject(animation.object));
+		return this;
+	}
+	crateNewCanvas(
+		canvasElement: HTMLCanvasElement,
+		canvasWidth: number,
+		canvasHeight: number,
+		scale: number = 1,
+	): AnimationControler {
+		this.canvas = new Canvas(canvasElement, canvasWidth, canvasHeight, scale, this.animations.map((animation) => animation.object));
+		return this;
+	}
+	addAnimation(animation: Animation): AnimationControler {
+		this.animations = [...this.animations, animation];
+		this.canvas?.addObject(animation.object);
+		return this;
+	}
+	setOptions(options: {
+		animationDuration?: number; 
+		shouldReverse?: boolean;
+		shouldLoop?: boolean;
+		shouldReduceQueue?: boolean;
+	}): AnimationControler {
+		this.animationDuration = options.animationDuration ?? this.animationDirection;
+		this.shouldLoop = options.shouldLoop ?? this.shouldLoop;
+		this.shouldReverse = options.shouldReverse ?? this.shouldReverse;
+		this.shouldReduceQueue = options.shouldReduceQueue ?? this.shouldReduceQueue;
+		return this;
+	}
 }
 
-abstract class Animation {
+export abstract class Animation {
 	protected isAttatchedToController = false;
 
 	constructor(public cps: Position2D[], public object: CanvasObject = undefined) {
@@ -317,4 +311,4 @@ export class BezierCruveAnimation extends Animation {
 	}
 }
 
-export default { Canvas, Circle, Square, AnimationControler, BezierCruveAnimation };
+export default { Canvas, Circle, Square, AnimationControler, SpringAnimation, BezierCruveAnimation };
