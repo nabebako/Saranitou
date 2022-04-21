@@ -15,21 +15,24 @@
 		request.send(formData);
 	}
 	function checkImageUrl(e: Event) {
-		const value = e.target['value'] ?? '';
-		if(e.type === 'keypress') {
-			e.preventDefault();
-			if(e['key'] === 'enter') {
-				checkImage.src = value;
-				checkImage.alt = value;
-			}
-		} else {
+		const value = e.target['value'];
+		if(value) {
 			checkImage.src = value;
 			checkImage.alt = value;
+		} else {
+			
 		}
 	}
 	function checkImageUrlError() {
 		checkImage.src = '/default.svg';
-		checkImage.alt = 'error loading specified image'
+		checkImage.alt = 'error loading specified image';
+	}
+
+	function handleKeyDown(e: KeyboardEvent) {
+		if(e.key === 'Enter') {
+			e.preventDefault();
+			checkImageUrl(e);
+		}
 	}
 </script>
 
@@ -51,9 +54,9 @@
 				<input type="text" name="dish-description" id="dish-description">
 				<label for="dish-description">Description</label>
 			</fieldset>
-			<img class="object-cover" height="300" width="400" on:error={checkImageUrlError} bind:this={checkImage} alt="testing">
+			<img class="object-cover w-96 h-72" on:error={checkImageUrlError} bind:this={checkImage} alt="testing">
 			<fieldset class="text-input">
-				<input type="url" name="dish-image-url" id="dish-image-url" on:blur={checkImageUrl} on:keydown|capture={checkImageUrl}>
+				<input type="url" name="dish-image-url" id="dish-image-url" on:blur={checkImageUrl} on:keydown|capture={handleKeyDown}>
 				<label for="dish-description">Image url</label>
 			</fieldset>
 			<fieldset class="checkbox-input" name="ingredients">
