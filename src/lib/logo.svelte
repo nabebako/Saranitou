@@ -56,7 +56,7 @@
 			fill="#ED5F76"
 		/>
 	</svg>
-	<p class="text-xl text-center text-white">Saraintou</p>
+	<p class="text-xl text-center text-white">Saranitou</p>
 </a>
 {:else}
 <a class="w-fit block justify-self-center lg:flex space-x-1" href="/">
@@ -84,6 +84,6 @@
 			fill="#ED5F76"
 		/>
 	</svg>
-	<p class="text-xl text-center hidden lg:inline text-white">Saraintou</p>
+	<p class="text-xl text-center hidden lg:inline text-white">Saranitou</p>
 </a>
 {/if}

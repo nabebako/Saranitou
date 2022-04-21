@@ -11,7 +11,7 @@
 </script>
 
 <svelte:head>
-	<title>Option • Saraintou</title>
+	<title>Option • Saranitou</title>
 </svelte:head>
 
 	<Header>
@@ -45,7 +45,7 @@
 					fill="#ED5F76"
 				/>
 			</svg>
-			<p class="text-xl text-center hidden lg:inline text-white">Saraintou</p>
+			<p class="text-xl text-center hidden lg:inline text-white">Saranitou</p>
 		</a>
 		<div class="flex space-x-2" slot="right">
 			<Theme />

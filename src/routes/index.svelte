@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-	<title>Saraintou • Discover and start cooking</title>
+	<title>Saranitou • Discover and start cooking</title>
 </svelte:head>
 
 <Header>
