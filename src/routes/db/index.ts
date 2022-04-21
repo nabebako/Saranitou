@@ -1,5 +1,5 @@
 /** @type {import('@sveltejs/kit').RequestHandler}*/
-import * as db from '../../../static/dummy-data/menu.json';
+import { db } from '$static/dummy-data/menu';
 
 export async function post({ request }) {
 	const ids: string[] = JSON.parse((await request.json()) ?? []);

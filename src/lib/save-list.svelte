@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import DishCard from './dish-card.svelte';
+	import DishCard from '$lib/dish-card.svelte';
 
 	let items = [];
 

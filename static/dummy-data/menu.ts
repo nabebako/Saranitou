@@ -1,4 +1,4 @@
-{
+export const db = {
 	"menu": [
 		{
 			"id": "1",

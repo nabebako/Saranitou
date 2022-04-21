@@ -1,14 +1,15 @@
 <script lang="ts">
-	import Header from '../lib/header.svelte';
-	import Footer from '../lib/footer.svelte';
-	import SaveList from '../lib/save-list.svelte';
-	import Sidebar from '../lib/sidebar.svelte';
-	import Help from '../lib/help.svelte';
-	import Theme from '../lib/theme.svelte';
-
 	import { browser } from '$app/env';
-	import '../styles/layout.css';
-	import '../styles/theme.css';
+	
+	import Header from '$lib/header.svelte';
+	import Footer from '$lib/footer.svelte';
+	import SaveList from '$lib/save-list.svelte';
+	import Sidebar from '$lib/sidebar.svelte';
+	import Help from '$lib/help.svelte';
+	import Theme from '$lib/theme.svelte';
+
+	import '$css/layout.css';
+	import '$css/theme.css';
 
 	export const router = browser;
 </script>
