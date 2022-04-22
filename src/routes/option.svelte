@@ -1,3 +1,6 @@
+<script lang="ts" context='module'>
+	export const prerender = true;
+</script>
 <script>
 	import Options from '$lib/options.svelte';
 	import Header from '$lib/header.svelte';

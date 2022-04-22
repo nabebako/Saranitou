@@ -1,6 +1,7 @@
+<script lang="ts" context='module'>
+	export const prerender = true;
+</script>
 <script lang="ts">
-	import { browser } from '$app/env';
-	
 	import Header from '$lib/header.svelte';
 	import Footer from '$lib/footer.svelte';
 	import SaveList from '$lib/save-list.svelte';
@@ -10,8 +11,6 @@
 
 	import '$css/layout.css';
 	import '$css/theme.css';
-
-	export const router = browser;
 </script>
 
 <svelte:head>
