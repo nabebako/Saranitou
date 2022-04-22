@@ -24,7 +24,7 @@
 		}
 	}
 	function checkImageUrlError() {
-		checkImage.src = '/default.svg';
+		checkImage.src = '/error.svg';
 		checkImage.alt = 'error loading specified image';
 	}
 
@@ -54,11 +54,18 @@
 				<input type="text" name="dish-description" id="dish-description">
 				<label for="dish-description">Description</label>
 			</fieldset>
-			<img class="object-cover w-96 h-72" on:error={checkImageUrlError} bind:this={checkImage} alt="testing">
-			<fieldset class="text-input">
-				<input type="url" name="dish-image-url" id="dish-image-url" on:blur={checkImageUrl} on:keydown|capture={handleKeyDown}>
-				<label for="dish-description">Image url</label>
-			</fieldset>
+			<div class="image-field-grid">
+				<div class="w-full">
+					<fieldset class="text-input">
+						<input type="url" name="dish-image-url" id="dish-image-url" on:blur={checkImageUrl} on:keydown|capture={handleKeyDown}>
+						<label for="dish-description">Image url</label>
+					</fieldset>
+				</div>
+				<div class="w-fit">
+					<p>Image</p>
+					<img class="object-cover check-image glass rounded-lg" on:error={checkImageUrlError} bind:this={checkImage} alt="testing">
+				</div>
+			</div>
 			<fieldset class="checkbox-input" name="ingredients">
 				<input type="checkbox" name="asdf" id="asf" value="asdf">
 				<label for="asf">What the heck</label>
@@ -70,6 +77,16 @@
 </main>
 
 <style lang="postcss">
+	.image-field-grid {
+		@apply grid gap-4;
+		grid-template-columns: auto 400px;
+	}
+
+	.check-image {
+		height: 300px;
+		width: 400px;
+	}
+
 	.checkbox-input {
 		@apply flex items-center space-x-2;
 		@apply w-full;
