@@ -13,7 +13,7 @@ export const db = {
 				"Grated radish",
 				"Tenpura sauce (50 ml)"
 			],
-			"image": "https://source.unsplash.com/xBMNxrbQonw"
+			"image": ""
 		},
 		{
 			"id": "2",

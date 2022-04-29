@@ -13,7 +13,7 @@
 </script>
 
 <svelte:head>
-	<title>{name} • Saraintou</title>
+	<title>{name} • Saranitou</title>
 </svelte:head>
 
 <Header>
@@ -50,7 +50,7 @@
 				fill="#ED5F76"
 			/>
 		</svg>
-		<p class="text-xl text-center hidden lg:inline text-white">Saraintou</p>
+		<p class="text-xl text-center hidden lg:inline text-white">Saranitou</p>
 	</a>
 	<div class="flex space-x-2" slot="right">
 		<div class="hidden sm:inline">
