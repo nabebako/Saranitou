@@ -1,3 +1,6 @@
+<script lang="ts" context='module'>
+	export const prerender = true;
+</script>
 <script lang="ts">
 	import Recomendation from '$lib/recomendation.svelte';
 	import Header from '$lib/header.svelte';
@@ -12,7 +15,7 @@
 </script>
 
 <svelte:head>
-	<title>Saraintou • Discover and start cooking</title>
+	<title>Saranitou • Discover and start cooking</title>
 </svelte:head>
 
 <Header>

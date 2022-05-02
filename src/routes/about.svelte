@@ -1,3 +1,6 @@
+<script lang="ts" context='module'>
+	export const prerender = true;
+</script>
 <script lang="ts">
 	import Theme from '$lib/theme.svelte';
 	import Header from '$lib/header.svelte';
@@ -5,13 +8,8 @@
 	import Sidebar from '$lib/sidebar.svelte';
 	import Logo from '$lib/logo.svelte';
 
-	import { browser } from '$app/env';
-
 	import '$css/layout.css';
 	import '$css/theme.css';
-
-	export const router = browser;
-	export const prerender = true;
 </script>
 
 <svelte:head>
