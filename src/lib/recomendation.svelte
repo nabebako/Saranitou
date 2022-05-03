@@ -38,12 +38,13 @@
 		fetch(url)
 		.then((res) => res.json())
 		.then((body) => {
-			const recomedation = body.recomedation;
+			console.log(body);
+			const recomendation = body.recomendation[0];
 			const srcBefore = src;
-			id = recomedation.id;
-			name = recomedation.name.en || recomedation.name.jp;
-			description = recomedation.description ?? '';
-			src = recomedation.image || '/default.svg';
+			id = recomendation.id;
+			name = recomendation.name.en || recomendation.name.jp;
+			description = recomendation.description ?? '';
+			src = recomendation.image || '/default.svg';
 			if(srcBefore === src) shouldShowLoading = false;
 		})
 		.catch();

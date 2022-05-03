@@ -3,13 +3,13 @@
 	export const prerender = true;
 
 	export const load: Load = async function ({ fetch }) {
-		let item = {};
-		await fetch('/api/recomendation')
+		let items = {};
+		await fetch('/api/recomendation?amount=2')
 			.then((res) => res.json())
-			.then(({recomendation}) => item = recomendation);
+			.then(({recomendation}) => items = recomendation);
 
 		return {
-			props: { item },
+			props: { items },
 		};
 	}
 </script>
@@ -17,7 +17,6 @@
 <script lang="ts">
 	import Header from '$lib/header.svelte';
 	import Footer from '$lib/footer.svelte';
-	import Help from '$lib/help.svelte';
 	import Sidebar from '$lib/sidebar.svelte';
 	import Theme from '$lib/theme.svelte';
 	import Logo from '$lib/logo.svelte';
@@ -26,7 +25,7 @@
 	import '$css/layout.css';
 	import '$css/theme.css';
 
-	export let item: {};
+	export let items: Array<{}>;
 </script>
 
 <svelte:head>
@@ -36,9 +35,12 @@
 <Header>
 	<div class="w-10 flex items-center justify-center" slot="left">
 		<Sidebar iconSize={24}>
-			<div class="sm:hidden" slot="before">
-				<Theme />
-			</div>
+			<svelte:fragment slot="before">
+				<div class="sm:hidden">
+					<Theme />
+				</div>
+				<a class="bnt" href="/">Recomendation</a>
+			</svelte:fragment>
 		</Sidebar>
 	</div>
 	<svelte:fragment slot="center">
@@ -49,7 +51,6 @@
 		<div class="hidden sm:inline">
 			<Theme />
 		</div>
-		<Help />
 	</div>
 </Header>
 
@@ -62,9 +63,13 @@
 			</div>
 			<img class="pointer-events-none" width="400" src="/error.svg" alt="">
 		</section>
-		<section class="space-y-4 max-w-2xl mx-auto">
+		<section class="space-y-4 max-w-6xl mx-auto">
 			<p class="text-xl">Our recomendation</p>
-			<DishCard {item}/>
+			<div class="grid grid-cols-2 gap-8">
+				{#each items as item}
+				<DishCard {item}/>
+				{/each}
+			</div>
 		</section>
 	</div>
 </main>
