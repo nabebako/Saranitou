@@ -38,7 +38,7 @@
 </Header>
 
 <main class="bg-neutral-100 dark:bg-neutral-600">
-	<p>{name}</p>
+	<p>{name.en}</p>
 	<p>{description}</p>
 </main>
 

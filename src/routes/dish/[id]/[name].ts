@@ -13,20 +13,21 @@ export const get: RequestHandler = async function ({ params }) {
 			)
 		);
 
-		let props = {};
-		snapshot.forEach((doc) => {
-			props = doc.data();
-		});
+		let props = snapshot.docs[0].data();
 
-		if(props) throw new Error('404');
-
-		return {
-			status: 200,
-			body: props,
-		};
+		if(!props) {
+			return {
+				status: 404,
+			};
+		} else {
+			return {
+				status: 200,
+				body: props,
+			};
+		}
 	} catch(err) {
 		return {
-			status: 404,
+			status: 500,
 		};
 	}
 }
