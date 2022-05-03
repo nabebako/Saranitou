@@ -1,6 +1,6 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, query, where, getDocs, limit } from 'firebase/firestore';
 
 const firestore = getFirestore(initializeApp({
 	apiKey: 			import.meta.env.VITE_API_KEY as string,
@@ -12,24 +12,31 @@ const firestore = getFirestore(initializeApp({
 	measurementId: 		import.meta.env.VITE_MEASUREMENT_ID as string,
 }));
 
-export const post: RequestHandler = async function ({ request }) {
-	let ids = await request.json() as Array<string>;
-	ids = ids.filter((val) => !!val);
-	if(!ids) {
-		return {
-			status: 401,
-		}
-	}
-	let items = [];
+export const get: RequestHandler = async function ({ params }) {
+	try {
+		const snapshot = await getDocs(
+			query(
+				collection(firestore, 'dishes'),
+				where('id', '==', params.id),
+				where('urlName', '==', params.name),
+				limit(1),
+			)
+		);
 
-	(await getDocs(query(collection(firestore, 'dishes'), where('id', 'in', ids)))).forEach((doc) => {
-		items = [...items, doc.data()];
-	});
-	return {
-		status: 200,
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: items,
-	};
+		let props = {};
+		snapshot.forEach((doc) => {
+			props = doc.data();
+		});
+
+		if(props) throw new Error('404');
+		
+		return {
+			status: 200,
+			body: props,
+		};
+	} catch(err) {
+		return {
+			status: 404,
+		};
+	}
 }

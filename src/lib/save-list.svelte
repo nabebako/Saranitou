@@ -4,16 +4,17 @@
 
 	let items = [];
 
-	onMount(async () => {
-		items = (
-			await fetch('/db', {
+	onMount(() => {
+		fetch('/api/database', {
 				method: 'post',
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify(localStorage.getItem('dish-ids') ?? '')
-			}).then((res) => res.json())
-		).items;
+				body: localStorage.getItem('dish-ids') ?? '',
+			})
+		.then((res) => res.json())
+		.then((res) => items = res)
+		.catch();
 	});
 </script>
 

@@ -4,7 +4,7 @@
 
 <div class="media-card glass">
 	<div class="relative flex justify-end flex-col">
-		<a class="absolute block h-full w-full bg-white" href="dish/{item.id}">
+		<a class="absolute block h-full w-full bg-white" href="/dish/{item.id}/{item.urlName}">
 			<img
 				class="w-full h-full object-cover select-none"
 				src={item.image}
@@ -17,7 +17,7 @@
 		<div class="overlay p-4">
 			<a
 				class="text-base text-white hover:text-secondary-300 transition-colors duration-300"
-				href="/{item.id}">{item.name}</a
+				href="/dish/{item.id}/{item.urlName}">{item.name.en}</a
 			>
 		</div>
 	</div>

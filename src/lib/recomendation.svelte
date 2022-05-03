@@ -22,10 +22,10 @@
 
 		request.onload = () => {
 			if(request.status === 200) {
-				const res = JSON.parse(request.response);
+				const res = JSON.parse(request.response).recomedation;
 				const srcBefore = src;
 				id = res.id;
-				name = res.name;
+				name = res.name.en;
 				description = res.description;
 				src = res.image || '/default.svg';
 				if(srcBefore === src) shouldShowLoading = false;
@@ -38,7 +38,7 @@
 
 		animate();
 
-		request.open('post', '/recomendation');
+		request.open('get', '/api/recomendation');
 		request.setRequestHeader('Content-Type', 'application/json');
 		request.send(
 			JSON.stringify({
