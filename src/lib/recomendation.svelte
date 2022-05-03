@@ -17,35 +17,36 @@
 	function animate() {}
 
 	function refresh() {
-		const request = new XMLHttpRequest();
-		const options = JSON.parse(localStorage.getItem('options')) ?? {};
+		const params = new Map<string, string>(); 
+		const currentTime = new Date().toTimeString().match(/[0-9]{1,2}:[0-9]{2}:[0-9]{2}/)[0];
+		const options = localStorage.getItem('options');
 
-		request.onload = () => {
-			if(request.status === 200) {
-				const res = JSON.parse(request.response);
-				const srcBefore = src;
-				id = res.id;
-				name = res.name;
-				description = res.description;
-				src = res.image || '/default.svg';
-				if(srcBefore === src) shouldShowLoading = false;
-			} else {
-				// show error
-			}
-		};
+		params.set('time', currentTime.toString());
+		if(options) {
+			params.set('options', options);
+		}
+		
+		let url = '/api/recomendation';
+
+		params.forEach((value, key) => {
+			url += url.includes('?')? `&${key}=${value}` : `?${key}=${value}`;
+		})
 
 		shouldShowLoading = true;
-
 		animate();
 
-		request.open('post', '/recomendation');
-		request.setRequestHeader('Content-Type', 'application/json');
-		request.send(
-			JSON.stringify({
-				'current-time': new Date().toTimeString().match(/[0-9]{1,2}:[0-9]{2}:[0-9]{2}/)[0],
-				options: { ...options }
-			})
-		);
+		fetch(url)
+		.then((res) => res.json())
+		.then((body) => {
+			const recomedation = body.recomedation;
+			const srcBefore = src;
+			id = recomedation.id;
+			name = recomedation.name.en || recomedation.name.jp;
+			description = recomedation.description ?? '';
+			src = recomedation.image || '/default.svg';
+			if(srcBefore === src) shouldShowLoading = false;
+		})
+		.catch();
 	}
 
 	function save() {

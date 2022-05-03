@@ -1,20 +1,7 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, updateDoc } from 'firebase/firestore';
+import { firestore } from '$lib/firestore';
+import { collection, addDoc, updateDoc } from 'firebase/firestore';
 
-const firebaseConfig = {
-  apiKey: 				import.meta.env.VITE_API_KEY as string,
-  authDomain: 			import.meta.env.VITE_AUTH_DOMAIN as string,
-  projectId: 			import.meta.env.VITE_PROJECT_ID as string,
-  storageBucket: 		import.meta.env.VITE_STORAGE_BUCKET as string,
-  messagingSenderId:	import.meta.env.VITE_MESSAGING_SENDER_ID as string,
-  appId: 				import.meta.env.VITE_APP_ID as string,
-  measurementId: 		import.meta.env.VITE_MEASUREMENT_ID as string,
-};
-
-const firestore = getFirestore(initializeApp(firebaseConfig));
-
-/** @type {import('@sveltejs/kit').RequestHandler}*/
 export const post: RequestHandler = async function ({ request }) {
 	if(!request.headers.get('Content-Type') || request.headers.get('Content-Type')?.search('multipart/form-data') === -1) {
 		return {
