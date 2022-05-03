@@ -1,16 +1,6 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import { initializeApp } from 'firebase/app';
+import { firestore } from '$lib/firestore';
 import { getFirestore, collection, query, where, getDoc, doc, getDocs, limit } from 'firebase/firestore';
-
-const firestore = getFirestore(initializeApp({
-	apiKey: 			import.meta.env.VITE_API_KEY as string,
-	authDomain: 		import.meta.env.VITE_AUTH_DOMAIN as string,
-	projectId: 			import.meta.env.VITE_PROJECT_ID as string,
-	storageBucket: 		import.meta.env.VITE_STORAGE_BUCKET as string,
-	messagingSenderId:	import.meta.env.VITE_MESSAGING_SENDER_ID as string,
-	appId: 				import.meta.env.VITE_APP_ID as string,
-	measurementId: 		import.meta.env.VITE_MEASUREMENT_ID as string,
-}));
 
 export const get: RequestHandler = async function () {
 	const count = (await getDoc(doc(firestore, 'dishes/counter'))).get('count') as number;
