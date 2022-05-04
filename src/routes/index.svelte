@@ -1,6 +1,3 @@
-<script lang="ts" context='module'>
-	export const prerender = true;
-</script>
 <script lang="ts">
 	import Recomendation from '$lib/recomendation.svelte';
 	import Header from '$lib/header.svelte';
@@ -29,7 +26,7 @@
 	<svelte:fragment slot="center">
 		<Logo />
 	</svelte:fragment>
-
+	<a href="/dish/4/temaki">blah</a>
 	<div class="flex space-x-2" slot="right">
 		<div class="hidden sm:inline">
 			<Theme />

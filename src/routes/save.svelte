@@ -1,6 +1,3 @@
-<script lang="ts" context='module'>
-	export const prerender = true;
-</script>
 <script lang="ts">
 	import Header from '$lib/header.svelte';
 	import Footer from '$lib/footer.svelte';
