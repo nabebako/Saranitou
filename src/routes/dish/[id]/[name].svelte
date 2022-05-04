@@ -1,3 +1,6 @@
+<script context='module'>
+	export const prerendering = true;
+</script>
 <script>
 	import Header from '$lib/header.svelte';
 	import Footer from '$lib/footer.svelte';
@@ -14,7 +17,7 @@
 </script>
 
 <svelte:head>
-	<title>{name} • Saranitou</title>
+	<title>{name.en} • Saranitou</title>
 </svelte:head>
 
 <Header>
