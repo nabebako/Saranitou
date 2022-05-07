@@ -36,7 +36,7 @@
 </Header>
 
 <main class="overflow-hidden bg-neutral-100 dark:bg-neutral-600">
-	<div class="my-8">
+	<div class="relative my-8 min-h-[75vh]">
 		<Recomendation />
 	</div>
 </main>
