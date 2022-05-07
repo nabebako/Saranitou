@@ -36,7 +36,9 @@
 </Header>
 
 <main class="overflow-hidden bg-neutral-100 dark:bg-neutral-600">
-	<Recomendation />
+	<div class="my-8">
+		<Recomendation />
+	</div>
 </main>
 
 <Footer />

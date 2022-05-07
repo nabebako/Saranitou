@@ -34,8 +34,4 @@
 		@apply rounded;
 		@apply overflow-hidden;
 	}
-	.overlay {
-		@apply relative;
-		background-color: hsl(293, 6%, 25%, 0.85);
-	}
 </style>
