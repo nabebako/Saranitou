@@ -17,8 +17,16 @@ export const post: RequestHandler = async function ({ request }) {
 		const name 			= formData.get('dish-name') as string;
 		const description 	= formData.get('description') as string;
 		const imageUrl 		= formData.get('image-url') as string;
+		const scriptCheck	= /<script>|<script\/>/;
 
 		if(!name || !description) throw new Error('no name or description provided');
+
+		if(scriptCheck.test(name) || scriptCheck.test(description)) {
+			return {
+				status: 401,
+				body: 'script tag detected; nice try'
+			}
+		}
 
 		const docRef = await addDoc(collection(firestore, 'suggestions'), {
 			name,
@@ -38,7 +46,7 @@ export const post: RequestHandler = async function ({ request }) {
 				});
 			} else {
 				return {
-					status: 400,
+					status: 200,
 					body: {
 						'url-endpoint-status': imageTest.status,
 						'error': 'url endpoint error',
