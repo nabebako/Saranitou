@@ -10,7 +10,10 @@
 	}
 </script>
 
-<div class="relative z-20 hover:cursor-pointer" on:click={toggleSidebar}>
+<div
+	class="relative z-20 rounded-full"
+	on:click={toggleSidebar}
+>
 	<Hamburger canvasWidth={iconSize} canvasHeight={iconSize} />
 </div>
 

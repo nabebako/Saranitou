@@ -12,19 +12,19 @@ html {
 }
 
 .bnt {
-	@apply block w-fit px-3 py-2;
+	@apply flex w-fit px-3 py-2;
 	@apply rounded-xl;
 	@apply hover:cursor-pointer select-none;
 	@apply space-x-2;
 }
 .bnt-sm {
-	@apply block w-fit px-3 py-1;
+	@apply flex w-fit px-3 py-1;
 	@apply rounded-md;
 	@apply hover:cursor-pointer select-none;
 	@apply space-x-2;
 }
 .bnt-inline {
-	@apply inline-block w-fit px-3 py-1;
+	@apply inline-flex w-fit px-3 py-1;
 	@apply rounded-md;
 	@apply hover:cursor-pointer select-none;
 	@apply space-x-2;
@@ -34,9 +34,7 @@ html {
 .bnt-inline {
 	@apply bg-primary-300 text-neutral-100;
 	@apply hover:bg-secondary-300 hover:text-neutral-600;
-	@apply focus:bg-secondary-300 focus:text-neutral-600;
 	@apply transition-colors ease-out;
-	@apply focus:outline-none;
 }
 .bnt img,
 .bnt svg {

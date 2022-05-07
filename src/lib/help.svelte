@@ -39,17 +39,18 @@
 		</div>
 	{/if}
 {:else}
-	<div
-		class="rounded-full p-2 hover:cursor-pointer bg-primary-300 hover:bg-primary-200 transition-colors duration-200"
+	<button
+		class="p-2 rounded-full bg-primary-300 hover:bg-primary-200 transition-colors duration-200"
 		on:mouseover={showHelp}
 		on:mouseleave={hideHelp}
 		on:click={togglePersistantHelp}
-		on:focus
+		on:focus={showHelp}
+		on:blur={hideHelp}
 	>
 		<div class="w-6 h-6 change-color">
 			<p class="text-center">?</p>
 		</div>
-	</div>
+	</button>
 {/if}
 
 <style lang="postcss">

@@ -48,4 +48,6 @@
 	});
 </script>
 
-<canvas height={canvasHeight} width={canvasWidth} on:click={controler.start} bind:this={canvas} />
+<button class="p-2 rounded-full hover:bg-neutral-10 transition-colors ease-out" on:click={controler.start}>
+	<canvas height={canvasHeight} width={canvasWidth} bind:this={canvas} />
+</button>
