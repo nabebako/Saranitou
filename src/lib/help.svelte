@@ -1,6 +1,8 @@
 <script lang="ts" context="module">
 	import { writable } from 'svelte/store';
 
+	let toggleButton: HTMLButtonElement;
+
 	let shouldHelpPersist = false;
 	let isMouseOnHelp = false;
 	const shouldShowHelp = writable(false);
@@ -19,6 +21,7 @@
 			shouldShowHelp.set(true);
 		} else {
 			if (!isMouseOnHelp) shouldShowHelp.set(false);
+			toggleButton.blur();
 		}
 	}
 </script>
@@ -41,6 +44,7 @@
 {:else}
 	<button
 		class="p-2 rounded-full bg-primary-300 hover:bg-primary-200 transition-colors duration-200"
+		bind:this={toggleButton}
 		on:mouseover={showHelp}
 		on:mouseleave={hideHelp}
 		on:click={togglePersistantHelp}

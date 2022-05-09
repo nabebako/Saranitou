@@ -8,7 +8,7 @@
 			if (currentTheme === 'light') return 'dark';
 			else if (currentTheme === 'dark') return 'system';
 			else if (currentTheme === 'system') return 'light';
-			else return 'system';
+			else return 'light';
 		});
 	}
 </script>
@@ -17,7 +17,7 @@
 	import { onMount } from 'svelte';
 
 	onMount(() => {
-		theme.set(localStorage.getItem('theme') ?? 'system');
+		theme.set(localStorage.getItem('theme') ?? 'light');
 		window
 			.matchMedia('(prefers-color-scheme: dark)')
 			.addEventListener('change', () => theme.update((currentTheme) => currentTheme));
@@ -32,7 +32,7 @@
 					? document.documentElement.classList.add('dark')
 					: document.documentElement.classList.remove('dark');
 			} else {
-				theme.set('system');
+				theme.set('light');
 				return;
 			}
 			localStorage.setItem('theme', val);
@@ -42,7 +42,7 @@
 </script>
 
 <button
-	class="flex items-center justify-center h-10 w-10 rounded-full bg-primary-300 hover:bg-primary-200"
+	class="flex items-center justify-center h-10 w-10 rounded-full bg-primary-300 hover:bg-primary-200 transition-colors duration-200 ease"
 	on:click={cycleTheme}
 	title="Theme | {$theme}"
 >

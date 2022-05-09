@@ -1,5 +1,5 @@
 <footer class="w-full text-neutral-100 bg-neutral-700">
-	<div class="mx-6 sm:mx-auto sm:w-4/5 py-4 sm:py-6">
+	<div class="mx-6 sm:mx-auto sm:w-4/5 pb-8 pt-6 sm:py-6">
 		<div class="grid grid-flow-col justify-between gap-6">
 			<div>
 				<ul>
