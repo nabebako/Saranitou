@@ -6,8 +6,7 @@
 	import Theme from '$lib/theme.svelte';
 	import Logo from '$lib/logo.svelte';
 
-	import '$css/layout.css';
-	import '$css/theme.css';
+	import '$css/global.css';
 
 	export let name = {};
 	export let description = '';

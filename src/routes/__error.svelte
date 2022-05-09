@@ -21,8 +21,7 @@
 	import Logo from '$lib/logo.svelte';
 	import DishCard from '$lib/dish-card.svelte';
 
-	import '$css/layout.css';
-	import '$css/theme.css';
+	import '$css/global.css';
 
 	export let items: Array<{}>;
 </script>

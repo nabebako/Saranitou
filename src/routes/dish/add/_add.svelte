@@ -2,8 +2,7 @@
 	import Header from '$lib/header.svelte';
 	import Logo from '$lib/logo.svelte';
 
-	import '$css/layout.css';
-	import '$css/theme.css';
+	import '$css/global.css';
 
 	let form: HTMLFormElement;
 	let previewImage: HTMLImageElement;
