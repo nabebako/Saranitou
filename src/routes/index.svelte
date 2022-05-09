@@ -1,3 +1,7 @@
+<script context='module'>
+	export const prerender = true;
+</script>
+
 <script lang="ts">
 	import Recomendation from '$lib/recomendation.svelte';
 	import Header from '$lib/header.svelte';
