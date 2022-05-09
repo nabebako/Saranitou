@@ -7,38 +7,51 @@
 	import Theme from '$lib/theme.svelte';
 	import Logo from '$lib/logo.svelte';
 
-	import '$css/layout.css';
-	import '$css/theme.css';
+	import '$css/global.css';
 </script>
 
 <svelte:head>
 	<title>Saranitou • Discover and start cooking</title>
 </svelte:head>
 
-<Header>
-	<div class="w-10 flex items-center justify-center" slot="left">
-		<Sidebar iconSize={24}>
-			<div class="sm:hidden" slot="before">
+
+<div class="full-screen grid fullpage-grid min-h-fit">
+	<Header>
+		<div class="w-10 flex items-center justify-center" slot="left">
+			<Sidebar iconSize={24}>
+				<div class="sm:hidden" slot="before">
+					<Theme />
+				</div>
+			</Sidebar>
+		</div>
+		<svelte:fragment slot="center">
+			<Logo />
+		</svelte:fragment>
+		<a href="/dish/4/temaki">blah</a>
+		<div class="flex space-x-2" slot="right">
+			<div class="hidden sm:inline">
 				<Theme />
 			</div>
-		</Sidebar>
-	</div>
-	<svelte:fragment slot="center">
-		<Logo />
-	</svelte:fragment>
-	<a href="/dish/4/temaki">blah</a>
-	<div class="flex space-x-2" slot="right">
-		<div class="hidden sm:inline">
-			<Theme />
+			<Help />
 		</div>
-		<Help />
-	</div>
-</Header>
+	</Header>
+	<main class="overflow-hidden bg-neutral-100 dark:bg-neutral-600">
+		<div class="relative h-full">
+			<div class="py-8">
+				<Recomendation />
+			</div>
+		</div>
+	</main>
+	<Footer />
+</div>
 
-<main class="overflow-hidden bg-neutral-100 dark:bg-neutral-600">
-	<div class="relative my-8 min-h-[75vh]">
-		<Recomendation />
-	</div>
-</main>
-
-<Footer />
+<style lang="postcss">
+	.fullpage-grid {
+		grid-template-rows: auto 1fr auto;
+	}
+	.full-screen {
+		min-height: 100vh;
+		min-height: calc(var(--vh, 1vh) * 100);
+		width: 100vw;
+	}
+</style>
