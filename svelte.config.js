@@ -13,9 +13,6 @@ const config = {
 		  hydrate: true,
 		  router: true
 		},
-		prerender: {
-			default: true,
-		},
 		vite: {
 			resolve: {
 				alias: [
