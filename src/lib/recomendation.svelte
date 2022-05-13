@@ -30,31 +30,39 @@
 		const params = new Map<string, string>();
 		const currentTime = new Date().toTimeString().match(/[0-9]{1,2}:[0-9]{2}:[0-9]{2}/)[0];
 		const options = localStorage.getItem('options');
+		const excludes = localStorage.getItem('seen-dishes');
 
 		params.set('time', currentTime.toString());
-		if(options) {
-			params.set('options', options);
-		}
-		
-		let url = '/api/recomendation';
+		if(options) params.set('options', options);
+		if(excludes) params.set('excludes', excludes.replace(/[\[\]\"\']/g, ''));
 
-		params.forEach((value, key) => {
-			url += url.includes('?')? `&${key}=${value}` : `?${key}=${value}`;
-		})
+		
+		let url = new URL(document.URL);
+		url.pathname = '/api/recomendation';
+
+		params.forEach((value, key) => url.searchParams.set(key, value));
 
 		shouldShowLoading = true;
 		animate();
 
-		fetch(url)
-		.then((res) => res.json())
-		.then((body) => {
-			dish = body.recomendation[0];
-			const recomendation = body.recomendation[0];
-			const srcBefore = src;
-			src = recomendation.image || '/default.svg';
-			if(srcBefore === src) shouldShowLoading = false;
+		fetch(url.toString())
+		.then(async (res) => {
+			if(res.status !== 200) throw new Error(await res.text());
+			return res.json();
 		})
-		.catch();
+		.then((body: APIRecomendationsResponse) => {
+			if(body.recomendations[0]) {
+				dish = body.recomendations[0];
+				const srcBefore = src;
+				src = body.recomendations[0].image || '/default.svg';
+				if(srcBefore === src) shouldShowLoading = false;
+				let seenDishes = (JSON.parse(localStorage.getItem('seen-dishes')) ?? []) as string[];
+				localStorage.setItem('seen-dishes', JSON.stringify([...seenDishes, body.recomendations[0].id]));
+			}
+			if(body.amountAvailable <= 1) localStorage.removeItem('seen-dishes');
+		})
+		.catch((err) => {
+		});
 	}
 
 	function save() {

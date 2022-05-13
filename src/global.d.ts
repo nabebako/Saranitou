@@ -12,3 +12,11 @@ declare interface DocumentDish {
 	ingredients: string[];
 	urlName: string;
 };
+
+declare interface APIRecomendationsResponse {
+	amount: number,
+	amountAvailable: number,
+	excludes: string[],
+	recomendations: DocumentDish[],
+	note?: string,
+};
