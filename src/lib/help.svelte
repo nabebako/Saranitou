@@ -4,15 +4,12 @@
 	let toggleButton: HTMLButtonElement;
 
 	let shouldHelpPersist = false;
-	let isMouseOnHelp = false;
 	const shouldShowHelp = writable(false);
 
 	function showHelp() {
-		isMouseOnHelp = true;
 		shouldShowHelp.set(true);
 	}
 	function hideHelp() {
-		isMouseOnHelp = false;
 		if (!shouldHelpPersist) shouldShowHelp.set(false);
 	}
 	function togglePersistantHelp() {
@@ -20,7 +17,7 @@
 		if (shouldHelpPersist) {
 			shouldShowHelp.set(true);
 		} else {
-			if (!isMouseOnHelp) shouldShowHelp.set(false);
+			shouldShowHelp.set(false);
 			toggleButton.blur();
 		}
 	}

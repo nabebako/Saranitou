@@ -28,10 +28,16 @@
 
 <style lang="postcss">
 	.media-card {
-		@apply h-64;
+		@apply h-48;
 		@apply grid;
-		grid-template-columns: 12rem 1fr;
+		grid-template-columns: 9rem 1fr;
 		@apply rounded;
 		@apply overflow-hidden;
+	}
+	@media screen(lg) {
+		.media-card {
+			@apply h-64;
+			grid-template-columns: 12rem 1fr;
+		}
 	}
 </style>
