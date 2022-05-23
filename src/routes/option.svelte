@@ -16,9 +16,7 @@
 
 	<Header>
 		<div class="w-10 flex items-center justify-center" slot="left">
-			<Sidebar>
-				<a class="bnt" slot="before" href="/">Recomendation</a>
-			</Sidebar>
+			<Sidebar/>
 		</div>
 		<svelte:fragment slot="center">
 			<Logo/>
@@ -29,7 +27,7 @@
 		</div>
 	</Header>
 	<main>
-		<div class="main-container">
+		<div class="main-container p-main">
 			<Options />
 		</div>
 	</main>

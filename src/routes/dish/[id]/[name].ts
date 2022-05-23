@@ -22,7 +22,9 @@ export const get: RequestHandler = async function ({ params }) {
 		} else {
 			return {
 				status: 200,
-				body: props,
+				body: {
+					'dish': props,
+				},
 			};
 		}
 	} catch(err) {

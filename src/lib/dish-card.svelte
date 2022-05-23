@@ -1,8 +1,8 @@
-<script>
-	export let item;
+<script lang="ts">
+	export let item: DocumentDish;
 </script>
 
-<div class="media-card glass">
+<div class="media-card glass font-handwriting">
 	<div class="relative flex justify-end flex-col">
 		<a class="absolute block h-full w-full bg-white" href="/dish/{item.id}/{item.urlName}">
 			<img

@@ -35,7 +35,10 @@ module.exports = {
 			},
 			maxWidth: {
 				'text': '75ch'
-			}
+			},
+		},
+		fontFamily: {
+			'handwriting': ['Nothing You Could Do', 'sans-serif']
 		}
 	},
 	plugins: []

@@ -34,9 +34,7 @@
 <body>
 	<Header>
 		<div slot="left">
-			<Sidebar>
-				<a class="bnt" slot="before" href="/">Recomendation</a>
-			</Sidebar>
+			<Sidebar/>
 		</div>
 		<svelte:fragment slot="center">
 			<Logo/>
@@ -47,12 +45,23 @@
 		</div>
 	</Header>
 	<main>
-		<div class="main-container">
-			<h1 class="text-center text-2xl">Saved list</h1>
-			<div class="media-card-container mt-16">
-				{#each items as item}
-					<DishCard {item} />
-				{/each}
+		<div class="main-container p-main min-h-[calc(var(--vh)*80)] font-handwriting">
+			<p class="text-center text-2xl">Saved list</p>
+			<div class="mt-16">
+				{#if items.length !== 0}
+				<div class="media-card-container">
+					{#each items as item}
+						<DishCard {item} />
+					{/each}
+				</div>
+				{:else}
+				<p class="pb-8 text-center text-xl">You have no dish saved; find some and come back later.</p>
+				<p class="pb-4 text-center text-xl">Start discovering some here:</p>
+				<div class="grid w-fit mx-auto grid-cols-2 gap-12 place-items-center">
+					<a class="link" href="/">Get a recomendation</a>
+					<a class="link" href="/search">Search for them</a>
+				</div>
+				{/if}
 			</div>
 		</div>
 	</main>

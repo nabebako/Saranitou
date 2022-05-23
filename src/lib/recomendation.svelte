@@ -126,7 +126,7 @@
 				<p>Swipe right to skip</p>
 			</Help>
 			{#if shouldShowLoading}
-				<div class="grid justify-center items-center p-12 aspect-square glass rounded-lg">
+				<div class="grid justify-center items-center p-12 aspect-square glass rounded-lg font-handwriting">
 					<Loading />
 				</div>
 			{/if}
@@ -141,10 +141,10 @@
 								on:load={() => shouldShowLoading = false}
 							/>
 							<div class="overlay">
-								<h1 class="text-2xl text-center py-4">{dish.name.en}</h1>
+								<h1 class="py-4 text-2xl text-center font-handwriting">{dish.name.en}</h1>
 							</div>
 							<div class="overlay w-full px-2 py-1 !absolute bottom-0">
-								<p class="h-12 overflow-hidden">
+								<p class="h-12 overflow-hidden font-handwriting">
 									{dish.description}
 								</p>
 							</div>

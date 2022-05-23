@@ -38,7 +38,7 @@
 
 <div>
 	<form id="option-form" on:submit|preventDefault={saveOptions} bind:this={optionForm}>
-		<div class="option-gird">
+		<div class="option-gird font-handwriting">
 			<fieldset class="collapsible" name="meal">
 				<legend>
 					<button
