@@ -2,11 +2,11 @@
 	import type { Load } from '@sveltejs/kit';
 
 	export const load: Load = async function ({ fetch }) {
-		let items = {};
+		let items = [];
 		await fetch('/api/recomendation?amount=2')
 			.then((res) => res.json())
-			.then(({recomendation}) => items = recomendation);
-
+			.then(({ recomendations }: APIRecomendationsResponse) => items = recomendations);
+		
 		return {
 			props: { items },
 		};
@@ -23,7 +23,7 @@
 
 	import '$css/global.css';
 
-	export let items: Array<{}>;
+	export let items: DocumentDish[] = [];
 </script>
 
 <svelte:head>
@@ -37,7 +37,6 @@
 				<div class="sm:hidden">
 					<Theme />
 				</div>
-				<a class="bnt" href="/">Recomendation</a>
 			</svelte:fragment>
 		</Sidebar>
 	</div>
@@ -53,7 +52,7 @@
 </Header>
 
 <main class="overflow-hidden bg-neutral-100 dark:bg-neutral-600">
-	<div class="main-container text-center">
+	<div class="main-container p-main text-center">
 		<section class="flex space-x-8 justify-center items-center">
 			<div>
 				<p class="text-8xl">404</p>
@@ -62,7 +61,7 @@
 			<img class="pointer-events-none" width="400" src="/error.svg" alt="">
 		</section>
 		<section class="space-y-4 max-w-6xl mx-auto">
-			<p class="text-xl">Our recomendation</p>
+			<p class="text-xl font-handwriting">Our recomendations</p>
 			<div class="grid grid-cols-2 gap-8">
 				{#each items as item}
 				<DishCard {item}/>
