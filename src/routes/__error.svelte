@@ -14,11 +14,6 @@
 </script>
 
 <script lang="ts">
-	import Header from '$lib/header.svelte';
-	import Footer from '$lib/footer.svelte';
-	import Sidebar from '$lib/sidebar.svelte';
-	import Theme from '$lib/theme.svelte';
-	import Logo from '$lib/logo.svelte';
 	import DishCard from '$lib/dish-card.svelte';
 
 	import '$css/global.css';
@@ -29,27 +24,6 @@
 <svelte:head>
 	<title>Saranitou • Discover and start cooking</title>
 </svelte:head>
-
-<Header>
-	<div class="w-10 flex items-center justify-center" slot="left">
-		<Sidebar iconSize={24}>
-			<svelte:fragment slot="before">
-				<div class="sm:hidden">
-					<Theme />
-				</div>
-			</svelte:fragment>
-		</Sidebar>
-	</div>
-	<svelte:fragment slot="center">
-		<Logo />
-	</svelte:fragment>
-
-	<div class="flex space-x-2" slot="right">
-		<div class="hidden sm:inline">
-			<Theme />
-		</div>
-	</div>
-</Header>
 
 <main class="overflow-hidden bg-neutral-100 dark:bg-neutral-600">
 	<div class="main-container p-main text-center">
@@ -70,5 +44,3 @@
 		</section>
 	</div>
 </main>
-
-<Footer />
