@@ -62,6 +62,7 @@
 			if(body.amountAvailable <= 1) localStorage.removeItem('seen-dishes');
 		})
 		.catch((err) => {
+
 		});
 	}
 
@@ -241,7 +242,7 @@
 			</button>
 			<a
 				class="bar-element"
-				href="/dish/{dish.id}/{dish.urlName}"
+				href="https://www.google.com/search?q={dish.urlName}"
 				target="_blank"
 				rel="noopener noreferrer"
 				transition:fade={{duration: 200, easing: cubicOut}}

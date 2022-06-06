@@ -1,17 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import Header from '$lib/header.svelte';
-	import Footer from '$lib/footer.svelte';
-	import Sidebar from '$lib/sidebar.svelte';
-	import Help from '$lib/help.svelte';
-	import Theme from '$lib/theme.svelte';
-	import Logo from '$lib/logo.svelte';
 	import DishCard from '$lib/dish-card.svelte';
+	import Loading from '$lib/animation/loading.svelte';
 
 	import '$css/global.css';
 
 	let items = [];
+	let shouldShowLoading = true;
 
 	onMount(() => {
 		fetch('/api/database', {
@@ -22,7 +18,10 @@
 				body: localStorage.getItem('dish-ids') ?? '',
 			})
 		.then((res) => res.json())
-		.then((res) => items = res)
+		.then((res) => {
+			items = res;
+			shouldShowLoading = false;
+		})
 		.catch();
 	});
 </script>
@@ -31,44 +30,39 @@
 	<title>Liked Dishes • Saranitou</title>
 </svelte:head>
 
-<body>
-	<Header>
-		<div slot="left">
-			<Sidebar/>
+<main>
+	<div class="grid main-container p-main min-h-[calc(var(--vh)*80)] font-handwriting">
+		<p class="text-center text-2xl">Saved list</p>
+		{#if shouldShowLoading}
+		<div class="grid w-full h-full center-contents">
+			<Loading/>
 		</div>
-		<svelte:fragment slot="center">
-			<Logo/>
-		</svelte:fragment>
-		<div class="flex space-x-2" slot="right">
-			<Theme />
-			<Help />
-		</div>
-	</Header>
-	<main>
-		<div class="main-container p-main min-h-[calc(var(--vh)*80)] font-handwriting">
-			<p class="text-center text-2xl">Saved list</p>
-			<div class="mt-16">
-				{#if items.length !== 0}
-				<div class="media-card-container">
-					{#each items as item}
-						<DishCard {item} />
-					{/each}
-				</div>
-				{:else}
-				<p class="pb-8 text-center text-xl">You have no dish saved; find some and come back later.</p>
-				<p class="pb-4 text-center text-xl">Start discovering some here:</p>
-				<div class="grid w-fit mx-auto grid-cols-2 gap-12 place-items-center">
-					<a class="link" href="/">Get a recomendation</a>
-					<a class="link" href="/search">Search for them</a>
-				</div>
-				{/if}
+		{:else}
+		<div class="mt-16 h-full">
+			{#if items.length !== 0}
+			<div class="media-card-container">
+				{#each items as item}
+				<DishCard {item} />
+				{/each}
 			</div>
+			{:else}
+			<p class="pb-8 text-center text-xl">You have no dish saved; find some and come back later.</p>
+			<p class="pb-4 text-center text-xl">Start discovering some here:</p>
+			<div class="grid w-fit mx-auto grid-cols-2 gap-12 place-items-center">
+				<a class="link" href="/">Get a recomendation</a>
+				<a class="link" href="/search">Search for them</a>
+			</div>
+			{/if}
 		</div>
-	</main>
-	<Footer />
-</body>
+		{/if}
+	</div>
+</main>
 
 <style lang="postcss">
+	.main-container {
+		grid-template-rows: auto 1fr;
+	}
+
 	.media-card-container {
 		@apply grid gap-4;
 		grid-template-columns: 1fr;

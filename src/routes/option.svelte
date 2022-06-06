@@ -1,11 +1,5 @@
 <script>
 	import Options from '$lib/options.svelte';
-	import Header from '$lib/header.svelte';
-	import Sidebar from '$lib/sidebar.svelte';
-	import Help from '$lib/help.svelte';
-	import Theme from '$lib/theme.svelte';
-	import Footer from '$lib/footer.svelte';
-	import Logo from '$lib/logo.svelte';
 
 	import '$css/global.css';
 </script>
@@ -14,21 +8,8 @@
 	<title>Option • Saranitou</title>
 </svelte:head>
 
-	<Header>
-		<div class="w-10 flex items-center justify-center" slot="left">
-			<Sidebar/>
-		</div>
-		<svelte:fragment slot="center">
-			<Logo/>
-		</svelte:fragment>
-		<div class="flex space-x-2" slot="right">
-			<Theme />
-			<Help />
-		</div>
-	</Header>
-	<main>
-		<div class="main-container p-main">
-			<Options />
-		</div>
-	</main>
-	<Footer />
+<main>
+	<div class="main-container p-main">
+		<Options />
+	</div>
+</main>

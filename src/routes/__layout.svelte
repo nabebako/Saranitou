@@ -1,4 +1,7 @@
 <script>
+	import Header from "$lib/header.svelte";
+	import Footer from "$lib/footer.svelte";
+
 	import { onMount } from "svelte";
 
 	onMount(() => {
@@ -8,4 +11,11 @@
 		});
 	});
 </script>
-<slot></slot>
+
+<div class="main">	
+	<Header/>
+	
+	<slot></slot>
+	
+	<Footer/>
+</div>

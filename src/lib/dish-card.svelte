@@ -15,10 +15,9 @@
 			/>
 		</a>
 		<div class="overlay p-4">
-			<a
-				class="text-base text-white hover:text-secondary-300 transition-colors duration-300"
-				href="/dish/{item.id}/{item.urlName}">{item.name.en}</a
-			>
+			<span class="text-base text-white hover:text-secondary-300 transition-colors duration-300">
+				{item.name.en}
+			</span>
 		</div>
 	</div>
 	<div class="p-4">

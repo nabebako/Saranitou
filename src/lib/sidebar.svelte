@@ -2,8 +2,7 @@
 	import Hamburger from '$lib/animation/hamburger.svelte';
 
 	export let iconSize: number = 24;
-
-	let shouldShow = false;
+	export let shouldShow = false;
 
 	function toggleSidebar() {
 		shouldShow = !shouldShow;
@@ -17,8 +16,8 @@
 	<Hamburger canvasWidth={iconSize} canvasHeight={iconSize} />
 </div>
 
-<div class="sidebar-container" should-show={shouldShow}>
-	<div class="px-4 pt-24 md:pt-32 pb-8 grid gap-4 bg-neutral-100 dark:bg-neutral-600">
+<div class="sidebar-container bg-neutral-100 dark:bg-neutral-600" should-show={shouldShow}>
+	<div class="px-4 pt-24 md:pt-32 pb-8 grid gap-4">
 		<slot name="before" />
 		<a class="link" href="/">Recomendation</a>
 		<a class="link" href="/save">View saved</a>
