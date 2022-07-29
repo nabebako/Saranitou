@@ -1,6 +1,6 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import { firestore } from '$lib/firestore';
-import { collection, query, where, getDoc, doc, getDocs, limit, DocumentData } from 'firebase/firestore';
+import { collection, query, where, getDoc, doc, getDocs, limit } from 'firebase/firestore';
 
 export const get: RequestHandler = async function ({ url }) {
 
@@ -10,7 +10,7 @@ export const get: RequestHandler = async function ({ url }) {
 	let ids: string[] = [];
 
 	try {
-		const count = (await getDoc(doc(firestore, 'dishes/counter'))).get('count') as number;
+		const count = (await getDoc(doc(firestore, 'counter/dish'))).get('count') as number;
 		const countAvailable = count - excludes.length;
 		
 		if(countAvailable < 1) {

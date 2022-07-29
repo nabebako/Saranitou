@@ -10,19 +10,24 @@
 	let shouldShowLoading = true;
 
 	onMount(() => {
-		fetch('/api/database', {
+		const dishs = localStorage.getItem('dish-ids');
+		if (dishs) {
+			fetch('/api/database', {
 				method: 'post',
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: localStorage.getItem('dish-ids') ?? '',
+				body: dishs,
 			})
-		.then((res) => res.json())
-		.then((res) => {
-			items = res;
+			.then((res) => res.json())
+			.then((res) => {
+				items = res;
+				shouldShowLoading = false;
+			})
+			.catch();
+		} else {
 			shouldShowLoading = false;
-		})
-		.catch();
+		}
 	});
 </script>
 
