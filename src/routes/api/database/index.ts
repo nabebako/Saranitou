@@ -37,6 +37,4 @@ export const post: RequestHandler = async function ({ request }) {
 			body: 'json structure not acceptable, only accepts array',
 		}
 	}
-
-
 }

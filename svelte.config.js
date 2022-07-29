@@ -11,16 +11,16 @@ const config = {
 		adapter: adapter(),
 		browser: {
 		  hydrate: true,
-		  router: true
+		  router: false,
 		},
 		vite: {
 			resolve: {
 				alias: [
 					{ find: '$static', 	replacement: path.resolve('static') },
 					{ find: '$css', 	replacement: path.resolve('src/css') },
-				]
-			}
-		}
+				],
+			},
+		},
 	},
 
 	// Consult https://github.com/sveltejs/svelte-preprocess
@@ -29,9 +29,12 @@ const config = {
 	preprocess: [
 		preprocess({
 			postcss: {
-				plugins: [autoprefixer(), tailwindcss()]
-			}
-		})
+				plugins: [
+					autoprefixer(),
+					tailwindcss(),
+				],
+			},
+		}),
 	],
 };
 
