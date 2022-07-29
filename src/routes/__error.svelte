@@ -1,14 +1,18 @@
 <script lang="ts" context='module'>
 	import type { Load } from '@sveltejs/kit';
 
-	export const load: Load = async function ({ fetch }) {
+	export const load: Load = async function ({ error, status, fetch }) {
 		let items = [];
 		await fetch('/api/recomendation?amount=2')
 			.then((res) => res.json())
 			.then(({ recomendations }: APIRecomendationsResponse) => items = recomendations);
 		
 		return {
-			props: { items },
+			props: {
+				items,
+				errorMessage: error.message,
+				status,
+			},
 		};
 	}
 </script>
@@ -19,6 +23,8 @@
 	import '$css/global.css';
 
 	export let items: DocumentDish[] = [];
+	export let errorMessage: string = '';
+	export let status: number = 0;
 </script>
 
 <svelte:head>
@@ -29,8 +35,8 @@
 	<div class="main-container p-main text-center">
 		<section class="flex space-x-8 justify-center items-center">
 			<div>
-				<p class="text-8xl">404</p>
-				<p class="text-xl">Page not found</p>
+				<p class="text-8xl">{status}</p>
+				<p class="text-xl">{errorMessage}</p>
 			</div>
 			<img class="pointer-events-none" width="400" src="/error.svg" alt="">
 		</section>
