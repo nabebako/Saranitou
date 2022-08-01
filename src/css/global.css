@@ -18,6 +18,7 @@ html {
 	@apply bg-neutral-700;
 	font-family: 'Space Mono', monospace;
 }
+
 body {
 	@apply bg-neutral-100 dark:bg-neutral-600;
 	@apply text-neutral-700 dark:text-neutral-100;
@@ -30,18 +31,21 @@ body {
 	@apply hover:cursor-pointer select-none;
 	@apply space-x-2;
 }
+
 .bnt-sm {
 	@apply flex w-fit px-3 py-1;
 	@apply rounded-md;
 	@apply hover:cursor-pointer select-none;
 	@apply space-x-2;
 }
+
 .bnt-inline {
 	@apply inline-flex w-fit px-3 py-1;
 	@apply rounded-md;
 	@apply hover:cursor-pointer select-none;
 	@apply space-x-2;
 }
+
 .bnt,
 .bnt-sm,
 .bnt-inline {
@@ -49,10 +53,12 @@ body {
 	@apply hover:bg-secondary-300 hover:text-neutral-600;
 	@apply transition-colors ease-out;
 }
+
 .bnt img,
 .bnt svg {
 	@apply h-6;
 }
+
 .bnt-sm img,
 .bnt-sm svg,
 .bnt-inline img,
@@ -74,6 +80,7 @@ body {
 .flex-center-contents {
 	@apply justify-center items-center;
 }
+
 .center-contents {
 	@apply justify-center items-center;
 }
@@ -82,6 +89,7 @@ body {
 	max-width: 80rem;
 	@apply mx-auto px-8;
 }
+
 .p-main {
 	@apply py-12;
 }
@@ -90,18 +98,22 @@ body {
 	@apply flex items-center space-x-2;
 	@apply w-full;
 }
+
 .checkbox-input input {
 	@apply appearance-none;
 	@apply grid w-4 h-4 m-0;
 	@apply bg-transparent;
 	@apply border-2 rounded-full border-neutral-300;
 }
+
 .checkbox-input input:hover {
 	@apply border-primary-200;
 }
+
 .checkbox-input input:checked {
 	@apply border-0;
 }
+
 .checkbox-input input::before {
 	content: '';
 	@apply block;
@@ -111,9 +123,11 @@ body {
 	@apply transition-transform duration-75;
 	@apply scale-0;
 }
+
 .checkbox-input input:checked::before {
 	@apply scale-100;
 }
+
 .checkbox-input label {
 	@apply block;
 	@apply w-full pl-2;
@@ -121,11 +135,13 @@ body {
 	@apply text-neutral-700 dark:text-neutral-100;
 	@apply transition-colors;
 }
+
 .checkbox-input label:hover {
 	@apply cursor-pointer;
 	@apply text-primary-200;
 }
-.checkbox-input input:checked ~ label {
+
+.checkbox-input input:checked~label {
 	@apply text-primary-300;
 }
 
@@ -133,27 +149,32 @@ body {
 	@apply relative;
 	@apply border-t-8 border-transparent;
 }
+
 .text-input input,
 .text-input textarea {
-	@apply p-2;
+	@apply py-2 px-4;
 	@apply bg-transparent appearance-none;
 	@apply text-neutral-600 dark:text-neutral-100;
 	@apply border-2 rounded border-neutral-600 dark:border-neutral-100;
 	@apply transition-colors;
 	@apply outline-none;
 }
+
 .text-input input:enabled:hover,
 .text-input textarea:enabled:hover {
 	@apply border-primary-200;
 }
+
 .text-input input:disabled:hover,
 .text-input textarea:disabled:hover {
 	@apply cursor-not-allowed;
 }
+
 .text-input input:focus,
 .text-input textarea:focus {
 	@apply border-primary-300;
 }
+
 .text-input label {
 	@apply absolute left-3 top-0 -translate-y-1/2 z-20;
 	@apply block w-fit h-4 px-1;
@@ -164,12 +185,14 @@ body {
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 	transition-duration: 150ms;
 }
-.text-input input:focus ~ label,
-.text-input textarea:focus ~ label {
+
+.text-input input:focus~label,
+.text-input textarea:focus~label {
 	@apply text-primary-300;
 }
-.text-input input:disabled ~ label:hover,
-.text-input textarea:disabled ~ label:hover {
+
+.text-input input:disabled~label:hover,
+.text-input textarea:disabled~label:hover {
 	@apply cursor-not-allowed;
 }
 
@@ -178,7 +201,36 @@ body {
 	background-color: hsl(293, 6%, 25%, 0.85);
 }
 
-.glass {
-	background: rgba(255, 255, 255, 0.2);
-	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+@layer utilities {
+	.glass {
+		@apply border border-neutral-200;
+		@apply bg-white;
+		box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+	}
+
+	.box-shadow-sm {
+		box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+	}
+
+	.glass-shadow {
+		@apply relative inline-block;
+		@apply border rounded;
+		@apply transition-all duration-75 ease-out;
+		box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+	}
+
+	.glass-shadow::after {
+		content: '';
+		@apply absolute;
+		@apply w-full h-full;
+		@apply top-0 left-0 -z-10;
+		@apply border rounded;
+		@apply opacity-0;
+		@apply transition-all duration-75 ease-out;
+		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+	}
+
+	.glass-shadow:hover::after {
+		opacity: 1;
+	}
 }

@@ -12,10 +12,20 @@
 	});
 </script>
 
-<div class="main">	
+<div class="main">
 	<Header/>
-	
+
 	<slot></slot>
-	
+
 	<Footer/>
 </div>
+
+<style lang="postcss">
+	:global(.main) {
+		@apply grid min-h-fit;
+		grid-template-rows: auto 1fr auto;
+		min-height: 100vh;
+		min-height: calc(var(--vh, 1vh) * 100);
+		width: 100%;
+	}
+</style>

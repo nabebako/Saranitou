@@ -16,11 +16,12 @@
 	<Hamburger canvasWidth={iconSize} canvasHeight={iconSize} />
 </div>
 
-<div class="sidebar-container bg-neutral-100 dark:bg-neutral-600" should-show={shouldShow}>
+<div class="sidebar-container bg-white dark:bg-neutral-600 box-shadow-sm" should-show={shouldShow}>
 	<div class="px-4 pt-24 md:pt-32 pb-8 grid gap-4">
 		<slot name="before" />
 		<a class="link" href="/">Recomendation</a>
 		<a class="link" href="/save">View saved</a>
+		<a class="link" href="/search">Search</a>
 		<a class="link" href="/option">Options</a>
 		<slot name="after" />
 	</div>
