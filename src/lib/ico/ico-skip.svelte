@@ -1,0 +1,30 @@
+<script lang="ts">
+	import def from './ico-default';
+
+	export let width = def.width;
+	export let height = def.height;
+	export let classCss = '';
+</script>
+
+<svg
+	{width}
+	{height}
+	class={classCss}
+	viewBox="0 0 240 240"
+	fill="none"
+	xmlns="http://www.w3.org/2000/svg"
+>
+	<rect x="196" y="10" width="18" height="220" rx="9" fill="#E4687C" fill-opacity="0.8" />
+	<path
+		class="tri-3"
+		d="M192.483 112.247C197.395 116.249 197.395 123.751 192.483 127.753L96.066 206.301C89.5331 211.623 79.75 206.974 79.75 198.548L79.75 41.4521C79.75 33.0257 89.5331 28.377 96.066 33.6992L192.483 112.247Z"
+		fill="#E4687C"
+		fill-opacity="0.8"
+	/>
+	<path
+		class="tri-2"
+		d="M140.483 112.247C145.395 116.249 145.395 123.751 140.483 127.753L44.066 206.301C37.5331 211.623 27.75 206.974 27.75 198.548L27.75 41.4521C27.75 33.0257 37.5331 28.377 44.066 33.6992L140.483 112.247Z"
+		fill="#EC96A4"
+		fill-opacity="0.8"
+	/>
+</svg>
