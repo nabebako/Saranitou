@@ -201,10 +201,17 @@ body {
 	background-color: hsl(293, 6%, 25%, 0.85);
 }
 
+.card-grid {
+	@apply grid;
+	@apply gap-8 justify-between align-middle;
+	grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
+}
+
 @layer utilities {
 	.glass {
+		@apply relative z-10;
 		@apply border border-neutral-200;
-		@apply bg-white;
+		@apply bg-transparent;
 		box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
 	}
 

@@ -32,7 +32,10 @@
 
 {#if $$slots.default}
 	{#if $shouldShowHelp}
-		<div transition:fade={{ duration: 300, easing: cubicInOut }} class="absolute {position} z-50">
+		<div
+			transition:fade={{ duration: 300, easing: cubicInOut }}
+			class="absolute {position} z-50"
+		>
 			<div class="p-4 rounded-md bg-neutral-700 text-white">
 				<slot />
 			</div>
@@ -40,7 +43,7 @@
 	{/if}
 {:else}
 	<button
-		class="p-2 rounded-full bg-primary-300 hover:bg-primary-200 transition-colors duration-200"
+		class="p-2 rounded-full transition-colors duration-200 hover:bg-neutral-10"
 		bind:this={toggleButton}
 		on:mouseover={showHelp}
 		on:mouseleave={hideHelp}
@@ -49,15 +52,7 @@
 		on:blur={hideHelp}
 	>
 		<div class="w-6 h-6 change-color">
-			<p class="text-center">?</p>
+			<p class="text-center text-primary-300 text-xl">?</p>
 		</div>
 	</button>
 {/if}
-
-<style lang="postcss">
-	.change-color * {
-		@apply text-neutral-100 dark:text-neutral-700;
-		@apply fill-neutral-100 dark:fill-neutral-700;
-		@apply stroke-neutral-100 dark:stroke-neutral-700;
-	}
-</style>
