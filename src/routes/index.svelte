@@ -8,10 +8,6 @@
 	<title>Saranitou • Discover and start cooking</title>
 </svelte:head>
 
-<main class="overflow-hidden bg-neutral-100 dark:bg-neutral-600">
-	<div class="relative h-full">
-		<div class="py-8">
-			<Recomendation />
-		</div>
-	</div>
+<main class="relative h-full bg-neutral-100 dark:bg-neutral-600">
+	<Recomendation />
 </main>

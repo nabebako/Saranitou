@@ -43,7 +43,9 @@
 	{/if}
 {:else}
 	<button
-		class="p-2 rounded-full transition-colors duration-200 hover:bg-neutral-10"
+		class="p-2 rounded-full transition-colors duration-200 hover:bg-neutral-10 {$shouldShowHelp
+			? 'bg-neutral-10'
+			: ''}"
 		bind:this={toggleButton}
 		on:mouseover={showHelp}
 		on:mouseleave={hideHelp}

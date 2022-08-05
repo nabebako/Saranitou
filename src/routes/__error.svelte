@@ -1,26 +1,27 @@
-<script lang="ts" context='module'>
+<script lang="ts" context="module">
 	import type { Load } from '@sveltejs/kit';
 
 	export const load: Load = async function ({ error, status, fetch }) {
 		let items = [];
 		await fetch('/api/recomendation?amount=2')
 			.then((res) => res.json())
-			.then(({ recomendations }: APIRecomendationsResponse) => items = recomendations);
-		
+			.then(({ recomendations }: APIRecomendationsResponse) => (items = recomendations));
+
 		return {
 			props: {
 				items,
 				errorMessage: error.message,
-				status,
-			},
+				status
+			}
 		};
-	}
+	};
 </script>
 
 <script lang="ts">
 	import DishCard from '$lib/dish-card.svelte';
 
 	import '$css/global.css';
+	import IcoError from '../lib/ico/ico-error.svelte';
 
 	export let items: DocumentDish[] = [];
 	export let errorMessage: string = '';
@@ -38,13 +39,13 @@
 				<p class="text-8xl">{status}</p>
 				<p class="text-xl">{errorMessage}</p>
 			</div>
-			<img class="pointer-events-none" width="400" src="/error.svg" alt="">
+			<IcoError height={400} width={400} />
 		</section>
 		<section class="space-y-4 max-w-6xl mx-auto">
 			<p class="text-xl font-handwriting">Our recomendations</p>
 			<div class="grid grid-cols-2 gap-8">
 				{#each items as item}
-				<DishCard {item}/>
+					<DishCard {item} />
 				{/each}
 			</div>
 		</section>

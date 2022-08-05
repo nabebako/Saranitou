@@ -35,10 +35,10 @@
 	<title>Liked Dishes • Saranitou</title>
 </svelte:head>
 
-<main>
+<main class="relative min-h-full">
 	<p class="text-center text-2xl font-handwriting">Saved list</p>
 	{#if shouldShowLoading}
-		<div class="grid w-full h-full center-contents">
+		<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
 			<Loading />
 		</div>
 	{:else}
