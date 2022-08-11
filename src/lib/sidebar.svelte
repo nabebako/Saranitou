@@ -9,10 +9,7 @@
 	}
 </script>
 
-<div
-	class="relative z-20 rounded-full"
-	on:click={toggleSidebar}
->
+<div class="relative z-20 rounded-full" on:click={toggleSidebar}>
 	<Hamburger canvasWidth={iconSize} canvasHeight={iconSize} />
 </div>
 
@@ -22,7 +19,6 @@
 		<a class="link" href="/">Recomendation</a>
 		<a class="link" href="/save">View saved</a>
 		<a class="link" href="/search">Search</a>
-		<a class="link" href="/option">Options</a>
 		<slot name="after" />
 	</div>
 </div>
