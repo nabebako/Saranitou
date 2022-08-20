@@ -2,19 +2,19 @@ import type { RequestHandler } from '@sveltejs/kit';
 import { firestore } from '$lib/firestore';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
-export const post: RequestHandler = async function ({ request }) {
-	if(request.headers.get('Content-Type') !== 'application/json') {
+export const POST: RequestHandler = async function ({ request }) {
+	if (request.headers.get('Content-Type') !== 'application/json') {
 		return {
 			status: 400,
 			body: 'only supports application/json',
-		}
+		};
 	}
 
 	try {
 		let ids = await request.json() as Array<string>;
 		ids = ids.filter((val) => !!val);
 
-		if(!ids) {
+		if (!ids) {
 			return {
 				status: 200,
 				body: {},
@@ -35,6 +35,6 @@ export const post: RequestHandler = async function ({ request }) {
 		return {
 			status: 400,
 			body: 'json structure not acceptable, only accepts array',
-		}
+		};
 	}
-}
+};
