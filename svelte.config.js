@@ -2,6 +2,7 @@ import adapter from '@sveltejs/adapter-vercel';
 import preprocess from 'svelte-preprocess';
 import autoprefixer from 'autoprefixer';
 import tailwindcss from 'tailwindcss';
+import { getPathes } from './paths.js';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -9,7 +10,7 @@ const config = {
 	kit: {
 		prerender: {
 			enabled: true,
-			entries: ['/dish/1'],
+			entries: await getPathes(),
 			crawl: false,
 		},
 		adapter: adapter(),

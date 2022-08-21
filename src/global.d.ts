@@ -13,6 +13,8 @@ declare interface DocumentDish {
 	urlName: string;
 };
 
+declare type APIDatabase = DocumentDish[];
+
 declare interface APIRecomendationsResponse {
 	amount: number,
 	amountAvailable: number,
