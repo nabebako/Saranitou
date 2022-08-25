@@ -1,6 +1,8 @@
 <script lang="ts" context="module">
 	import type { Load } from '@sveltejs/kit';
 
+	export const prerender = true;
+
 	export const load: Load = async function ({ params, fetch }) {
 		const { id } = params;
 		const dish = await fetch('/api/database', {
@@ -16,32 +18,21 @@
 			props: { dish }
 		};
 	};
-
-	export const prerender = true;
 </script>
 
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import IcoSkip from '$lib/ico/ico-skip.svelte';
-	import Footer from '$lib/footer.svelte';
-	import Header from '$lib/header.svelte';
 	import IcoSave from '$lib/ico/ico-save.svelte';
+	import IcoSymlink from '../../../lib/ico/ico-symlink.svelte';
 
 	export let dish: DocumentDish;
 
 	let showContent = false;
-	let rgbHero = { r: 0, g: 0, b: 0 };
 	let next: DocumentDish;
+	const icoSize = 64;
 
 	onMount(() => {
-		window.addEventListener('wheel', (ev) => {
-			if (ev.deltaY > 0) showContent = true;
-		});
-
-		window.addEventListener('scroll', () => {
-			if (window.scrollY === 0) showContent = false;
-		});
-
 		let seen = JSON.parse(localStorage.getItem('seen') || '[]') as string[];
 		seen.push(dish.id);
 
@@ -77,82 +68,24 @@
 />
 
 <div
-	class="fixed z-10 top-0 w-full {showContent
-		? 'translate-y-0'
-		: '-translate-y-full'} transition-transform duration-500 overflow-hidden}"
+	class="flex items-center justify-around w-full h-[calc(var(--vh)*100)] object-cover bg-no-repeat bg-clip-content bg-cover bg-center bg-black"
+	style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({dish.image});"
 >
-	<Header />
-</div>
-
-<div
-	class="flex items-center justify-around w-full h-screen object-cover bg-no-repeat bg-clip-content bg-cover bg-center bg-black"
-	style="background-image: linear-gradient(rgba({rgbHero.r}, {rgbHero.g}, {rgbHero.b}, 0.4), rgba({rgbHero.r}, {rgbHero.g}, {rgbHero.b}, 0.4)), url({dish.image});"
->
-	<div class="side-control-div opacity-40 grayscale p-32">
-		<button class="p-2" on:click={save}>
-			<IcoSave height={64} width={null} />
-		</button>
-	</div>
-	<p class="text-center title text-white">{dish.name.en}</p>
-	<div class="side-control-div opacity-40 grayscale p-32">
-		<button class="p-2" on:click={skip}>
-			<IcoSkip height={64} width={null} />
-		</button>
+	<div>
+		<h1 class="text-center title text-white">{dish.name.en}</h1>
+		<div class="flex gap-32 pt-4 justify-center">
+			<button class="p-6 interactive" on:click={save}>
+				<IcoSave height={icoSize} width={icoSize} />
+			</button>
+			<a class="p-6 interactive" href="https://www.google.com" target="_blank">
+				<IcoSymlink height={icoSize} width={icoSize} />
+			</a>
+			<button class="p-6 interactive" on:click={skip}>
+				<IcoSkip height={icoSize} width={icoSize} />
+			</button>
+		</div>
 	</div>
 </div>
-
-{#if showContent}
-	<div class="max-w-[60ch] mx-auto text-2xl my-16">
-		<section>
-			<p class="mb-4">🕛 2 hours 40 minutes</p>
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium eius fugiat
-				provident distinctio aliquam minus veritatis architecto excepturi ab optio, neque
-				cum quisquam ducimus deserunt laboriosam doloribus recusandae nobis nihil?
-			</p>
-		</section>
-		<section>
-			<h2 class="mb-2">Ingredients</h2>
-			<ul>
-				<li>Shit</li>
-				<li>Crap</li>
-				<li>Wood</li>
-				<li>Socks</li>
-				<li>RAM</li>
-				<li>CPU</li>
-				<li>Copium</li>
-				<li>Alcohol</li>
-				<li>Mercury</li>
-			</ul>
-		</section>
-		<section>
-			<h2 class="mb-2">Instructions</h2>
-			<h3 class="mb-1">To Make Pickled Lotus Root & Ginger</h3>
-			<ul>
-				<li>Gather all the ingredients.</li>
-				<li>
-					Combine rice vinegar, sugar, and kosher salt in a small saucepan. Bring it to a
-					boil and let the sugar dissolved completely. Set aside to cool.
-				</li>
-				<li>
-					Peel and cut the ginger into julienne strips (thinner the better). Peel the
-					lotus root and cut out the edge to make a flower shape (Read my Hana Renkon
-					tutorial).
-				</li>
-				<li>
-					Slice the lotus root into ⅛ inch (3 mm) and soak in vinegar water (add 1 tsp
-					rice vinegar to the water) for 5 minutes to prevent it from turning brown.
-				</li>
-				<li>
-					Boil water in a small saucepan and blanch the ginger and lotus root for 3
-					minutes. Drain well and transfer them to the vinegar mixture to marinate. You
-					can make this ahead and keep it up to 1 week in the refrigerator.
-				</li>
-			</ul>
-		</section>
-	</div>
-	<Footer />
-{/if}
 
 <style lang="postcss">
 	.title {
@@ -163,35 +96,9 @@
 		letter-spacing: 0.08em;
 	}
 
-	p,
-	ul,
-	li,
-	h3 {
-		font-family: 'Cormorant Garamond', serif;
-	}
-	li {
-		list-style-type: disc;
-		list-style-position: inside;
-		margin-left: 2ch;
-	}
-	h2 {
-		font-family: 'Montserrat', sans-serif;
-		@apply text-primary-300;
-		font-size: 2rem;
-		letter-spacing: 0.02em;
-		font-variant: small-caps;
-	}
-
-	section {
-		@apply mb-12;
-	}
-
-	.side-control-div {
-		@apply transition-all;
-		@apply duration-500 ease-out;
-	}
-
-	.side-control-div:hover {
-		@apply grayscale-0 opacity-100;
+	.interactive {
+		@apply grayscale hover:grayscale-0;
+		@apply opacity-50 hover:opacity-100;
+		@apply transition-all duration-500 ease-out;
 	}
 </style>
