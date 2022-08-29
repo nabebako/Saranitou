@@ -17,7 +17,9 @@
 	import { onMount } from 'svelte';
 	import IcoThemeLight from './ico/ico-theme-light.svelte';
 	import IcoThemeDark from './ico/ico-theme-dark.svelte';
-	import IcoThemeOs from './ico/ico-theme-os.svelte';
+	import IcoThemeOs from './ico/ico-theme-system.svelte';
+
+	export let iconSize = 24;
 
 	onMount(() => {
 		theme.set(localStorage.getItem('theme') ?? 'light');
@@ -44,16 +46,12 @@
 	});
 </script>
 
-<button
-	class="flex items-center justify-center h-10 w-10 rounded-full transition-colors duration-200 ease hover:bg-neutral-10"
-	on:click={cycleTheme}
-	title="Theme | {$theme}"
->
+<button class="block" on:click={cycleTheme} title="Theme | {$theme}">
 	{#if $theme === 'light'}
-		<IcoThemeLight classCss="fill-primary-300 stroke-primary-300" />
+		<IcoThemeLight width={iconSize} height={iconSize} />
 	{:else if $theme === 'dark'}
-		<IcoThemeDark classCss="fill-primary-300 stroke-primary-300" />
+		<IcoThemeDark width={iconSize} height={iconSize} />
 	{:else}
-		<IcoThemeOs classCss="fill-primary-300 stroke-primary-300" />
+		<IcoThemeOs width={iconSize} height={iconSize} />
 	{/if}
 </button>

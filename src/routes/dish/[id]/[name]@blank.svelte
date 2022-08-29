@@ -24,15 +24,15 @@
 	import { onMount } from 'svelte';
 	import IcoSkip from '$lib/ico/ico-skip.svelte';
 	import IcoSave from '$lib/ico/ico-save.svelte';
-	import IcoSymlink from '../../../lib/ico/ico-symlink.svelte';
-	import IcoBookmark from '../../../lib/ico/ico-bookmark.svelte';
-	import IcoSearch from '../../../lib/ico/ico-search.svelte';
-	import IcoSaranitouSm from '../../../lib/ico/logo/ico-saranitou-sm.svelte';
-	import IcoGithub from '../../../lib/ico/logo/ico-github.svelte';
+	import IcoSymlink from '$lib/ico/ico-link.svelte';
+	import IcoBookmark from '$lib/ico/ico-bookmark.svelte';
+	import IcoSearch from '$lib/ico/ico-search.svelte';
+	import IcoSaranitouSm from '$lib/ico/logo/ico-saranitou-sm.svelte';
+	import IcoGithub from '$lib/ico/logo/ico-github.svelte';
+	import Theme from '../../../lib/theme.svelte';
 
 	export let dish: DocumentDish;
 
-	let showContent = false;
 	let next: DocumentDish;
 
 	const icoSize = 64;
@@ -48,11 +48,14 @@
 		fetch(url)
 			.then((res) => res.json() as Promise<APIRecomendationsResponse>)
 			.then((body) => {
+				if (body.amountAvailable <= 1) localStorage.setItem('seen', '[]');
 				next = body.recomendations[0];
 			})
 			.catch((err) => {
 				console.log(err);
 			});
+
+		localStorage.setItem('seen', JSON.stringify(seen));
 	});
 
 	function save() {
@@ -87,6 +90,9 @@
 			<a class="block p-2 interactive" href="/search">
 				<IcoSearch width={icoSm} height={icoSm} />
 			</a>
+			<div class="p-2 interactive">
+				<Theme iconSize={icoSm} />
+			</div>
 		</div>
 	</div>
 </header>
@@ -101,12 +107,15 @@
 			<button class="p-6 interactive" on:click={save}>
 				<IcoSave height={icoSize} width={icoSize} />
 			</button>
-			<a class="p-6 interactive" href="https://www.google.com" target="_blank">
+			<a class="block p-6 interactive" href="https://www.google.com" target="_blank">
 				<IcoSymlink height={icoSize} width={icoSize} />
 			</a>
-			<button class="p-6 interactive" on:click={skip}>
+			<a
+				class="block p-6 interactive"
+				href={next ? `/dish/${next.id}/${next.urlName}` : 'javascript:void(0)'}
+			>
 				<IcoSkip height={icoSize} width={icoSize} />
-			</button>
+			</a>
 		</div>
 	</div>
 </div>

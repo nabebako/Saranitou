@@ -5,7 +5,7 @@
 	import IcoRefresh from './ico/ico-refresh.svelte';
 	import IcoSave from './ico/ico-save.svelte';
 	import IcoSkip from './ico/ico-skip.svelte';
-	import IcoSymlink from './ico/ico-symlink.svelte';
+	import IcoSymlink from './ico/ico-link.svelte';
 
 	export let refresh: () => void;
 	export let save: () => void;
