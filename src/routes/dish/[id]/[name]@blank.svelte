@@ -25,12 +25,18 @@
 	import IcoSkip from '$lib/ico/ico-skip.svelte';
 	import IcoSave from '$lib/ico/ico-save.svelte';
 	import IcoSymlink from '../../../lib/ico/ico-symlink.svelte';
+	import IcoBookmark from '../../../lib/ico/ico-bookmark.svelte';
+	import IcoSearch from '../../../lib/ico/ico-search.svelte';
+	import IcoSaranitouSm from '../../../lib/ico/logo/ico-saranitou-sm.svelte';
+	import IcoGithub from '../../../lib/ico/logo/ico-github.svelte';
 
 	export let dish: DocumentDish;
 
 	let showContent = false;
 	let next: DocumentDish;
+
 	const icoSize = 64;
+	const icoSm = 36;
 
 	onMount(() => {
 		let seen = JSON.parse(localStorage.getItem('seen') || '[]') as string[];
@@ -67,6 +73,24 @@
 	rel="stylesheet"
 />
 
+<header class="absolute top-0 left-1/2 -translate-x-1/2 w-[80vw]">
+	<div class="flex w-full py-4 justify-between">
+		<div>
+			<a class="block p-2 interactive" href="/">
+				<IcoSaranitouSm width={icoSm} height={icoSm} />
+			</a>
+		</div>
+		<div class="flex">
+			<a class="block p-2 interactive" href="/save">
+				<IcoBookmark width={icoSm} height={icoSm} />
+			</a>
+			<a class="block p-2 interactive" href="/search">
+				<IcoSearch width={icoSm} height={icoSm} />
+			</a>
+		</div>
+	</div>
+</header>
+
 <div
 	class="flex items-center justify-around w-full h-[calc(var(--vh)*100)] object-cover bg-no-repeat bg-clip-content bg-cover bg-center bg-black"
 	style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url({dish.image});"
@@ -85,6 +109,12 @@
 			</button>
 		</div>
 	</div>
+</div>
+
+<div class="absolute bottom-6 right-6">
+	<a class="block p-2 interactive" href="https://github.com/nabebako/Saranitou" target="_blank">
+		<IcoGithub width={icoSm} height={icoSm} />
+	</a>
 </div>
 
 <style lang="postcss">
