@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '$css/global.css';
+	import Recomendation from '../lib/recomendation.svelte';
 </script>
 
 <svelte:head>
@@ -8,6 +9,6 @@
 
 <main class="relative h-full bg-neutral-100 dark:bg-neutral-600">
 	<div>
-		<p>Hello World</p>
+		<Recomendation></Recomendation>
 	</div>
 </main>
