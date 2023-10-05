@@ -9,3 +9,4 @@ build
 !.env.example
 todo.*
 ignore
+.vercel

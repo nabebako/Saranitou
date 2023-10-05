@@ -3,7 +3,7 @@
 
 	export let width = def.width;
 	export let height = def.height;
-	export let classCss = '';
+	export let classCss = def.class;
 </script>
 
 <svg
