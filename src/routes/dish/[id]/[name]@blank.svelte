@@ -65,10 +65,6 @@
 			localStorage.setItem('saved', JSON.stringify(saved));
 		}
 	}
-
-	function skip() {
-		window.location.assign(new URL(window.origin + '/dish/' + next.id + '/' + next.urlName));
-	}
 </script>
 
 <link
