@@ -11,13 +11,14 @@
 
 	onMount(() => {
 		const dishs = localStorage.getItem('dish-ids');
+		const url = '/api/database';
 		if (dishs) {
-			fetch('/api/database', {
-				method: 'post',
+			fetch(url, {
+				method: 'get',
 				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: dishs
+					'Content-Type': 'application/json',
+					'dish': dishs
+				}
 			})
 				.then((res) => res.json())
 				.then((res) => {

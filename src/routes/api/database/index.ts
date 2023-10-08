@@ -2,16 +2,17 @@ import type { RequestHandler } from '@sveltejs/kit';
 import { firestore } from '$lib/firestore';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
-export const POST: RequestHandler = async function ({ request }) {
-	if (request.headers.get('Content-Type') !== 'application/json') {
+export const GET: RequestHandler = async function ({ request }) {
+	if (!request.headers.has('dish')) {
 		return {
 			status: 400,
-			body: 'only supports application/json',
+			body: 'no dish header',
 		};
 	}
 
 	try {
-		let ids = await request.json() as Array<string>;
+
+		let ids = JSON.parse(request.headers.get('dish')) as Array<string>;
 		ids = ids.filter((val) => !!val);
 
 		if (!ids) {
