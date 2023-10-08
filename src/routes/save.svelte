@@ -10,14 +10,19 @@
 	let shouldShowLoading = true;
 
 	onMount(() => {
-		const dishs = localStorage.getItem('dish-ids');
+		const dishs = JSON.parse(localStorage.getItem('dish-ids')) as string[];
+		const dishHeaderString = dishs.reduce((str, val) => {
+			str = val + ',' + str;
+			return str;
+		}, '').slice(0, -1);
+
 		const url = '/api/database';
 		if (dishs) {
 			fetch(url, {
 				method: 'get',
 				headers: {
 					'Content-Type': 'application/json',
-					'dish': dishs
+					'dish': dishHeaderString
 				}
 			})
 				.then((res) => res.json())

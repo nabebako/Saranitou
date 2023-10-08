@@ -11,8 +11,7 @@ export const GET: RequestHandler = async function ({ request }) {
 	}
 
 	try {
-
-		let ids = JSON.parse(request.headers.get('dish')) as Array<string>;
+		let ids = request.headers.get('dish').split(',');
 		ids = ids.filter((val) => !!val);
 
 		if (!ids) {
