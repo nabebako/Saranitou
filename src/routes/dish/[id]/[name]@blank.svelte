@@ -1,16 +1,13 @@
 <script lang="ts" context="module">
 	import type { Load } from '@sveltejs/kit';
 
-	export const prerender = true;
-
 	export const load: Load = async function ({ params, fetch }) {
 		const { id } = params;
 		const dish = await fetch('/api/database', {
-			method: 'post',
+			method: 'get',
 			headers: {
-				'Content-Type': 'application/json'
+				'dish': id
 			},
-			body: `["${id}"]`
 		})
 			.then((res) => res.json() as Promise<APIDatabase>)
 			.then((body) => body[0]);

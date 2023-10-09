@@ -10,7 +10,7 @@
 	let shouldShowLoading = true;
 
 	onMount(() => {
-		const dishs = JSON.parse(localStorage.getItem('dish-ids')) as string[];
+		const dishs = JSON.parse(localStorage.getItem('saved')) as string[];
 		const dishHeaderString = dishs.reduce((str, val) => {
 			str = val + ',' + str;
 			return str;
@@ -21,7 +21,6 @@
 			fetch(url, {
 				method: 'get',
 				headers: {
-					'Content-Type': 'application/json',
 					'dish': dishHeaderString
 				}
 			})

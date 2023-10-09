@@ -7,10 +7,10 @@
 		<a class="absolute block h-full w-full bg-white" href="/dish/{item.id}/{item.urlName}">
 			<img
 				class="w-full h-full object-cover select-none"
-				src={item.image || '/default.svg'}
+				src={item.image || '/error.svg'}
 				alt={item.name.en}
 				on:error={function () {
-					this.src = '/default.svg';
+					this.src = '/error.svg';
 				}}
 			/>
 		</a>
